@@ -1,0 +1,25 @@
+.searchList {
+  width: 100%;
+  max-width: 450px;
+  cursor: pointer;
+  position: absolute;
+  background: #e8e3cd;
+  border-radius: 4px;
+  max-height: 497px;
+  margin-top: 16px;
+  padding: 13px 13px 0;
+  overflow: auto;
+  z-index: 100 !important;
+
+  li {
+    list-style: none;
+  }
+
+  &-images {
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 19px;
+    display: flex;
+  }
+}
+
