@@ -10,8 +10,6 @@ export async function POST(req: Request) {
 
     const { name, email, password, role } = await req.json();
 
-    console.log("signup data role: ", role);
-
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return NextResponse.json(
@@ -37,7 +35,7 @@ export async function POST(req: Request) {
     if (error instanceof Error) {
       return NextResponse.json(
         {
-          message: "Signup failed",
+          message: "Internal server error",
           error: error.message,
         },
         { status: 500 }
@@ -46,7 +44,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       {
-        message: "Signup failed",
+        message: "Internal server error",
         error: String(error),
       },
       { status: 500 }

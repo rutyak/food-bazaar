@@ -52,7 +52,7 @@ const Navbar = () => {
         <Link href="/cart" onClick={handleCartClick}>
           <li>Cart ({cartAll.length})</li>
         </Link>
-        <Link href="/adminDashboard">
+        <Link href="/admin">
           <li>Admin Dashboard</li>
         </Link>
       </Box>
