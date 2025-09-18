@@ -20,12 +20,15 @@ import {
   Divider,
   Box,
   IconButton,
+  Select,
+  Stack,
 } from "@chakra-ui/react";
 import SignUp from "./Signup";
 import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaGoogle, FaTimes } from "react-icons/fa";
-import { getSession, signIn } from "next-auth/react";
+import { signIn } from "next-auth/react";
+import styles from "./Auth.module.css";
 
 const Login = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -33,8 +36,11 @@ const Login = () => {
   const toast = useToast();
   const router = useRouter();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    role: "customer",
+  });
   const [rememberMe, setRememberMe] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [socialLoading, setSocialLoading] = useState<
@@ -45,14 +51,8 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    console.log("Email: ", email, "Password: ", password);
-    
     try {
-      const result = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
+      const result = await signIn("credentials", formData);
 
       if (result?.error) {
         toast({
@@ -103,6 +103,13 @@ const Login = () => {
     }
   };
 
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  }
+
   return (
     <>
       <Button
@@ -122,6 +129,7 @@ const Login = () => {
       >
         <ModalOverlay backdropFilter="blur(5px)" />
         <ModalContent
+          className={styles.modalContent}
           bg="gray.900"
           color="white"
           borderRadius="lg"
@@ -130,19 +138,6 @@ const Login = () => {
           position="relative"
           m="10px"
         >
-          <IconButton
-            aria-label="Close modal"
-            icon={<FaTimes />}
-            position="absolute"
-            top={1}
-            right={1}
-            size="sm"
-            variant="ghost"
-            color="white"
-            zIndex={10}
-            onClick={onClose}
-            _hover={{ bg: "gray.700" }}
-          />
           <Tabs isFitted variant="soft-rounded" colorScheme="orange" pb={3}>
             <TabList
               p={4}
@@ -150,7 +145,6 @@ const Login = () => {
               justifyItems="center"
               alignContent="center"
               gap={2}
-              mt={6}
             >
               <Tab
                 _selected={{ color: "white", bg: "orange.500" }}
@@ -168,104 +162,118 @@ const Login = () => {
             <TabPanels px={6}>
               <TabPanel>
                 <form onSubmit={handleSubmit}>
-                  <FormControl mb={4}>
-                    <FormLabel htmlFor="email">Email</FormLabel>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="Enter your email"
-                      onChange={(e) => setEmail(e.target.value)}
-                      value={email}
-                      bg="gray.800"
-                      borderColor="gray.600"
-                      _hover={{ borderColor: "gray.500" }}
-                      _focus={{
-                        borderColor: "orange.500",
-                        boxShadow: "0 0 0 1px orange.500",
-                      }}
-                      autoComplete="email"
-                    />
-                  </FormControl>
+                  <Stack spacing={4}>
+                    <FormControl isRequired>
+                      <FormLabel htmlFor="email">Email</FormLabel>
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="Enter your email"
+                        onChange={handleChange}
+                        value={formData.email}
+                        bg="gray.800"
+                        borderColor="gray.600"
+                        _hover={{ borderColor: "gray.500" }}
+                        _focus={{
+                          borderColor: "orange.500",
+                          boxShadow: "0 0 0 1px orange.500",
+                        }}
+                        autoComplete="email"
+                      />
+                    </FormControl>
 
-                  <FormControl mb={6}>
-                    <FormLabel htmlFor="password">Password</FormLabel>
-                    <Input
-                      id="password"
-                      type="password"
-                      placeholder="Enter your password"
-                      onChange={(e) => setPassword(e.target.value)}
-                      value={password}
-                      bg="gray.800"
-                      borderColor="gray.600"
-                      _hover={{ borderColor: "gray.500" }}
-                      _focus={{
-                        borderColor: "orange.500",
-                        boxShadow: "0 0 0 1px orange.500",
-                      }}
-                      autoComplete="current-password"
-                    />
-                  </FormControl>
+                    <FormControl isRequired>
+                      <FormLabel htmlFor="password">Password</FormLabel>
+                      <Input
+                        id="password"
+                        type="password"
+                        placeholder="Enter your password"
+                        onChange={handleChange}
+                        value={formData.password}
+                        bg="gray.800"
+                        borderColor="gray.600"
+                        _hover={{ borderColor: "gray.500" }}
+                        _focus={{
+                          borderColor: "orange.500",
+                          boxShadow: "0 0 0 1px orange.500",
+                        }}
+                        autoComplete="current-password"
+                      />
+                    </FormControl>
 
-                  <HStack justify="space-between" width="100%" mb={6}>
-                    <Checkbox
-                      colorScheme="orange"
-                      isChecked={rememberMe}
-                      onChange={(e) => setRememberMe(e.target.checked)}
-                    >
-                      Remember me
-                    </Checkbox>
+                    <FormControl isRequired>
+                      <FormLabel htmlFor="role">Role</FormLabel>
+                      <Select
+                        id="role"
+                        value={formData.role}
+                        onChange={handleChange}
+                      >
+                        <option value="customer">Customer</option>
+                        <option value="admin">Admin</option>
+                      </Select>
+                    </FormControl>
+
+                    <HStack justify="space-between" width="100%">
+                      <Checkbox
+                        colorScheme="orange"
+                        isChecked={rememberMe}
+                        onChange={(e) => setRememberMe(e.target.checked)}
+                      >
+                        Remember me
+                      </Checkbox>
+                      <Button
+                        variant="link"
+                        colorScheme="orange"
+                        size="sm"
+                        onClick={() => {
+                          toast({
+                            title: "Password reset",
+                            status: "info",
+                            duration: 3000,
+                            isClosable: true,
+                          });
+                        }}
+                      >
+                        Forgot password?
+                      </Button>
+                    </HStack>
+
                     <Button
-                      variant="link"
                       colorScheme="orange"
-                      size="sm"
-                      onClick={() => {
-                        toast({
-                          title: "Password reset",
-                          status: "info",
-                          duration: 3000,
-                          isClosable: true,
-                        });
-                      }}
+                      width="full"
+                      type="submit"
+                      isLoading={isLoading}
+                      loadingText="Signing in..."
+                      size="lg"
+                      _hover={{ bg: "orange.600" }}
                     >
-                      Forgot password?
+                      Login
                     </Button>
-                  </HStack>
 
-                  <Button
-                    colorScheme="orange"
-                    width="full"
-                    type="submit"
-                    isLoading={isLoading}
-                    loadingText="Signing in..."
-                    mb={6}
-                    size="lg"
-                    _hover={{ bg: "orange.600" }}
-                  >
-                    Login
-                  </Button>
+                    <Flex align="center" my={2}>
+                      <Divider borderColor="gray.600" />
+                      <Text px={2} color="gray.400" fontSize="sm">
+                        OR
+                      </Text>
+                      <Divider borderColor="gray.600" />
+                    </Flex>
 
-                  <Flex align="center" mb={6}>
-                    <Divider borderColor="gray.600" />
-                    <Text px={2} color="gray.400" fontSize="sm">
-                      OR
-                    </Text>
-                    <Divider borderColor="gray.600" />
-                  </Flex>
-
-                  <Flex direction="column" gap={3}>
-                    <Button
-                      leftIcon={<FaGoogle />}
-                      variant="outline"
-                      colorScheme="red"
-                      onClick={() => handleSocialSignIn("google")}
-                      isLoading={socialLoading === "google"}
-                      loadingText="Signing in with Google"
-                      disabled={isLoading}
-                      _hover={{ bg: "gray.700" }}
-                    >
-                      Continue with Google
-                    </Button>
-                  </Flex>
+                    <Flex direction="column" gap={3}>
+                      <Button
+                        leftIcon={<FaGoogle />}
+                        variant="outline"
+                        color="white"
+                        colorScheme="red"
+                        onClick={() => handleSocialSignIn("google")}
+                        isLoading={socialLoading === "google"}
+                        loadingText="Signing in with Google"
+                        disabled={isLoading}
+                        _hover={{ bg: "gray.700" }}
+                      >
+                        Continue with Google
+                      </Button>
+                    </Flex>
+                  </Stack>
                 </form>
               </TabPanel>
               <TabPanel p={0}>

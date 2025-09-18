@@ -13,10 +13,12 @@ import {
   Box,
   Flex,
   Divider,
+  Select,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import { FaGoogle, FaGithub } from "react-icons/fa";
+import { FaGoogle } from "react-icons/fa";
 import { signIn } from "next-auth/react";
+import styles from "./Auth.module.css";
 
 interface SignUpProps {
   onClose: () => void;
@@ -28,6 +30,7 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
     email: "",
     password: "",
     confirmPassword: "",
+    role: "customer", 
   });
   const [isLoading, setIsLoading] = useState(false);
   const [socialLoading, setSocialLoading] = useState<
@@ -36,7 +39,9 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
   const toast = useToast();
   const router = useRouter();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
@@ -44,6 +49,7 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    console.log("formData in signUp:", formData);
 
     try {
       const res = await fetch("/api/auth/signup", {
@@ -94,7 +100,7 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
   };
 
   return (
-    <TabPanel className="signup-body">
+    <TabPanel className={styles.signupBody}>
       <form onSubmit={handleSubmit}>
         <Stack spacing={4}>
           <FormControl isRequired>
@@ -142,6 +148,19 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
             />
           </FormControl>
 
+          {/* New Role Selection */}
+          <FormControl isRequired>
+            <FormLabel htmlFor="role">Role</FormLabel>
+            <Select id="role" value={formData.role} onChange={handleChange}>
+              <option value="customer" color="black">
+                Customer
+              </option>
+              <option value="admin" color="black">
+                Admin
+              </option>
+            </Select>
+          </FormControl>
+
           <Box pt={2}>
             <Button
               colorScheme="orange"
@@ -154,7 +173,7 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
             </Button>
           </Box>
 
-          <Flex align="center" my={4}>
+          <Flex align="center" my={2}>
             <Divider />
             <Text px={2} color="gray.500">
               OR
@@ -170,6 +189,8 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
               isLoading={socialLoading === "google"}
               loadingText="Signing up with Google"
               disabled={isLoading}
+              color="white"
+              _hover={{ bg: "gray.700" }}
             >
               Continue with Google
             </Button>

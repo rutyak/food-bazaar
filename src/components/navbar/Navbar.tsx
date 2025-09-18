@@ -52,6 +52,9 @@ const Navbar = () => {
         <Link href="/cart" onClick={handleCartClick}>
           <li>Cart ({cartAll.length})</li>
         </Link>
+        <Link href="/adminDashboard">
+          <li>Admin Dashboard</li>
+        </Link>
       </Box>
 
       {status === "authenticated" ? (

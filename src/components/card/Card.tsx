@@ -19,9 +19,6 @@ const Card = ({
   const imageSrc = cloudinaryImageId
     ? `${image_url}/${cloudinaryImageId}`
     : `${image_url}/${imageId}`;
-
-
-  console.log("action: ", action);
   
   return (
     <Link href={`/menu/${id}`} style={{textDecoration: "none"}}>

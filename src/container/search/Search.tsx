@@ -85,7 +85,7 @@ const Search = ({
             //   data.results[0]?.components?.village ||
             //   "Unknown location";
 
-            console.log("City:", data.results[0]?.components?.city);
+            console.log("City in location detection:", data.results[0]?.components?.city);
 
             setCity(data.results[0]?.components?.city);
 

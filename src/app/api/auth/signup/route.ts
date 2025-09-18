@@ -8,7 +8,9 @@ export async function POST(req: Request) {
     const connect = await dbConnect();
     console.log("mongoDB connection:", connect);
 
-    const { name, email, password } = await req.json();
+    const { name, email, password, role } = await req.json();
+
+    console.log("signup data role: ", role);
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -24,11 +26,12 @@ export async function POST(req: Request) {
       name,
       email,
       password: hashPass,
+      role,
     });
 
     return NextResponse.json({
       message: "Signup successfully",
-      userData: { name: user.name, email: user.email },
+      userData: { name: user.name, email: user.email, role: user.role },
     });
   } catch (error: unknown) {
     if (error instanceof Error) {

@@ -17,19 +17,28 @@ const handler = NextAuth({
       credentials: {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
+        role: { label: "Role", type:"select" },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
         await dbConnect();
 
-        const user = await User.findOne({ email: credentials.email });
-        if (!user) throw new Error("User not found");
+        const user = await User.findOne({
+          email: credentials.email.toLowerCase().trim(),
+        });
+        console.log("user in nextauth: ", user);
 
-        const isValid = await bcrypt.compare(credentials.password, user.password);
+        if (!user) throw new Error("User not found");
+        if (!user.password) throw new Error("User has no password set");
+
+        const isValid = await bcrypt.compare(
+          credentials.password,
+          user.password
+        );
         if (!isValid) throw new Error("Invalid credentials");
 
-        return { id: user._id.toString(), name: user.name, email: user.email };
+        return { id: user._id.toString(), name: user.name, email: user.email, role: user.role };
       },
     }),
   ],
@@ -50,7 +59,7 @@ const handler = NextAuth({
   },
 
   pages: {
-    signIn: "/auth/login", 
+    signIn: "/auth/login",
   },
 
   debug: process.env.NODE_ENV === "development",

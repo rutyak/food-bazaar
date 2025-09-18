@@ -4,8 +4,9 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
 
   console.log("searchParams: ", searchParams);
-  const lat = searchParams.get("lat") || "12.9351929";
-  const lng = searchParams.get("lng") || "77.62448069999999";
+  
+  const lat = "12.9351929";
+  const lng = "77.62448069999999";
 
   try {
     const swiggyUrl = `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&page_type=DESKTOP_WEB_LISTING`;
