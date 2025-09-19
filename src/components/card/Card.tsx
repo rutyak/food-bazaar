@@ -6,42 +6,29 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-const Card = ({
-  name,
-  cloudinaryImageId,
-  imageId,
-  action,
-  grid,
-  cuisines,
-  avgRating,
-  id,
-}: any) => {
-  const imageSrc = cloudinaryImageId
-    ? `${image_url}/${cloudinaryImageId}`
-    : `${image_url}/${imageId}`;
-  
+const Card = ({ _id, name, description, image, location, categories }: any) => {
   return (
-    <Link href={`/menu/${id}`} style={{textDecoration: "none"}}>
+    <Link href={`/menu/${_id}`} style={{ textDecoration: "none" }}>
       <div
-        className={action ? "top-carousal-card" : grid ? "grid-card" : "card"}
+        className={false ? "top-carousal-card" : true ? "grid-card" : "card"}
       >
         <div className="card-img">
           <Image
-            src={imageSrc}
+            src={image}
             width={100}
             height={100}
             layout="responsive"
             alt="card-image"
           />
         </div>
-        {!action && (
+        {!false && (
           <div className="info">
             <h2 className="title">{name}</h2>
             <div className="rating">
               <Image src={rating?.src} width={15} height={15} alt="rating" />
-              <p>{avgRating}</p>
+              <p>4.5</p>
             </div>
-            <p className="cuisines">{cuisines?.join(", ")}</p>
+            <p className="cuisines">{categories?.join(", ")}</p>
           </div>
         )}
       </div>

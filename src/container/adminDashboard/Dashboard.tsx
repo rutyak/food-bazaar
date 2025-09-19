@@ -48,12 +48,6 @@ function AdminDashboard() {
     categories: "",
   });
 
-  const [categoryData, setCategoryData] = useState({
-    name: "",
-    image: null,
-    description: "",
-  });
-
   const [menuItems, setMenuItems] = useState([
     {
       restaurantId: "",
@@ -91,6 +85,8 @@ function AdminDashboard() {
           }
           uploadedItems.push({ ...item, image: imageUrl });
         }
+        
+        console.log("$$$$$$$$$$ uploaded items with image: ", uploadedItems);
 
         const res = await axios.post(`/api/${endpoint}`, uploadedItems);
         console.log("bulk menu uploaded.....:", res.data);
@@ -135,8 +131,6 @@ function AdminDashboard() {
           location: "",
           categories: "",
         });
-      } else if (endpoint === "category") {
-        setCategoryData({ name: "", image: null, description: "" });
       } else {
         setMenuItems([
           {
@@ -221,7 +215,6 @@ function AdminDashboard() {
         <Tabs variant="enclosed" colorScheme="blue">
           <TabList>
             <Tab>Restaurants</Tab>
-            <Tab>Categories</Tab>
             <Tab>Menu Items</Tab>
           </TabList>
 
@@ -231,16 +224,6 @@ function AdminDashboard() {
                 data={restaurantData}
                 setData={setRestaurantData}
                 onSubmit={() => handleSubmit("addrestaurant", restaurantData)}
-                handleChangeFactory={handleChangeFactory}
-                loading={loading}
-              />
-            </TabPanel>
-
-            <TabPanel>
-              <CategoryForm
-                data={categoryData}
-                setData={setCategoryData}
-                handleSubmit={() => handleSubmit("category", categoryData)}
                 handleChangeFactory={handleChangeFactory}
                 loading={loading}
               />
@@ -265,7 +248,9 @@ function AdminDashboard() {
                       colorScheme="blue"
                       onClick={() => handleSubmit("menuItem", menuItems)}
                     >
-                      Save All Menu Items
+                      {loading
+                        ? "Saving all menu items..."
+                        : "Save All Menu Items"}
                     </Button>
                   </Stack>
                 </>

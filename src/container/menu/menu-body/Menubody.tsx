@@ -12,6 +12,7 @@ import VariableContext from "@/context/VariableContext";
 import { useParams } from "next/navigation";
 import React from "react";
 import { v4 } from "uuid";
+import axios from "axios";
 
 interface MenuQuery {
   id?: string;
@@ -22,56 +23,48 @@ const Menubody = () => {
   const [menu, setMenu] = useState<any>([]);
   const [menuOpt, setMenuOpt] = useState<any>([]);
   const { location } = useContext(VariableContext);
-  const uniqueId = v4();
 
   useEffect(() => {
-    if (query?.id && location?.lat && location?.lng) {
-      getMenumenu(query?.id, location.lat, location.lng);
+    if (query?.id) {
+      getMenu(query?.id);
     }
-  }, [query.id, location]);
+  }, [query.id]);
 
   console.log("menu menu dta #############: ", menu);
 
-  async function getMenumenu(restaurantId: string, lat: number, lng: number) {
+  async function getMenu(restaurantId: string) {
     try {
-      console.log("restaurantId, lat, lng", restaurantId, lat, lng);
+      console.log("restaurantId on card click: ", restaurantId);
 
-      const res = await fetch(
-        `/api/menu/${restaurantId}?lat=${lat}&lng=${lng}`
-      );
-      const data = await res?.json();
-      console.log("menu cards: ", data);
-      setMenu(data?.data?.data?.cards);
-      const menuFetched =
-        data?.data?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
-      setMenuOpt(menuFetched);
-      console.log(
-        "menu card",
-        data?.data?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards
-      );
+      const data = await axios.get(`/api/menu/${restaurantId}`);
+      console.log("menu cards: ", data?.data?.menuItems);
+      setMenu(data?.data?.menuItems);
+      // const menuFetched =
+      //   data?.data?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
+      // setMenuOpt(menuFetched);
     } catch (error) {
       console.error("error: ", error);
     }
   }
 
-  return menuOpt?.length === 0 ? (
+  return menu?.length === 0 ? (
     <Shimmer menuShimmerStyle={menuShimmerStyle} />
   ) : (
     <>
       <div className="card-menu">
         <Heading as="h2" size="lg" className="title-restau">
-          {/* {menu[0]?.card?.card?.text} */}
+          {menu[0]?.restaurantId?.name}
         </Heading>
         <Box mt="4" className="restau-desc">
           <Box mb="23px">
             <Heading size="md" className="title-of-card">
               <Image src={starIcon?.src} alt="rating" />
-              {menu[2]?.card?.card?.info?.avgRating} (
-              {menu[2]?.card?.card?.info?.totalRatingsString}) |{" "}
-              {menu[2]?.card?.card?.info?.costForTwoMessage}
+              {menu[0]?.restaurantId?.rating}
+              {/* {menu[0]?.restaurantId?.totalRatingsString}) |{" "} */}
+              {/* {menu[0]?.restaurantId?.costForTwoMessage} */}
             </Heading>
             <Text py="2" className="cuisine">
-              {menu[2]?.card?.card?.info?.labels?.[2]?.message}
+              {menu[0]?.restaurantId?.categories}
             </Text>
           </Box>
           <Box mt="-30px" mb="-10px" ml="-5px">
@@ -88,7 +81,7 @@ const Menubody = () => {
                   Outlet
                 </Text>
                 <Text fontWeight="500" fontSize="14px" color="gray.300">
-                  {menu[2]?.card?.card?.info?.areaName}
+                  {menu[0]?.restaurantId?.location}
                 </Text>
               </Box>
             </Box>
@@ -101,12 +94,12 @@ const Menubody = () => {
                 mr="8px"
               />
               <Text fontSize="14px">
-                {menu[2]?.card?.card?.info?.sla?.slaString}
+                45 - 50
               </Text>
             </Box>
           </Box>
           <Divider my="4" borderColor="gray.200" />{" "}
-          <Box>
+          {/* <Box>
             <Text className="dist-fees">
               {" "}
               {menu[2]?.card?.card?.info?.expectationNotifiers?.[0]?.enrichedText?.replace(
@@ -114,20 +107,12 @@ const Menubody = () => {
                 ""
               )}
             </Text>
-          </Box>
+          </Box> */}
         </Box>
         <Box className="list-items">
           <>
-            {console.log("menuoptions: ", menuOpt)}
-            {menuOpt?.map((item: any, index: number) => {
-              if (item?.card?.card?.itemCards) {
-                return (
-                  <MenuOptions
-                    key={item?.card?.card?.categoryId || index}
-                    options={item?.card?.card}
-                  />
-                );
-              }
+            {menu?.map((item: any, index: number) => {
+              return <MenuOptions key={item?._id} item={item} />;
             })}
           </>
         </Box>

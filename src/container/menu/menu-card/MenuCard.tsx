@@ -8,14 +8,14 @@ import { useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 
 const MenuCard = ({
-  id,
+  _id,
+  category,
+  description,
+  image,
+  isVeg,
   name,
-  description = "add any thing",
-  ratings,
-  isBestseller,
   price,
-  defaultPrice,
-  imageId,
+  rating,
 }: any) => {
   const [quantity, setQuantity] = useState(1);
   const [isAdded, setIsAdded] = useState(false);
@@ -40,17 +40,17 @@ const MenuCard = ({
 
       let currentQuantity = itemQuantity?.quantity ?? 0;
 
-      const itemDetails = {
-        id,
-        name,
-        ratings,
-        price,
-        defaultPrice,
-        imageId,
-        quantity: currentQuantity + 1,
-      };
-      console.log(currentQuantity);
-      dispatch(addCart(itemDetails));
+      // const itemDetails = {
+      //   id,
+      //   name,
+      //   ratings,
+      //   price,
+      //   defaultPrice,
+      //   imageId,
+      //   quantity: currentQuantity + 1,
+      // };
+      // console.log(currentQuantity);
+      // dispatch(addCart(itemDetails));
 
       setQuantity((prev) => prev + 1);
     }
@@ -62,7 +62,7 @@ const MenuCard = ({
         <Box className="card-text" mb={4}>
           <Box mb={2}>
             <Text fontSize="md" fontWeight="bold" color="#DD6B20">
-              {isBestseller ? "Bestseller" : ""}
+              {/* {isBestseller ? "Bestseller" : ""} */}
             </Text>
           </Box>
           <Box mb={2} className="item-title">
@@ -72,19 +72,17 @@ const MenuCard = ({
             <Heading as="h3" size="md" className="item-card-price">
               <Image src={rupee?.src} alt="rupee" w="10px" />
               <Text>
-                {defaultPrice
-                  ? Math.floor(defaultPrice / 100)
-                  : Math.floor(price / 100)}
+                {Math.floor(price / 100)}
               </Text>
             </Heading>
           </Box>
           <Box className="item-rating" mb={2}>
-            {Object.keys(ratings?.aggregatedRating).length !== 0 ? (
+            {Object.keys(rating).length !== 0 ? (
               <>
                 <img src={starIcon?.src} alt="rating" />
                 <Text fontSize="sm">
-                  {ratings?.aggregatedRating?.rating} (
-                  {ratings?.aggregatedRating?.ratingCountV2})
+                  {rating}
+                  {/* {ratings?.aggregatedRating?.ratingCountV2}) */}
                 </Text>
               </>
             ) : (
@@ -111,17 +109,17 @@ const MenuCard = ({
             )}
           </Box>
         </Box>
-        {imageId ? (
+        {image ? (
           <>
             <Box className="item-img-btn" position="relative">
               <Image
-                src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${imageId}`}
+                src={image}
                 alt="img-card-menu"
                 boxSize="100px"
                 objectFit="cover"
               />
               <Box className="add-btn">
-                <Button colorScheme="teal" onClick={() => handleAddToCart(id)}>
+                <Button colorScheme="teal" onClick={() => handleAddToCart(_id)}>
                   <Text>ADD ({quantity})</Text>
                 </Button>
               </Box>
@@ -129,7 +127,7 @@ const MenuCard = ({
           </>
         ) : (
           <Box className="add-btn-without-img">
-            <Button colorScheme="teal" onClick={() => handleAddToCart(id)}>
+            <Button colorScheme="teal" onClick={() => handleAddToCart(_id)}>
               ADD (<Text>{quantity}</Text>)
             </Button>
           </Box>

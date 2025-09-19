@@ -1,6 +1,5 @@
 import { dbConnect } from "@/lib/dbConnect";
 import Restaurant from "@/lib/models/Restaurant";
-import User from "@/lib/models/User";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -42,5 +41,23 @@ export async function POST(req: Request) {
       message: "Internal server error",
       error: String(error),
     });
+  }
+}
+
+export async function GET(req: Request) {
+  try {
+    await dbConnect();
+
+    const restaurants = await Restaurant.find();
+
+    return NextResponse.json({
+      message: "Restaurants fetched successfully",
+      restaurants,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Internal server error", error: String(error) },
+      { status: 500 }
+    );
   }
 }
