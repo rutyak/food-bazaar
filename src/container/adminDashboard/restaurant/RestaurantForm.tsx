@@ -43,6 +43,10 @@ function RestaurantForm({
         <Input id="location" value={data.location} onChange={handleChange} />
       </FormControl>
       <FormControl>
+        <FormLabel>Ratings</FormLabel>
+        <Input id="rating" value={data.rating} onChange={handleChange} />
+      </FormControl>
+      <FormControl>
         <FormLabel>Categories (comma separated)</FormLabel>
         <Input
           id="categories"

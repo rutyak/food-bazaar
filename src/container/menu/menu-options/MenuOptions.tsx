@@ -10,8 +10,8 @@ import MenuCard from "../menu-card/MenuCard";
 import "./MenuOptions.scss";
 import CustomAccordion from "@/components/accordian/CustomAccordion";
 
-const MenuOptions = ({ item }: any) => {
-  console.log("item in menuOption: ", item);
+const MenuOptions = ({ category, items }: any) => {
+  console.log("item in menuOption: ", items);
 
   return (
     <>
@@ -23,14 +23,15 @@ const MenuOptions = ({ item }: any) => {
               borderRadius="10px"
             >
               <Box as="span" flex="1" textAlign="left">
-                {item.name}{" "}
-                {item?.length > 0 ? `(${item?.length})` : ""}
+                {category} {items?.length > 0 ? `(${items?.length})` : ""}
               </Box>
               <AccordionIcon />
             </AccordionButton>
           </h2>
           <AccordionPanel>
-            <MenuCard key={item?._id} {...item} />
+            {items?.map((item: any) => (
+              <MenuCard key={item?._id} {...item} />
+            ))}
             {/* {item.categories?.length > 0 &&
                 item?.categories?.map((cat: any, index: number) => {
                   return (

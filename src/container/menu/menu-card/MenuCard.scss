@@ -33,7 +33,7 @@
 .item-card {
   display: flex;
   height: 221px;
-  align-content: center;
+  align-items: center;
   justify-content: space-between;
 }
 
@@ -61,13 +61,10 @@
 }
 
 .add-btn {
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  gap: 9px;
-  display: flex;
   position: absolute;
-  bottom: 39px;
+  bottom: -18px;
+  left: 0px;
+  right: 0px;
 }
 
 .add-btn-without-img {
@@ -77,6 +74,12 @@
   align-items: center;
   justify-content: center;
   gap: 13px;
+}
+
+.card-text{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 @media (max-width: 768px) {
@@ -92,8 +95,6 @@
     flex-direction: column;
     display: flex;
     height: auto !important;
-    // align-items: center;
-    // justify-content: space-between;
   }
 
   .menu-items-for-mobile {

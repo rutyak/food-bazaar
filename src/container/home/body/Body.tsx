@@ -104,7 +104,7 @@ const Body = ({
     console.log("lat: ", location.lat, "lng: ", location.lng);
 
     try {
-      const data = await axios.get(`/api/addrestaurant`);
+      const data = await axios.get(`/api/restaurant`);
 
       console.log("all data: ", data.data.restaurants);
 

@@ -12,8 +12,16 @@ export async function POST(req: Request) {
     const addedMenuItems = [];
 
     for (let item of menuItems) {
-      const { restaurantId, name, description, price, image, category, isVeg } =
-        item;
+      const {
+        restaurantId,
+        name,
+        description,
+        price,
+        image,
+        category,
+        isVeg,
+        rating,
+      } = item;
 
       if (
         !restaurantId ||
@@ -21,7 +29,8 @@ export async function POST(req: Request) {
         !description ||
         !price ||
         !image ||
-        !category
+        !category ||
+        !rating
       ) {
         return NextResponse.json({ message: "All fields required" });
       }
@@ -34,6 +43,7 @@ export async function POST(req: Request) {
         image,
         category,
         isVeg,
+        rating,
       });
 
       addedMenuItems.push(addedmenuItem);

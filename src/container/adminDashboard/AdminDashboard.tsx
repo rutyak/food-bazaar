@@ -10,15 +10,12 @@ import {
   TabPanel,
   Heading,
   Button,
-  VStack,
   useToast,
-  Divider,
   Stack,
 } from "@chakra-ui/react";
 import axios from "axios";
-import styles from "./Dashboard.module.css";
+import styles from "./AdminDashboard.module.css";
 import RestaurantForm from "./restaurant/RestaurantForm";
-import CategoryForm from "./category/CategoryForm";
 import MenuItemForm from "./menuItem/MenuItemForm";
 
 const handleChangeFactory =
@@ -123,7 +120,7 @@ function AdminDashboard() {
         });
       }
 
-      if (endpoint === "addrestaurant") {
+      if (endpoint === "restaurant") {
         setRestaurantData({
           name: "",
           description: "",
@@ -223,7 +220,7 @@ function AdminDashboard() {
               <RestaurantForm
                 data={restaurantData}
                 setData={setRestaurantData}
-                onSubmit={() => handleSubmit("addrestaurant", restaurantData)}
+                onSubmit={() => handleSubmit("restaurant", restaurantData)}
                 handleChangeFactory={handleChangeFactory}
                 loading={loading}
               />

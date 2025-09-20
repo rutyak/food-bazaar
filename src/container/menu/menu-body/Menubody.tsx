@@ -5,13 +5,11 @@ import { useState, useEffect, useContext } from "react";
 import MenuOptions from "../menu-options/MenuOptions";
 import starIcon from "@/assets/star.png";
 import Footer from "@/container/footer/Footer";
-import * as menuFooter from "./MenuFooter.module.scss";
 import Shimmer from "@/components/shimmer-effect/Shimmer";
 import * as menuShimmerStyle from "@/components/shimmer-effect/MenuShimmer.module.scss";
 import VariableContext from "@/context/VariableContext";
 import { useParams } from "next/navigation";
 import React from "react";
-import { v4 } from "uuid";
 import axios from "axios";
 
 interface MenuQuery {
@@ -34,8 +32,6 @@ const Menubody = () => {
 
   async function getMenu(restaurantId: string) {
     try {
-      console.log("restaurantId on card click: ", restaurantId);
-
       const data = await axios.get(`/api/menu/${restaurantId}`);
       console.log("menu cards: ", data?.data?.menuItems);
       setMenu(data?.data?.menuItems);
@@ -53,18 +49,18 @@ const Menubody = () => {
     <>
       <div className="card-menu">
         <Heading as="h2" size="lg" className="title-restau">
-          {menu[0]?.restaurantId?.name}
+          {menu[0]?.items[0]?.restaurant[0]?.name}
         </Heading>
         <Box mt="4" className="restau-desc">
           <Box mb="23px">
             <Heading size="md" className="title-of-card">
               <Image src={starIcon?.src} alt="rating" />
-              {menu[0]?.restaurantId?.rating}
+              {menu[0]?.items[0]?.restaurant[0]?.rating} | $250 for two
               {/* {menu[0]?.restaurantId?.totalRatingsString}) |{" "} */}
               {/* {menu[0]?.restaurantId?.costForTwoMessage} */}
             </Heading>
             <Text py="2" className="cuisine">
-              {menu[0]?.restaurantId?.categories}
+              {menu[0]?.items[0]?.restaurant[0]?.categories}
             </Text>
           </Box>
           <Box mt="-30px" mb="-10px" ml="-5px">
@@ -81,7 +77,7 @@ const Menubody = () => {
                   Outlet
                 </Text>
                 <Text fontWeight="500" fontSize="14px" color="gray.300">
-                  {menu[0]?.restaurantId?.location}
+                  {menu[0]?.items[0]?.restaurant[0]?.location}
                 </Text>
               </Box>
             </Box>
@@ -93,9 +89,7 @@ const Menubody = () => {
                 bg="teal.500"
                 mr="8px"
               />
-              <Text fontSize="14px">
-                45 - 50
-              </Text>
+              <Text fontSize="14px">45 - 50</Text>
             </Box>
           </Box>
           <Divider my="4" borderColor="gray.200" />{" "}
@@ -111,8 +105,8 @@ const Menubody = () => {
         </Box>
         <Box className="list-items">
           <>
-            {menu?.map((item: any, index: number) => {
-              return <MenuOptions key={item?._id} item={item} />;
+            {menu?.map((data: any, index: number) => {
+              return <MenuOptions key={data?._id} category={data.category} items={data.items} />;
             })}
           </>
         </Box>

@@ -19,7 +19,7 @@ const menuItemSchema = new mongoose.Schema(
       required: true,
     },
     isVeg: { type: Boolean, default: true },
-    rating: { type: Number, default: 0 },
+    rating: { type: Number },
   },
   { timestamps: true }
 );

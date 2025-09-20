@@ -1,38 +1,62 @@
+import { dbConnect } from "@/lib/dbConnect";
+import Restaurant from "@/lib/models/Restaurant";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-
-  console.log("searchParams: ", searchParams);
-  
-  const lat = "12.9351929";
-  const lng = "77.62448069999999";
-
+export async function POST(req: Request) {
   try {
-    const swiggyUrl = `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&page_type=DESKTOP_WEB_LISTING`;
+    console.log("restaurant api cliked");
+    const connect = await dbConnect();
+    console.log("mongoDB connection: ", connect);
 
-    const response = await fetch(swiggyUrl, {
-      headers: {
-        "User-Agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
-      },
-      next: { revalidate: 3600 },
-    });
+    const { name, description, image, location, categories } = await req.json();
 
-    if (!response.ok) {
-      throw new Error(`swiggy API error: ${response.statusText}`);
+    if (!name || !description || !image || !location || !categories) {
+      throw new Error("All fields required");
     }
 
-    const data = await response.json();
+    const restaurantInfo = await Restaurant.create({
+      name,
+      description,
+      image,
+      location,
+      categories,
+    });
 
-    return NextResponse.json({ success: true, data });
+    return NextResponse.json({
+      message: "Restaurant added successfully",
+      restaurant: restaurantInfo,
+    });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json(
+        {
+          message: "Internal server error",
+          error: error.message,
+        },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({
+      message: "Internal server error",
+      error: String(error),
+    });
+  }
+}
+
+export async function GET(req: Request) {
+  try {
+    await dbConnect();
+
+    const restaurants = await Restaurant.find();
+
+    return NextResponse.json({
+      message: "Restaurants fetched successfully",
+      restaurants,
+    });
   } catch (error) {
-    console.error("swiggy proxy error: ", error);
     return NextResponse.json(
-      {
-        success: false,
-        error: "Failed to fetch restaurants",
-      },
+      { message: "Internal server error", error: String(error) },
       { status: 500 }
     );
   }

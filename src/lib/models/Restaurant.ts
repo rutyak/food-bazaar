@@ -18,7 +18,10 @@ const restaurantSchema = new mongoose.Schema(
     },
     rating: {
       type: Number,
-      default: 0,
+    },
+    pricefortwo: {
+      type: Number,
+      default: 100,
     },
   },
   { timestamps: true }

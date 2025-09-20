@@ -66,28 +66,22 @@ const MenuCard = ({
             </Text>
           </Box>
           <Box mb={2} className="item-title">
-            <Heading as="h3" size="md">
+            <Heading as="h3" size="lg">
               {name}
             </Heading>
-            <Heading as="h3" size="md" className="item-card-price">
+            <Heading as="h3" size="lg" className="item-card-price">
               <Image src={rupee?.src} alt="rupee" w="10px" />
-              <Text>
-                {Math.floor(price / 100)}
-              </Text>
+              <Text>{price}</Text>
             </Heading>
           </Box>
           <Box className="item-rating" mb={2}>
-            {Object.keys(rating).length !== 0 ? (
-              <>
-                <img src={starIcon?.src} alt="rating" />
-                <Text fontSize="sm">
-                  {rating}
-                  {/* {ratings?.aggregatedRating?.ratingCountV2}) */}
-                </Text>
-              </>
-            ) : (
-              " "
-            )}
+            <>
+              <img src={starIcon?.src} alt="rating" />
+              <Text fontSize="sm">
+                {rating}
+                {/* {ratings?.aggregatedRating?.ratingCountV2}) */}
+              </Text>
+            </>
           </Box>
           <Box
             className="cuisine-menu-card"
@@ -109,29 +103,24 @@ const MenuCard = ({
             )}
           </Box>
         </Box>
-        {image ? (
-          <>
-            <Box className="item-img-btn" position="relative">
-              <Image
-                src={image}
-                alt="img-card-menu"
-                boxSize="100px"
-                objectFit="cover"
-              />
-              <Box className="add-btn">
-                <Button colorScheme="teal" onClick={() => handleAddToCart(_id)}>
-                  <Text>ADD ({quantity})</Text>
-                </Button>
-              </Box>
-            </Box>
-          </>
-        ) : (
-          <Box className="add-btn-without-img">
-            <Button colorScheme="teal" onClick={() => handleAddToCart(_id)}>
-              ADD (<Text>{quantity}</Text>)
-            </Button>
-          </Box>
-        )}
+        <Box className="item-img-btn" position="relative">
+          <Image
+            src={image}
+            alt="img-card-menu"
+            boxSize="100px"
+            objectFit="cover"
+          />
+          <Button
+            position="absolute"
+            bottom="-18px"
+            left="50%"
+            transform="translateX(-50%)"
+            colorScheme="teal"
+            onClick={() => handleAddToCart(_id)}
+          >
+            <Text>ADD ({quantity})</Text>
+          </Button>
+        </Box>
       </Box>
       <hr></hr>
     </>

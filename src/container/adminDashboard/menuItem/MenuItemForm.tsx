@@ -100,9 +100,7 @@ function MenuItemForm({ data, setData, addItem, handleChangeFactory }: any) {
                 id="image"
                 type="file"
                 accept="image/*"
-                onChange={(e) =>
-                  handleChange(e, idx)
-                }
+                onChange={(e) => handleChange(e, idx)}
               />
             </FormControl>
 
@@ -111,6 +109,15 @@ function MenuItemForm({ data, setData, addItem, handleChangeFactory }: any) {
               <Input
                 id="category"
                 value={menuItem.category || ""}
+                onChange={(e) => handleChange(e, idx)}
+              />
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Ratings</FormLabel>
+              <Input
+                id="rating"
+                value={data.rating}
                 onChange={(e) => handleChange(e, idx)}
               />
             </FormControl>

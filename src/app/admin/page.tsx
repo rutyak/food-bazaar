@@ -1,7 +1,7 @@
-import Dashboard from "@/container/adminDashboard/Dashboard";
+import AdminDashboard from "@/container/adminDashboard/AdminDashboard";
 
 function Admin() {
-  return <Dashboard />;
+  return <AdminDashboard />;
 }
 
 export default Admin;
