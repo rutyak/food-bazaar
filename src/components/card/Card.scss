@@ -1,0 +1,57 @@
+.card,
+.grid-card {
+  border-radius: 10px;
+  padding: 8px;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(0.95);
+    z-index: 2;
+  }
+
+  .card-img img {
+    min-width: 250px;
+    min-height: 182px;
+    border-radius: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    object-fit: cover;
+  }
+
+  .carousal-card{
+    width: 85%;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 0.7rem;
+    margin-left: 0.3rem;
+  }
+
+  h2,
+  .rating {
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba(2, 6, 12, 0.75);
+  }
+
+  .cuisines {
+    color: rgba(2, 6, 12, 0.6);
+    font-size: 14px;
+  }
+
+  .rating {
+    display: flex;
+    align-items: center;
+    gap: 0.1rem;
+    width: 1rem;
+  }
+}
+
+.card {
+  width: 300px;
+}
+.top-carousal-card {
+  width: 140px;
+}

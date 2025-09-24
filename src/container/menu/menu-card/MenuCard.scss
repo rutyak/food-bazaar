@@ -1,0 +1,117 @@
+.item-img-btn {
+  position: relative;
+
+  img {
+    border-radius: 25px;
+    width: 211px;
+    margin: auto;
+    height: 150px;
+  }
+}
+
+.item-card-price {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+
+  > img {
+    width: 14px;
+    height: 12px;
+  }
+}
+
+.item-rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  > img {
+    width: 12px !important;
+  }
+}
+
+.item-card {
+  display: flex;
+  height: 221px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item-title {
+  > h3 {
+    font-size: 18px;
+    line-height: 20px;
+    letter-spacing: -0.3px;
+    color: rgba(2, 6, 12, 0.75);
+    font-weight: 700;
+  }
+}
+
+.item-img {
+  width: 360px;
+  height: 167px;
+  border-radius: 25px;
+}
+
+.stepper-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.add-btn {
+  position: absolute;
+  bottom: -18px;
+  left: 0px;
+  right: 0px;
+}
+
+.add-btn-without-img {
+  position: relative;
+  top: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+}
+
+.card-text{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+@media (max-width: 768px) {
+  .item-title {
+    > h3 {
+      font-size: 16px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .item-card {
+    flex-direction: column;
+    display: flex;
+    height: auto !important;
+  }
+
+  .menu-items-for-mobile {
+    img {
+      max-width: 165px;
+      margin-left: 3px;
+    }
+  }
+
+  .add-btn {
+    position: absolute;
+    bottom: 6px;
+    left: 2px;
+  }
+
+  .add-btn-without-img {
+    top: -20px;
+    width: 159px;
+  }
+}

@@ -1,0 +1,34 @@
+.restaurant-grid-filter {
+    display: flex;
+    border-radius: 12px;
+    max-width: 100%;
+    margin-bottom: 1.5rem;
+  }
+  
+  .restaurant-grid-filter > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .restaurant-grid-filter button {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 16px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    border: 1px solid #319795; 
+    color: #319795;
+  }
+  
+  .restaurant-grid-filter button:hover {
+    background-color: #e6fffa; 
+    transform: translateY(-1px);
+  }
+  
+  .restaurant-grid-filter button.active {
+    background-color: #319795;
+    color: white;
+  }
+  

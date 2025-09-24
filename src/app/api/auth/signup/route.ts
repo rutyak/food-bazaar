@@ -1,0 +1,53 @@
+import { NextResponse } from "next/server";
+import { dbConnect } from "@/lib/dbConnect";
+import User from "@/lib/models/User";
+import bcrypt from "bcryptjs";
+
+export async function POST(req: Request) {
+  try {
+    const connect = await dbConnect();
+    console.log("mongoDB connection:", connect);
+
+    const { name, email, password, role } = await req.json();
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return NextResponse.json(
+        { message: "User already exists" },
+        { status: 400 }
+      );
+    }
+
+    const hashPass = await bcrypt.hash(password, 10);
+
+    const user = await User.create({
+      name,
+      email,
+      password: hashPass,
+      role,
+    });
+
+    return NextResponse.json({
+      message: "Signup successfully",
+      userData: { name: user.name, email: user.email, role: user.role },
+    });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json(
+        {
+          message: "Internal server error",
+          error: error.message,
+        },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        message: "Internal server error",
+        error: String(error),
+      },
+      { status: 500 }
+    );
+  }
+}

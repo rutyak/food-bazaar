@@ -1,0 +1,166 @@
+.search {
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  display: flex;
+  position: absolute;
+  top: 10rem;
+  margin: auto;
+
+  Input {
+    border: none;
+    background: #fff;
+    border-radius: 0 20px 20px 0;
+    width: 500px;
+    height: 41px;
+    padding-left: 43px;
+
+    &:focus {
+      border-color: green;
+    }
+  }
+
+  Input::placeholder {
+    font-size: 14px;
+  }
+
+  Button {
+    background-color: #ffffff;
+    border-radius: 20px 0 0 20px;
+    align-items: center;
+    gap: 9px;
+    justify-content: center;
+    height: 41px;
+    display: flex;
+    box-shadow: 0 6px 20px rgba(38, 57, 77, 0.3);
+    font-size: 15px;
+    font-weight: 600;
+    color: #4a5568;
+    transition: all 0.3s ease;
+    padding: 0 16px;
+    cursor: pointer;
+    border: none;
+
+    &:hover {
+      background-color: #163c48;
+      color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(22, 60, 72, 0.4);
+    }
+  }
+
+  @media (max-width: 780px) {
+    Input {
+      width: 400px;
+    }
+  }
+
+  @media (max-width: 780px) {
+    Input {
+      width: 200px;
+    }
+  }
+}
+
+.accordian-panal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  margin-top: 3px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(237, 233, 233);
+    color: red;
+  }
+}
+
+.search-icon {
+  z-index: 26;
+  position: absolute;
+  top: 11px;
+  left: 11px;
+  width: 27px;
+  height: 27px;
+  padding-bottom: 5px;
+  object-fit: contain;
+}
+
+// @media (max-width: 480px) {
+//   .search {
+//     width: calc(100% + 34px);
+//   }
+//   .search Input {
+//     width: 251px;
+//     height: 36px;
+//   }
+//   .location-detector {
+//     button {
+//       font-size: 14px;
+//       height: 36px;
+//       cursor: pointer;
+//     }
+//   }
+//   .search-icon {
+//     top: 7;
+//   }
+// }
+
+@media (max-width: 439px) {
+  .search {
+    display: flex;
+  }
+
+  .searchList {
+    width: 355px !important;
+  }
+
+  .accordian-panal-detect {
+    img {
+      width: 22px;
+      height: 20px;
+    }
+
+    p {
+      font-size: 13px;
+    }
+  }
+
+  .location-detector {
+    button {
+      cursor: pointer;
+      height: 35px;
+      font-size: 14px;
+      border-radius: 8px;
+      background: black;
+      color: azure;
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  .accordian-panal-detect {
+    img {
+      width: 22px;
+      height: 20px;
+    }
+
+    p {
+      font-size: 13px;
+    }
+  }
+
+  .location-detector {
+    button {
+      cursor: pointer;
+      height: 35px;
+      font-size: 14px;
+      border-radius: 8px;
+      background: black;
+      color: azure;
+    }
+  }
+}
