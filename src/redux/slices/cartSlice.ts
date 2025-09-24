@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AnyCaaRecord } from "dns";
 
 interface CartItem {
-  itemId: string;
+  _id: string;
   name: string;
   price: number;
   quantity: number;
@@ -16,10 +17,17 @@ const cartSlice = createSlice({
       return action.payload;
     },
     addCart: (state, action: PayloadAction<CartItem>) => {
-      state.push(action.payload);
+      const existingItem = state.find(
+        (item) => item._id === action.payload._id
+      );
+      if (existingItem) {
+        existingItem.quantity += action.payload.quantity;
+      } else {
+        state.push(action.payload);
+      }
     },
     removeCart: (state, action: PayloadAction<string>) => {
-      return state.filter((item) => item.itemId !== action.payload);
+      return state.filter((item) => item._id !== action.payload);
     },
   },
 });

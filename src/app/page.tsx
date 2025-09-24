@@ -43,10 +43,10 @@ export default function Home() {
   async function getCarts() {
     try {
       const res = await axios.get("/api/cart");
-      console.log("carts: ", res?.data?.carts);
+      console.log("carts ^^^^^^^^^^: ", res?.data?.carts);
       dispatch(setCarts(res.data?.carts));
     } catch (error: any) {
-      console.error(error?.message);
+      console.error(error?.response);
     }
   }
 

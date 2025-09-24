@@ -1,5 +1,13 @@
 import { image_url } from "@/config/Config";
-import { Image, Flex, Box, Text, Heading, Button } from "@chakra-ui/react";
+import {
+  Image,
+  Flex,
+  Box,
+  Text,
+  Heading,
+  Button,
+  useToast,
+} from "@chakra-ui/react";
 import rupee from "@/assets/rupee.png";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,10 +19,32 @@ import axios from "axios";
 const CartItem = ({ item }: any) => {
   const dispatch = useDispatch();
 
-  const handlerRemoveCart = () => {
-    dispatch(removeCart(item.itemId));
+  const toast = useToast();
 
-    // const res = await axios.delete("/api/");
+  const handlerRemoveCart = async () => {
+    try {
+      dispatch(removeCart(item._id));
+
+      console.log("item id in frontend: ", item._id);
+
+      await axios.delete(`/api/cart/${item._id}`);
+
+      toast({
+        title: "Item removed successfully",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+      });
+    } catch (error: any) {
+      console.error(error.message);
+      toast({
+        title: "Failed to remove item",
+        status: "error",
+        duration: 3000,
+        position: "top",
+      });
+    }
   };
 
   return (

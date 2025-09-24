@@ -33,7 +33,6 @@ const MenuCard = ({ _id, description, image, name, price, rating }: any) => {
       // let currentQuantity = itemQuantity?.quantity ?? 0;
 
       const itemDetails = {
-        itemId: _id,
         name,
         price,
         image,

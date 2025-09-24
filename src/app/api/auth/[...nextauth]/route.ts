@@ -25,13 +25,11 @@ const handler = NextAuth({
         await dbConnect();
 
         const user = await User.findOne({
-          email: credentials.email?.toLowerCase().trim(),
+          email: credentials.email.toLowerCase().trim(),
         });
 
-        console.log("user role: ", user?.role);
-
         if (!user) throw new Error("User not found");
-        if (!user?.password) throw new Error("User has no password set");
+        if (!user.password) throw new Error("User has no password set");
 
         const isValid = await bcrypt.compare(
           credentials.password,
@@ -40,10 +38,10 @@ const handler = NextAuth({
         if (!isValid) throw new Error("Invalid credentials");
 
         return {
-          id: user._id?.toString(),
-          name: user?.name,
-          email: user?.email,
-          role: user?.role,
+          id: user._id.toString(),
+          name: user.name,
+          email: user.email,
+          role: user.role,
         };
       },
     }),
@@ -51,38 +49,22 @@ const handler = NextAuth({
 
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60 * 5,
-    updateAge: 15 * 60,
-  },
-  cookies: {
-    sessionToken: {
-      name:
-        process.env.NODE_ENV === "production"
-          ? "__Secure-next-auth.session-token"
-          : "next-auth.session-token",
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        secure: process.env.NODE_ENV === "production",
-      },
-    },
+    maxAge: 60 * 60 * 5, // 5 hours
+    updateAge: 15 * 60,  // 15 minutes
   },
 
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
-        token.role = user.role;
+        token.id = user.id ?? token.id;
+        token.role = user.role ?? token.role;
       }
-
       return token;
     },
-
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id;
-        session.user.role = token.role;
+        session.user.id = token.id as string;
+        session.user.role = token.role as string;
       }
       return session;
     },
@@ -92,6 +74,7 @@ const handler = NextAuth({
     signIn: "/auth/login",
   },
 
+  secret: process.env.NEXTAUTH_SECRET, 
   debug: process.env.NODE_ENV === "development",
 });
 

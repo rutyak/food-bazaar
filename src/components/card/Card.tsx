@@ -23,8 +23,8 @@ const Card = ({
         <div className="card-img">
           <Image
             src={image}
-            width={100}
-            height={100}
+            width={250}
+            height={182}
             layout="responsive"
             alt="card-image"
           />
