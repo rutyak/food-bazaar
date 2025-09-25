@@ -10,7 +10,8 @@ import Image from "next/image";
 import Search from "@/container/search/Search";
 import { HamburgerIcon } from "@chakra-ui/icons";
 
-const Header = ({ setSearch, search }: any) => {
+const Header = () => {
+  const [search, setSearch] = useState();
   const [cartLen, setCartLen] = useState();
 
   // const cartAll = useSelector((state: any) => state.cart.cartItems);

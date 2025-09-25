@@ -1,10 +1,11 @@
 import { image_url } from "@/config/Config";
-import ratingImage from "@/assets/rating-icon.png";
+import starIcon from "@/assets/star-icon.svg";
 import "./Card.scss";
 
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Flex, Text } from "@chakra-ui/react";
 
 const Card = ({
   _id,
@@ -25,22 +26,16 @@ const Card = ({
             src={image}
             width={250}
             height={182}
-            layout="responsive"
             alt="card-image"
           />
         </div>
         {!false && (
           <div className="info">
             <h2 className="title">{name}</h2>
-            <div className="rating">
-              <Image
-                src={ratingImage?.src}
-                width={15}
-                height={15}
-                alt="rating"
-              />
-              <p>{rating}</p>
-            </div>
+            <Flex className="rating" gap={5} alignItems="center">
+              <Image src={starIcon} width={15} height={15} alt="rating" />
+              <Text fontSize={13}>{rating}</Text>
+            </Flex>
             <p className="cuisines">{categories?.join(", ")}</p>
           </div>
         )}

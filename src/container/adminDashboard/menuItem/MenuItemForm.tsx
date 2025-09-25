@@ -13,7 +13,6 @@ import React from "react";
 
 function MenuItemForm({ data, setData, addItem, handleChangeFactory }: any) {
   function handleRemoveMenuItem(index: any) {
-    console.log("remove data:", index);
     const filteredItems = data.filter((_: any, i: number) => i !== index);
     setData(filteredItems);
   }

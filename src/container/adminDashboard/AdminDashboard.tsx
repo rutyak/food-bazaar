@@ -59,9 +59,7 @@ function AdminDashboard() {
 
   // API Submitters
   const handleSubmit = async (endpoint: string, data: any) => {
-    console.log("######### menu items: ", menuItems);
 
-    console.log("handle submit is clicked with endpoint:", endpoint);
     setLoading(true);
 
     try {
@@ -83,10 +81,7 @@ function AdminDashboard() {
           uploadedItems.push({ ...item, image: imageUrl });
         }
         
-        console.log("$$$$$$$$$$ uploaded items with image: ", uploadedItems);
-
         const res = await axios.post(`/api/${endpoint}`, uploadedItems);
-        console.log("bulk menu uploaded.....:", res.data);
 
         toast({
           title: res.data.message,
@@ -177,7 +172,6 @@ function AdminDashboard() {
   // };
 
   const handleSaveAllMenuItems = () => {
-    console.log("Bulk Menu Items:", menuItems);
     toast({
       title: "All menu items saved",
       status: "success",

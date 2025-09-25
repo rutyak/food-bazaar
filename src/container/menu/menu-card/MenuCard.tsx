@@ -1,7 +1,6 @@
 import { Box, Text, Heading, Image, Button, useToast } from "@chakra-ui/react";
 import "./MenuCard.scss";
-import starIcon from "@/assets/star-icon.png";
-import rupee from "@/assets/rupee.png";
+import starIcon from "@/assets/star-icon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { useRef, useState } from "react";
 import { useSession } from "next-auth/react";
@@ -46,8 +45,6 @@ const MenuCard = ({ _id, description, image, name, price, rating }: any) => {
 
         const res = await axios.post("/api/cart", itemDetails);
 
-        console.log("res from cart redux: ", res.data.addedItem);
-
         dispatch(addCart(res.data?.addedItem));
 
         toast({
@@ -86,17 +83,13 @@ const MenuCard = ({ _id, description, image, name, price, rating }: any) => {
               {name}
             </Heading>
             <Heading as="h3" size="lg" className="item-card-price">
-              <Image src={rupee?.src} alt="rupee" w="10px" />
-              <Text>{price}</Text>
+              ₹<Text>{price}</Text>
             </Heading>
           </Box>
           <Box className="item-rating" mb={2}>
             <>
-              <img src={starIcon?.src} alt="rating" />
-              <Text fontSize="sm">
-                {rating}
-                {/* {ratings?.aggregatedRating?.ratingCountV2}) */}
-              </Text>
+              <Image src={starIcon} width={15} height={15} alt="rating" />
+              <Text fontSize="sm">{rating}</Text>
             </>
           </Box>
           <Box

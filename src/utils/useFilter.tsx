@@ -1,11 +1,13 @@
+const useFilter = (searchValue: any, restaurants: any) => {
+  
+  const filteredData = restaurants?.filter((data: any) => {
+    return data?.name
+      ?.trim()
+      .toLowerCase()
+      .includes(searchValue?.trim().toLowerCase());
+  });
 
-const useFilter = (searchText: any, allCards: any) =>{
-
-    const filteredData = allCards?.filter((data: any) => {
-        return data?.info?.name?.trim().toLowerCase().includes(searchText?.trim().toLowerCase());
-      });
-
-    return filteredData;
-}
+  return filteredData;
+};
 
 export default useFilter;

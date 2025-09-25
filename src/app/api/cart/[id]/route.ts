@@ -11,8 +11,6 @@ export async function DELETE(
 
     const { id } = params;
 
-    console.log("id in cart api: ", id);
-
     if (!id) {
       return NextResponse.json({ message: "Id required" }, { status: 400 });
     }

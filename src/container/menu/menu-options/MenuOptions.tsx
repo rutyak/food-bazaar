@@ -11,7 +11,6 @@ import "./MenuOptions.scss";
 import CustomAccordion from "@/components/accordian/CustomAccordion";
 
 const MenuOptions = ({ category, items }: any) => {
-  console.log("item in menuOption: ", items);
 
   return (
     <>

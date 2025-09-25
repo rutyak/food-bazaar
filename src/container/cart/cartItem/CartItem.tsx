@@ -1,4 +1,3 @@
-import { image_url } from "@/config/Config";
 import {
   Image,
   Flex,
@@ -8,11 +7,9 @@ import {
   Button,
   useToast,
 } from "@chakra-ui/react";
-import rupee from "@/assets/rupee.png";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import "./CartItem.scss";
-import { RootState } from "@/redux/store";
 import {
   decreaseQuantity,
   increaseQuantity,
@@ -28,8 +25,6 @@ const CartItem = ({ item }: any) => {
   const handlerRemoveCart = async () => {
     try {
       dispatch(removeCart(item.itemId));
-
-      console.log("item id in frontend: ", item.itemId);
 
       await axios.delete(`/api/cart/${item.itemId}`);
 
@@ -73,6 +68,7 @@ const CartItem = ({ item }: any) => {
         status: "error",
         duration: 3000,
         isClosable: true,
+        position: "top",
       });
     }
   }
@@ -88,9 +84,10 @@ const CartItem = ({ item }: any) => {
         status: "success",
         duration: 3000,
         isClosable: true,
+        position: "top",
       });
     } catch (error: any) {
-      console.error(error.response?.data);
+      console.error(error?.message);
 
       toast({
         title:
@@ -143,8 +140,7 @@ const CartItem = ({ item }: any) => {
         flex="1"
       >
         <Text display="flex" alignItems="center" gap="3px">
-          <Image src={rupee?.src} alt="rupee" boxSize={3} />
-          {item.price?.toFixed(2)}
+          ₹{item.price?.toFixed(2)}
         </Text>
 
         <Flex align="center" gap={2}>

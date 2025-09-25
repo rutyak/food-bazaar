@@ -10,8 +10,8 @@
   }
 
   .card-img img {
-    min-width: 250px;
-    min-height: 182px;
+    max-width: 250px; 
+    max-height: 195px;
     border-radius: 1rem;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     object-fit: cover;

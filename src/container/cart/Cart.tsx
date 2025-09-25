@@ -24,7 +24,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
-import rupee from "@/assets/rupee.png";
 import CartItem from "./cartItem/CartItem";
 import "./Cart.scss";
 import MenuNavbar from "../menu/menuNavbar/MenuNavbar";
@@ -32,7 +31,6 @@ import { RootState } from "@/redux/store";
 
 const Cart = () => {
   const cart = useSelector((state: RootState) => state.cart);
-  console.log("cart: ", cart);
 
   const [paymentMethod, setPaymentMethod] = useState("creditCard");
   const [billingDetails, setBillingDetails] = useState({
@@ -178,8 +176,7 @@ const Cart = () => {
               alignItems="center"
               gap="3px"
             >
-              <Image src={rupee?.src} alt="rupee" boxSize={3} />
-              {deliveryCharge.toFixed(2)}
+              ₹{deliveryCharge.toFixed(2)}
             </Text>
           </Flex>
           <Flex justify="space-between" align="center" mt={2}>
@@ -197,8 +194,7 @@ const Cart = () => {
             alignItems="center"
             gap="3px"
           >
-            <Image src={rupee?.src} alt="rupee" boxSize={3} />
-            {calculateSubtotal().toFixed(2)}
+            ₹{calculateSubtotal().toFixed(2)}
           </Text>
         </Flex>
         <Flex justify="space-between" align="center" mb={4}>
@@ -210,8 +206,7 @@ const Cart = () => {
             alignItems="center"
             gap="3px"
           >
-            <Image src={rupee?.src} alt="rupee" boxSize={3} />{" "}
-            {calculateTotal()}
+            ₹{calculateTotal()}
           </Text>
         </Flex>
         <Button
@@ -238,8 +233,7 @@ const Cart = () => {
                   alignItems="center"
                   gap="3px"
                 >
-                  <Image src={rupee?.src} alt="rupee" boxSize={3} />
-                  {calculateSubtotal()}
+                ₹ {calculateSubtotal()}
                 </Text>
               </Flex>
               <Flex justify="space-between" align="center" mt={2}>
@@ -250,8 +244,7 @@ const Cart = () => {
                   alignItems="center"
                   gap="3px"
                 >
-                  <Image src={rupee?.src} alt="rupee" boxSize={3} />
-                  {deliveryCharge.toFixed(2)}
+                ₹ {deliveryCharge.toFixed(2)}
                 </Text>
               </Flex>
               <Flex justify="space-between" align="center" mt={2}>
@@ -262,8 +255,7 @@ const Cart = () => {
                   alignItems="center"
                   gap="3px"
                 >
-                  <Image src={rupee?.src} alt="rupee" boxSize={3} />
-                  {calculateTotal()}
+                ₹ {calculateTotal()}
                 </Text>
               </Flex>
               <Flex justify="space-between" align="center" mt={2}>

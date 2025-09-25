@@ -1,34 +1,24 @@
 "use client";
 
 import { Heading, Text, Box, Image, Divider } from "@chakra-ui/react";
-import { useState, useEffect, useContext } from "react";
 import MenuOptions from "../menu-options/MenuOptions";
-import starIcon from "@/assets/star.png";
+import starIcon from "@/assets/star-icon.svg";
 import Footer from "@/container/footer/Footer";
-import Shimmer from "@/components/shimmer-effect/Shimmer";
-import * as menuShimmerStyle from "@/components/shimmer-effect/MenuShimmer.module.scss";
 import { useParams } from "next/navigation";
 import React from "react";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-
-
 
 const Menubody = () => {
   const query = useParams<any>();
   const menuData = useSelector((state: RootState) => state.menu);
 
   const menu = menuData?.filter(
-    (data) => data.restaurantId?.toString() === query?.id
+    (data: any) => data.restaurantId?.toString() === query?.id
   );
 
-  console.log("menu menu dta #############: ", menuData);
-  console.log("menu data form reduxxxxxxxx: ", menu);
-  console.log("id: ", query?.id);
-
   return menu?.length === 0 ? (
-    <Shimmer menuShimmerStyle={menuShimmerStyle} />
+    "Loading..."
   ) : (
     <>
       <div className="card-menu">

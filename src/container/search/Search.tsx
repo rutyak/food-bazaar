@@ -17,8 +17,8 @@ import { RootState } from "@/redux/store";
 const locationApi = process.env.NEXT_PUBLIC_LOCATION_API_URL;
 
 interface SearchProps {
-  setSearch: (value: string) => void;
-  search: string;
+  setSearch: any;
+  search: any;
   cart?: boolean;
 }
 
@@ -37,7 +37,13 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
     const searchValue = e.target.value;
     setSearch(searchValue);
 
+    console.log("search value:", searchValue);
+    console.log("restaurants: ", restaurants);
+
     const filteredData = useFilter(searchValue, restaurants);
+
+    console.log("filteredData: ", filteredData);
+
     setResultList(filteredData);
   };
 
@@ -46,7 +52,7 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
 
     if (e.key === "Enter") {
       const filteredData = useFilter(searchValue, restaurants);
-      setResultList([]);
+      setResultList(filteredData);
       setSearch("");
     }
   };
@@ -59,10 +65,7 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
         async (position) => {
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
-          // localStorage.setItem("location", JSON.stringify({ lat, lng }));
           setIsLocating(false);
-
-          console.log(`Detected location: Latitude ${lat}, Longitude ${lng}`);
 
           try {
             const response = await fetch(
@@ -74,11 +77,6 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
             //   data.results[0]?.components?.town ||
             //   data.results[0]?.components?.village ||
             //   "Unknown location";
-
-            console.log(
-              "City in location detection:",
-              data.results[0]?.components?.city
-            );
 
             setCity(data.results[0]?.components?.city);
 
@@ -149,7 +147,7 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
               style={{ paddingLeft: "8px" }}
             />
             <Input
-              placeholder="Search your food..."
+              placeholder="Search for a restaurant..."
               size="md"
               onChange={handleSearch}
               onKeyDown={handleEnter}

@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    console.log("restaurant api cliked");
     const connect = await dbConnect();
     console.log("mongoDB connection: ", connect);
 

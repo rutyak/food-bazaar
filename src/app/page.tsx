@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Body from "../container/home/body/Body";
 import Header from "../container/home/header/Header";
 import Footer from "../container/footer/Footer";
@@ -17,13 +17,10 @@ export default function Home() {
     try {
       const res = await axios.get(`/api/restaurant`);
 
-      console.log("all data: ", res?.data?.restaurants);
-
       const restaurants = res?.data?.restaurants;
 
       dispatch(setRestaurants(restaurants));
 
-      console.log("fetched restaurants::", restaurants);
     } catch (error) {
       console.error(error);
     }
@@ -33,7 +30,6 @@ export default function Home() {
     try {
       const res = await axios.get("/api/menuItem");
 
-      console.log("res getmenu home: ", res?.data?.allMenu);
       dispatch(setMenu(res?.data?.allMenu));
     } catch (error: any) {
       console.error(error.message);
@@ -43,7 +39,6 @@ export default function Home() {
   async function getCarts() {
     try {
       const res = await axios.get("/api/cart");
-      console.log("carts ^^^^^^^^^^: ", res?.data?.carts);
       dispatch(setCarts(res.data?.carts));
     } catch (error: any) {
       console.error(error?.error);

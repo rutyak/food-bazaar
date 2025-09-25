@@ -3,8 +3,6 @@ import "./Filter.scss";
 import { useState } from "react";
 
 const Filter = ({ setFilteredCard, filteredCard, allCard }: any) => {
-
-  console.log("filteredCard :", filteredCard);
   
   const [togglebtn, setToggleBtn] = useState<any>({
     all: false,
@@ -56,7 +54,6 @@ const Filter = ({ setFilteredCard, filteredCard, allCard }: any) => {
         break;
     }
     setFilteredCard(newFilteredCard);
-    console.log("filtered cards::", filteredCard);
   };
 
   return (

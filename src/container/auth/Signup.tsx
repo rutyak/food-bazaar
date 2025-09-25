@@ -49,7 +49,6 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    console.log("formData in signUp:", formData);
 
     try {
       const res = await fetch("/api/auth/signup", {

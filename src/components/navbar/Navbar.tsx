@@ -13,7 +13,6 @@ const Navbar = () => {
   const carts = useSelector((state: RootState) => state.cart);
 
   const { data: session, status } = useSession();
-  console.log("auth data: ", session);
 
   const toast = useToast();
   const router = useRouter();

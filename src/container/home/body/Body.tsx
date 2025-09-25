@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import Carousel from "../../../components/carousel/Carousel";
-import Shimmer from "../../../components/shimmer-effect/Shimmer";
 import { Heading, Box } from "@chakra-ui/react";
 import "./Body.scss";
 import Filter from "@/components/filtermodal/FIlter";
@@ -26,8 +25,6 @@ interface restaurant {
 const Body = ({ setFilteredCard, filteredCard, allCard }: any) => {
   const restaurants = useSelector((state: RootState) => state.restaurants);
   const menuItems = useSelector((state: RootState) => state.menu);
-
-  console.log("Menu items fro redux: ", menuItems);
 
   const [data, setData] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<any>(false);
@@ -71,7 +68,7 @@ const Body = ({ setFilteredCard, filteredCard, allCard }: any) => {
   //         `/api/restaurant?lat=${location.lat}&lng=${location.lng}`
   //       );
 
-  //       console.log(res);
+  //       console.log();
   //       const data = await res.json();
 
   //       const newCards =
@@ -103,7 +100,7 @@ const Body = ({ setFilteredCard, filteredCard, allCard }: any) => {
   }, []);
 
   return allCard?.length === 0 ? (
-    <Shimmer />
+    "Loading..."
   ) : (
     <Box className="home-page">
       {/* {window.innerWidth > 885 &&
@@ -134,7 +131,6 @@ const Body = ({ setFilteredCard, filteredCard, allCard }: any) => {
             restaurants?.map((data: any) => {
               return <Card key={data?._id} {...data} grid="grid" />;
             })}
-          {isLoading && <Shimmer newLoad="newLoad" />}
         </Box>
       </Box>
     </Box>
