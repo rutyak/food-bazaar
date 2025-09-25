@@ -9,7 +9,7 @@ const Carousel = ({ suggestions, title }: any) => {
 
   const handleScroll = (direction: any) => {
     if (scrollRef.current) {
-      const amount = 900;
+      const amount = 280;
       scrollRef.current?.scrollBy({
         left: direction === "left" ? -amount : amount,
         behavior: "smooth",
@@ -34,7 +34,7 @@ const Carousel = ({ suggestions, title }: any) => {
       </Box>
       <Box className="carousel-card" ref={scrollRef} data-testid="carousel">
         {suggestions?.map((data: any, index: any) => (
-          <Card key={data?.info?.id || index} {...data?.info} {...data} />
+          <Card key={data?._id} {...data} {...data} />
         ))}
       </Box>
     </>

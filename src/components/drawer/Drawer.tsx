@@ -23,15 +23,21 @@ import {
 import { useRef } from "react";
 import { signOut } from "next-auth/react";
 import { FiLogOut, FiUser, FiShoppingCart } from "react-icons/fi";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
-const MyDrawer = ({ user }: any) => {
+const MyDrawer = () => {
+  const { data: session } = useSession();
+  const user = session?.user;
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef<HTMLDivElement>(null);
   const toast = useToast();
 
+  const router = useRouter();
+
   const handleLogout = async () => {
     try {
-
       await signOut({
         redirect: false,
         callbackUrl: "/",
@@ -46,6 +52,7 @@ const MyDrawer = ({ user }: any) => {
       });
 
       onClose();
+      router.push("/");
     } catch (error) {
       toast({
         title: "Logout failed",
@@ -63,7 +70,8 @@ const MyDrawer = ({ user }: any) => {
     <>
       <WrapItem>
         <Avatar
-          boxSize={10}
+          fontSize="8px"
+          boxSize={{ base: "9", md: "10" }}
           ref={btnRef}
           onClick={onOpen}
           name={user?.name || ""}

@@ -1,9 +1,8 @@
 .carousel-card {
-  gap: 1rem;
+  gap: 16px;
   width: 100%;
   overflow-x: auto;
   overflow: hidden;
-  height: 47%;
   transition: all 1s ease 0s;
   display: flex;
   margin: auto;
@@ -44,9 +43,7 @@
 @media (max-width: 480px) {
   .carousel-heading {
     margin: 1rem auto;
-    flex-direction: column;
     gap: 17px;
     margin-bottom: 4px;
   }
-
 }

@@ -97,7 +97,12 @@ const Cart = () => {
         boxShadow="md"
         className="cart-container"
       >
-        <Heading as="h2" size="xl" mb={6} textAlign="center">
+        <Heading
+          as="h2"
+          size={{ base: "lg", md: "xl" }}
+          mb={{ base: 3, md: 6 }}
+          textAlign="center"
+        >
           Your Cart
         </Heading>
         <Stack spacing={4}>
@@ -220,7 +225,7 @@ const Cart = () => {
 
         <Modal isOpen={isOpen} onClose={onClose} isCentered>
           <ModalOverlay />
-          <ModalContent>
+          <ModalContent m={2}>
             <ModalHeader>Confirm Payment</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
@@ -233,7 +238,7 @@ const Cart = () => {
                   alignItems="center"
                   gap="3px"
                 >
-                ₹ {calculateSubtotal()}
+                  ₹ {calculateSubtotal()}
                 </Text>
               </Flex>
               <Flex justify="space-between" align="center" mt={2}>
@@ -244,7 +249,7 @@ const Cart = () => {
                   alignItems="center"
                   gap="3px"
                 >
-                ₹ {deliveryCharge.toFixed(2)}
+                  ₹ {deliveryCharge.toFixed(2)}
                 </Text>
               </Flex>
               <Flex justify="space-between" align="center" mt={2}>
@@ -255,7 +260,7 @@ const Cart = () => {
                   alignItems="center"
                   gap="3px"
                 >
-                ₹ {calculateTotal()}
+                  ₹ {calculateTotal()}
                 </Text>
               </Flex>
               <Flex justify="space-between" align="center" mt={2}>

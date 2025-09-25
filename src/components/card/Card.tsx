@@ -19,7 +19,7 @@ const Card = ({
   return (
     <Link href={`/menu/${_id}`} style={{ textDecoration: "none" }}>
       <div
-        className={false ? "top-carousal-card" : true ? "grid-card" : "card"}
+        className="grid-card"
       >
         <div className="card-img">
           <Image

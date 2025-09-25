@@ -9,10 +9,10 @@ import Navbar from "@/components/navbar/Navbar";
 import Image from "next/image";
 import Search from "@/container/search/Search";
 import { HamburgerIcon } from "@chakra-ui/icons";
+import MobileMenu from "@/components/mobileMenu/MobileMenu";
 
 const Header = () => {
   const [search, setSearch] = useState();
-  const [cartLen, setCartLen] = useState();
 
   // const cartAll = useSelector((state: any) => state.cart.cartItems);
 
@@ -31,15 +31,7 @@ const Header = () => {
         </div>
         <div style={{ display: "flex", alignItems: "center" }}>
           <Navbar />
-          <HamburgerIcon
-            width={7}
-            height={9}
-            color="white"
-            display={{ base: "block", md: "none" }}
-            ml={1}
-            mr={3}
-            cursor="pointer"
-          />
+          <MobileMenu />
         </div>
       </div>
       <div className="title">

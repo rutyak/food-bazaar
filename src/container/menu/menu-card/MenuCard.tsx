@@ -71,7 +71,7 @@ const MenuCard = ({ _id, description, image, name, price, rating }: any) => {
 
   return (
     <>
-      <Box className="item-card" p={2} overflow="hidden" height="224px">
+      <Box className="item-card" p={2} height="250px" mb={{ base: 5, md: 0 }}>
         <Box className="card-text" mb={4}>
           <Box mb={2}>
             <Text fontSize="md" fontWeight="bold" color="#DD6B20">

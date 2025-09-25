@@ -16,15 +16,22 @@ const SearchList = ({ resultList }: any) => {
                 <Image
                   src={list?.image}
                   alt="list-img"
-                  boxSize="73px"
+                  boxSize={{ base: "50px", md: "73px" }}
                   objectFit="cover"
                 />
                 <Flex direction="column" gap="3px">
-                  <Text fontWeight="400">{list?.name}</Text>
-                  <Flex fontWeight="300" fontSize={12} gap="4px" alignItems="center">
-                    <AiFillStar color="gold"/> {list?.rating}
+                  <Text fontWeight="600" fontSize={{ base: 11, md: 12 }}>
+                    {list?.name}
+                  </Text>
+                  <Flex
+                    fontWeight="300"
+                    fontSize={{ base: 9, md: 12 }}
+                    gap="4px"
+                    alignItems="center"
+                  >
+                    <AiFillStar color="gold" /> {list?.rating}
                   </Flex>
-                  <Text fontWeight="300" fontSize={12}>
+                  <Text fontWeight="300" fontSize={{ base: 9, md: 12 }}>
                     {list?.categories}
                   </Text>
                 </Flex>

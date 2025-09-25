@@ -4,6 +4,8 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
+    await dbConnect();
+
     const { itemId, name, price, image, isVeg, quantity } = await req.json();
 
     if (!itemId || !name || !price || !image || !quantity) {
