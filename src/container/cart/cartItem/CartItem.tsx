@@ -13,7 +13,11 @@ import { DeleteIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import "./CartItem.scss";
 import { RootState } from "@/redux/store";
-import { removeCart } from "@/redux/slices/cartSlice";
+import {
+  decreaseQuantity,
+  increaseQuantity,
+  removeCart,
+} from "@/redux/slices/cartSlice";
 import axios from "axios";
 
 const CartItem = ({ item }: any) => {
@@ -23,11 +27,11 @@ const CartItem = ({ item }: any) => {
 
   const handlerRemoveCart = async () => {
     try {
-      dispatch(removeCart(item._id));
+      dispatch(removeCart(item.itemId));
 
-      console.log("item id in frontend: ", item._id);
+      console.log("item id in frontend: ", item.itemId);
 
-      await axios.delete(`/api/cart/${item._id}`);
+      await axios.delete(`/api/cart/${item.itemId}`);
 
       toast({
         title: "Item removed successfully",
@@ -46,6 +50,59 @@ const CartItem = ({ item }: any) => {
       });
     }
   };
+
+  async function handleQuantityDec() {
+    try {
+      dispatch(decreaseQuantity(item.itemId));
+
+      const res = await axios.post(`/api/cart/decrease/${item.itemId}`);
+
+      toast({
+        title: res?.data?.message,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    } catch (error: any) {
+      console.error(error.message);
+      toast({
+        title:
+          error.response?.data?.error ||
+          error.response?.data?.message ||
+          "Something went wrong",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  }
+
+  async function handleQuantityInc() {
+    try {
+      dispatch(increaseQuantity(item.itemId));
+
+      const res = await axios.post(`/api/cart/increase/${item.itemId}`);
+
+      toast({
+        title: res?.data?.message,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    } catch (error: any) {
+      console.error(error.response?.data);
+
+      toast({
+        title:
+          error.response?.data?.error ||
+          error.response?.data?.message ||
+          "Something went wrong",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  }
 
   return (
     <Flex
@@ -91,11 +148,17 @@ const CartItem = ({ item }: any) => {
         </Text>
 
         <Flex align="center" gap={2}>
-          <Button size="sm" isDisabled={item.quantity === 1}>
+          <Button
+            size="sm"
+            isDisabled={item.quantity === 1}
+            onClick={handleQuantityDec}
+          >
             -
           </Button>
           <Text>{item.quantity}</Text>
-          <Button size="sm">+</Button>
+          <Button size="sm" onClick={handleQuantityInc}>
+            +
+          </Button>
         </Flex>
 
         <Button

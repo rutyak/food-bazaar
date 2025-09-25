@@ -2,7 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AnyCaaRecord } from "dns";
 
 interface CartItem {
-  _id: string;
+  _id?: string;
+  itemId: string;
   name: string;
   price: number;
   quantity: number;
@@ -18,19 +19,37 @@ const cartSlice = createSlice({
     },
     addCart: (state, action: PayloadAction<CartItem>) => {
       const existingItem = state.find(
-        (item) => item._id === action.payload._id
+        (item) => item.itemId === action.payload.itemId
       );
       if (existingItem) {
-        existingItem.quantity += action.payload.quantity;
+        existingItem.quantity += 1;
       } else {
         state.push(action.payload);
       }
     },
     removeCart: (state, action: PayloadAction<string>) => {
-      return state.filter((item) => item._id !== action.payload);
+      return state.filter((item) => item.itemId !== action.payload);
+    },
+    increaseQuantity: (state, action: PayloadAction<string>) => {
+      const existingItem = state.find((item) => item.itemId === action.payload);
+      if (existingItem) {
+        existingItem.quantity += 1;
+      }
+    },
+    decreaseQuantity: (state, action: PayloadAction<string>) => {
+      const existingItem = state.find((item) => item.itemId === action.payload);
+      if (existingItem) {
+        existingItem.quantity -= 1;
+      }
     },
   },
 });
 
-export const { setCarts, addCart, removeCart } = cartSlice.actions;
+export const {
+  setCarts,
+  addCart,
+  removeCart,
+  increaseQuantity,
+  decreaseQuantity,
+} = cartSlice.actions;
 export default cartSlice.reducer;

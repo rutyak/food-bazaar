@@ -49,7 +49,7 @@ const handler = NextAuth({
 
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60 * 5, // 5 hours
+    maxAge: 60 * 60 * 48, // 2 days
     updateAge: 15 * 60,  // 15 minutes
   },
 

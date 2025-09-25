@@ -46,22 +46,19 @@ const Cart = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
-  const cartItems = useSelector((state: any) => state.cart.cartItems);
-
   const deliveryCharge = 40;
   const estimatedTime = 30;
 
   const calculateSubtotal = () => {
-    const subtotal = cart.reduce(({ acc, item }: any) => {
-      const price = item?.price;
-      return acc + price * item?.quantity?.toFixed(2);
+    const subtotal = cart.reduce((acc: number, item: any) => {
+      return acc + item.price * item.quantity;
     }, 0);
 
     return subtotal;
   };
 
   const calculateTotal = () => {
-    return (parseFloat(calculateSubtotal()) + deliveryCharge).toFixed(2);
+    return (calculateSubtotal() + deliveryCharge).toFixed(2);
   };
 
   const handlePaymentMethodChange = (value: any) => {
@@ -106,8 +103,8 @@ const Cart = () => {
           Your Cart
         </Heading>
         <Stack spacing={4}>
-          {cart?.map((item: any) => (
-            <CartItem key={item.itemId} item={item} cartItems={cartItems} />
+          {cart?.map((item: any, index: number) => (
+            <CartItem key={item._id + index} item={item} />
           ))}
         </Stack>
         <Box mt={8} p={4} bg="white" borderRadius="md" boxShadow="sm">
@@ -201,7 +198,7 @@ const Cart = () => {
             gap="3px"
           >
             <Image src={rupee?.src} alt="rupee" boxSize={3} />
-            {calculateSubtotal()}
+            {calculateSubtotal().toFixed(2)}
           </Text>
         </Flex>
         <Flex justify="space-between" align="center" mb={4}>

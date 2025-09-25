@@ -46,7 +46,7 @@ export default function Home() {
       console.log("carts ^^^^^^^^^^: ", res?.data?.carts);
       dispatch(setCarts(res.data?.carts));
     } catch (error: any) {
-      console.error(error?.response);
+      console.error(error?.error);
     }
   }
 

@@ -4,20 +4,39 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { name, price, image, isVeg, quantity } = await req.json();
+    const { itemId, name, price, image, isVeg, quantity } = await req.json();
 
-    const addedItem = await Cart.create({
-      name,
-      price,
-      image,
-      isVeg,
-      quantity,
-    });
+    if (!itemId || !name || !price || !image || !quantity) {
+      return NextResponse.json(
+        { message: "All fields required" },
+        { status: 400 }
+      );
+    }
 
-    return NextResponse.json({
-      message: "Add to cart successfully",
-      addedItem,
-    });
+    let addedItem;
+    const existingCart = await Cart.findOne({ itemId });
+
+    if (existingCart) {
+      existingCart.quantity += quantity;
+      addedItem = await existingCart.save();
+    } else {
+      addedItem = await Cart.create({
+        itemId,
+        name,
+        price,
+        image,
+        isVeg,
+        quantity,
+      });
+    }
+
+    return NextResponse.json(
+      {
+        message: "Add to cart successfully",
+        addedItem,
+      },
+      { status: 201 }
+    );
   } catch (error) {
     return NextResponse.json({
       message: "Internal server error",
@@ -47,4 +66,3 @@ export async function GET(req: Request) {
     );
   }
 }
-

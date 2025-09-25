@@ -91,7 +91,7 @@ const Menubody = () => {
             {menu[0]?.categories?.map((data: any, index: number) => {
               return (
                 <MenuOptions
-                  key={data?._id}
+                  key={data?.category + index}
                   category={data.category}
                   items={data.items}
                 />

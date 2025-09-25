@@ -17,7 +17,7 @@ export async function DELETE(
       return NextResponse.json({ message: "Id required" }, { status: 400 });
     }
 
-    const deletedCart = await Cart.findByIdAndDelete(id);
+    const deletedCart = await Cart.findOneAndDelete({ itemId: id });
     if (!deletedCart) {
       return NextResponse.json({ message: "Item not found" }, { status: 404 });
     }

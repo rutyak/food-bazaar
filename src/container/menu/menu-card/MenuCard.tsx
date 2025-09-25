@@ -11,6 +11,7 @@ import { addCart } from "@/redux/slices/cartSlice";
 const MenuCard = ({ _id, description, image, name, price, rating }: any) => {
   const [quantity, setQuantity] = useState(1);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const { status } = useSession();
@@ -19,7 +20,7 @@ const MenuCard = ({ _id, description, image, name, price, rating }: any) => {
 
   // const cartData = useSelector((store: any) => store.cart.cartItems);
 
-  const handleAddToCart = async (id: any) => {
+  const handleAddToCart = async (_id: any) => {
     if (status === "unauthenticated") {
       toast({
         title: "Please login to access the cart!!",
@@ -33,6 +34,7 @@ const MenuCard = ({ _id, description, image, name, price, rating }: any) => {
       // let currentQuantity = itemQuantity?.quantity ?? 0;
 
       const itemDetails = {
+        itemId: _id,
         name,
         price,
         image,
@@ -40,13 +42,32 @@ const MenuCard = ({ _id, description, image, name, price, rating }: any) => {
       };
 
       try {
-        dispatch(addCart(itemDetails));
+        setLoading(true);
 
         const res = await axios.post("/api/cart", itemDetails);
 
-        console.log("res from cart redux: ", res);
+        console.log("res from cart redux: ", res.data.addedItem);
+
+        dispatch(addCart(res.data?.addedItem));
+
+        toast({
+          title: "Item added to cart successfully",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
       } catch (error: any) {
         console.error(error.message);
+        toast({
+          title: "Failed to add",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -113,7 +134,7 @@ const MenuCard = ({ _id, description, image, name, price, rating }: any) => {
             colorScheme="teal"
             onClick={() => handleAddToCart(_id)}
           >
-            <Text>ADD ({quantity})</Text>
+            <Text>{loading ? "Adding..." : "ADD"}</Text>
           </Button>
         </Box>
       </Box>
