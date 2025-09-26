@@ -18,23 +18,25 @@ import {
   Flex,
   Text,
   Divider,
-  Box,
-  IconButton,
   Select,
   Stack,
 } from "@chakra-ui/react";
 import SignUp from "./Signup";
 import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { FaGoogle, FaTimes } from "react-icons/fa";
+import { FaGoogle } from "react-icons/fa";
 import { signIn } from "next-auth/react";
 import styles from "./Auth.module.css";
+import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
 
 const Login = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const finalRef = useRef(null);
-  const toast = useToast();
   const router = useRouter();
+
+  const toast = useToast();
+  const successToast = useSuccessToast();
+  const errorToast = useErrorToast();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -52,35 +54,25 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const result = await signIn("credentials", formData);
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      console.log("result from next-auth login: ", result);
 
       if (result?.error) {
-        toast({
-          title: "Login failed",
-          description: result.error,
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
+        errorToast("Invalid credentials");
         return;
       }
 
-      toast({
-        title: "Login Successful",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+      successToast("Login Successful");
 
       router.push("/");
       onClose();
     } catch (error: any) {
-      toast({
-        title: error.message || "Login failed",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      errorToast(error.message || "Login failed");
     } finally {
       setIsLoading(false);
     }
@@ -91,13 +83,7 @@ const Login = () => {
     try {
       await signIn(provider, { callbackUrl: "/" });
     } catch (error) {
-      toast({
-        title: "Login failed",
-        description: "An error occurred during social login",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      errorToast("Login failed");
     } finally {
       setSocialLoading(null);
     }
@@ -205,24 +191,14 @@ const Login = () => {
                       <FormLabel htmlFor="role">Role</FormLabel>
                       <Select
                         id="role"
-                        w-="100%"
+                        w="100%"
                         value={formData.role}
                         onChange={handleChange}
                         color="black"
                         bg="white"
                       >
-                        <option
-                          value="customer"
-                          style={{ maxWidth: "200px !important", fontSize: "12px" }}
-                        >
-                          Customer
-                        </option>
-                        <option
-                          value="admin"
-                          style={{ width: "200px !important", fontSize: "12px" }}
-                        >
-                          Admin
-                        </option>
+                        <option value="customer">Customer</option>
+                        <option value="admin">Admin</option>
                       </Select>
                     </FormControl>
 
@@ -279,7 +255,7 @@ const Login = () => {
                         colorScheme="red"
                         onClick={() => handleSocialSignIn("google")}
                         isLoading={socialLoading === "google"}
-                        loadingText="Signing in with Google"
+                        loadingText="Signing in with Google...."
                         disabled={isLoading}
                         _hover={{ bg: "gray.700" }}
                       >

@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { FaGoogle } from "react-icons/fa";
 import { signIn } from "next-auth/react";
 import styles from "./Auth.module.css";
+import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
 
 interface SignUpProps {
   onClose: () => void;
@@ -30,13 +31,16 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
     email: "",
     password: "",
     confirmPassword: "",
-    role: "customer", 
+    role: "customer",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [socialLoading, setSocialLoading] = useState<
     "google" | "github" | null
   >(null);
-  const toast = useToast();
+
+  const successToast = useSuccessToast();
+  const errorToast = useErrorToast();
+
   const router = useRouter();
 
   const handleChange = (
@@ -61,22 +65,12 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
 
       if (!res.ok) throw new Error(data.message || "Signup failed");
 
-      toast({
-        title: data.message || "Signup successful!",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+      successToast(data.message || "Signup successful!");
 
       router.push("/");
       onClose();
     } catch (err: any) {
-      toast({
-        title: err.message || "Something went wrong",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      errorToast(err.message || "Something went wrong");
     } finally {
       setIsLoading(false);
     }
@@ -87,12 +81,7 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
       setSocialLoading(provider);
       await signIn(provider, { callbackUrl: "/" });
     } catch {
-      toast({
-        title: "Sign up failed",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      errorToast("Sign up failed");
     } finally {
       setSocialLoading(null);
     }

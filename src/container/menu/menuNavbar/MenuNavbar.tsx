@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, Heading, useToast } from "@chakra-ui/react";
+import { Box, Button, Heading } from "@chakra-ui/react";
 import "./MenuNavbar.scss";
 import Login from "@/container/auth/Login";
 import { useContext } from "react";
@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { useErrorToast } from "@/toasts/CustomeToasts";
 
 const MenuNavbar = ({ cart, cartLen }: any) => {
   // const { user } = useContext(VariableContext);
@@ -17,16 +18,11 @@ const MenuNavbar = ({ cart, cartLen }: any) => {
   const { data: session } = useSession();
   const router = useRouter();
   const { status } = useSession();
-  const toast = useToast();
+  const errorToast = useErrorToast();
 
   function handleCartRedirect() {
     if (status === "unauthenticated") {
-      toast({
-        title: "Please login to access cart",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      errorToast("Please login to access cart");
     } else {
       router.push("/cart");
     }

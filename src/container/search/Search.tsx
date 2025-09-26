@@ -15,6 +15,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { useGlobalContext } from "@/context/GlobalContext";
+import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
 const locationApi = process.env.NEXT_PUBLIC_LOCATION_API ?? "";
 
 interface SearchProps {
@@ -33,7 +34,8 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
 
   const styles: any = searchStyles;
 
-  const toast = useToast();
+  const successToast = useSuccessToast();
+  const errorToast = useErrorToast();
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchValue = e.target.value;
@@ -87,34 +89,17 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
 
             setCity(`${city + ", " + state}`);
 
-            toast({
-              title: "Location detected",
-              status: "success",
-              duration: 3000,
-              isClosable: true,
-            });
+            successToast("Location detected");
           } catch (error) {
             console.error("Reverse geocoding error:", error);
-            toast({
-              title: "Geocoding failed",
-              description: "Unable to retrieve city name",
-              status: "error",
-              duration: 3000,
-              isClosable: true,
-            });
+            errorToast("Geocoding failed");
           }
         },
         (error) => {
           setIsLocating(false);
           console.error("Location error:", error);
 
-          toast({
-            title: "Location error",
-            description: error.message,
-            status: "error",
-            duration: 3000,
-            isClosable: true,
-          });
+          errorToast("Location error");
         },
         {
           enableHighAccuracy: true,
@@ -124,13 +109,7 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
       );
     } else {
       setIsLocating(false);
-      toast({
-        title: "Geolocation not supported",
-        description: "Your browser doesn't support geolocation",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      errorToast("Geolocation not supported");
     }
   };
 

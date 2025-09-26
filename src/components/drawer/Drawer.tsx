@@ -25,14 +25,17 @@ import { signOut } from "next-auth/react";
 import { FiLogOut, FiUser, FiShoppingCart } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
 
 const MyDrawer = () => {
   const { data: session } = useSession();
   const user = session?.user;
 
+  const successToast = useSuccessToast();
+  const errorToast = useErrorToast();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef<HTMLDivElement>(null);
-  const toast = useToast();
 
   const router = useRouter();
 
@@ -43,26 +46,12 @@ const MyDrawer = () => {
         callbackUrl: "/",
       });
 
-      toast({
-        title: "Logged out successfully",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-        position: "top",
-      });
+      successToast("Logged out successfully");
 
       onClose();
       router.push("/");
     } catch (error) {
-      toast({
-        title: "Logout failed",
-        description:
-          error instanceof Error ? error.message : "An error occurred",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-        position: "top",
-      });
+      errorToast("Logout failed");
     }
   };
 

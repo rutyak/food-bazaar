@@ -28,6 +28,7 @@ import CartItem from "./cartItem/CartItem";
 import "./Cart.scss";
 import MenuNavbar from "../menu/menuNavbar/MenuNavbar";
 import { RootState } from "@/redux/store";
+import { useErrorToast } from "@/toasts/CustomeToasts";
 
 const Cart = () => {
   const cart = useSelector((state: RootState) => state.cart);
@@ -42,7 +43,7 @@ const Cart = () => {
     country: "",
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const toast = useToast();
+  const errorToast = useErrorToast();
 
   const deliveryCharge = 40;
   const estimatedTime = 30;
@@ -74,13 +75,7 @@ const Cart = () => {
   const handleCheckout = () => {
     const { name, email, address, city, zipCode, country } = billingDetails;
     if (!name || !email || !address || !city || !zipCode || !country) {
-      toast({
-        title: "Billing Details Incomplete",
-        description: "Please fill out all billing details before proceeding.",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      errorToast("Billing Details Incomplete");
     } else {
       onOpen();
     }

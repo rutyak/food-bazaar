@@ -49,8 +49,8 @@ const handler = NextAuth({
 
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60 * 48, // 2 days
-    updateAge: 15 * 60,  // 15 minutes
+    maxAge: 60 * 60 * 48, 
+    updateAge: 15 * 60,
   },
 
   callbacks: {
@@ -72,9 +72,10 @@ const handler = NextAuth({
 
   pages: {
     signIn: "/auth/login",
+    error: "/auth/login",
   },
 
-  secret: process.env.NEXTAUTH_SECRET, 
+  secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV === "development",
 });
 

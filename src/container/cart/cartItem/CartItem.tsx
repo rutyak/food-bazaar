@@ -16,11 +16,13 @@ import {
   removeCart,
 } from "@/redux/slices/cartSlice";
 import axios from "axios";
+import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
 
 const CartItem = ({ item }: any) => {
   const dispatch = useDispatch();
 
-  const toast = useToast();
+  const successToast = useSuccessToast();
+  const errorToast = useErrorToast();
 
   const handlerRemoveCart = async () => {
     try {
@@ -28,21 +30,10 @@ const CartItem = ({ item }: any) => {
 
       await axios.delete(`/api/cart/${item.itemId}`);
 
-      toast({
-        title: "Item removed successfully",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-        position: "top",
-      });
+      successToast("Item removed successfully");
     } catch (error: any) {
       console.error(error.message);
-      toast({
-        title: "Failed to remove item",
-        status: "error",
-        duration: 3000,
-        position: "top",
-      });
+      errorToast("Failed to remove item");
     }
   };
 
@@ -52,24 +43,14 @@ const CartItem = ({ item }: any) => {
 
       const res = await axios.post(`/api/cart/decrease/${item.itemId}`);
 
-      toast({
-        title: res?.data?.message,
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+      successToast(res?.data?.message);
     } catch (error: any) {
       console.error(error.message);
-      toast({
-        title:
-          error.response?.data?.error ||
+      errorToast(
+        error.response?.data?.error ||
           error.response?.data?.message ||
-          "Something went wrong",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-        position: "top",
-      });
+          "Something went wrong"
+      );
     }
   }
 
@@ -79,25 +60,15 @@ const CartItem = ({ item }: any) => {
 
       const res = await axios.post(`/api/cart/increase/${item.itemId}`);
 
-      toast({
-        title: res?.data?.message,
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-        position: "top",
-      });
+      successToast(res?.data?.message);
     } catch (error: any) {
       console.error(error?.message);
 
-      toast({
-        title:
-          error.response?.data?.error ||
+      errorToast(
+        error.response?.data?.error ||
           error.response?.data?.message ||
-          "Something went wrong",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+          "Something went wrong"
+      );
     }
   }
 

@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import { addCart } from "@/redux/slices/cartSlice";
+import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
 
 const MenuCard = ({ _id, description, image, name, price, rating }: any) => {
   const [quantity, setQuantity] = useState(1);
@@ -15,18 +16,13 @@ const MenuCard = ({ _id, description, image, name, price, rating }: any) => {
   const dispatch = useDispatch();
   const { status } = useSession();
 
-  const toast = useToast();
-
+  const successToast = useSuccessToast();
+  const errorToast = useErrorToast();
   // const cartData = useSelector((store: any) => store.cart.cartItems);
 
   const handleAddToCart = async (_id: any) => {
     if (status === "unauthenticated") {
-      toast({
-        title: "Please login to access the cart!!",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      errorToast("Please login to access the cart!!");
     } else {
       // let itemQuantity = cartData?.find((item: any) => item.id === id);
 
@@ -47,22 +43,10 @@ const MenuCard = ({ _id, description, image, name, price, rating }: any) => {
 
         dispatch(addCart(res.data?.addedItem));
 
-        toast({
-          title: "Item added to cart successfully",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-          position: "top",
-        });
+        successToast("Item added to cart successfully");
       } catch (error: any) {
         console.error(error.message);
-        toast({
-          title: "Failed to add",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-          position: "top",
-        });
+        errorToast("Failed to add");
       } finally {
         setLoading(false);
       }

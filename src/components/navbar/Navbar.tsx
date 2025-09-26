@@ -8,26 +8,21 @@ import MyDrawer from "../drawer/Drawer";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { RootState } from "@/redux/store";
+import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
 
 const Navbar = () => {
   const carts = useSelector((state: RootState) => state.cart);
 
   const { data: session, status } = useSession();
 
-  const toast = useToast();
+  const errorToast = useErrorToast();
+
   const router = useRouter();
 
   function handleCartClick(e: React.MouseEvent) {
     e.preventDefault();
     if (status === "unauthenticated") {
-      toast({
-        title: "Login Required",
-        description: "Please login to access your cart",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-        position: "top",
-      });
+      errorToast("Please login to access your cart");
       router.push("/");
     } else {
       router.push("/cart");

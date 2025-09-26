@@ -17,6 +17,7 @@ import axios from "axios";
 import styles from "./AdminDashboard.module.css";
 import RestaurantForm from "./restaurant/RestaurantForm";
 import MenuItemForm from "./menuItem/MenuItemForm";
+import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
 
 const handleChangeFactory =
   (setState: React.Dispatch<React.SetStateAction<any>>) =>
@@ -33,7 +34,8 @@ const handleChangeFactory =
   };
 
 function AdminDashboard() {
-  const toast = useToast();
+  const successToast = useSuccessToast();
+  const errorToast = useErrorToast();
 
   // States
   const [loading, setLoading] = useState(false);
@@ -59,7 +61,6 @@ function AdminDashboard() {
 
   // API Submitters
   const handleSubmit = async (endpoint: string, data: any) => {
-
     setLoading(true);
 
     try {
@@ -80,15 +81,10 @@ function AdminDashboard() {
           }
           uploadedItems.push({ ...item, image: imageUrl });
         }
-        
+
         const res = await axios.post(`/api/${endpoint}`, uploadedItems);
 
-        toast({
-          title: res.data.message,
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-        });
+        successToast(res.data.message);
       } else {
         let imageUrl = data.image;
         if (data.image instanceof File) {
@@ -107,12 +103,7 @@ function AdminDashboard() {
           image: imageUrl,
         });
 
-        toast({
-          title: res.data.message,
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-        });
+        successToast(res.data.message);
       }
 
       if (endpoint === "restaurant") {
@@ -137,13 +128,7 @@ function AdminDashboard() {
         ]);
       }
     } catch (error) {
-      toast({
-        title: "Error while saving",
-        description: error instanceof Error ? error.message : String(error),
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      errorToast("Error while saving");
     } finally {
       setLoading(false);
     }
@@ -172,12 +157,7 @@ function AdminDashboard() {
   // };
 
   const handleSaveAllMenuItems = () => {
-    toast({
-      title: "All menu items saved",
-      status: "success",
-      duration: 2000,
-      isClosable: true,
-    });
+    successToast("All menu items saved");
     setMenuItems([]);
   };
 

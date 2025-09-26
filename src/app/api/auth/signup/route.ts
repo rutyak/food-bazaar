@@ -2,12 +2,31 @@ import { NextResponse } from "next/server";
 import { dbConnect } from "@/lib/dbConnect";
 import User from "@/lib/models/User";
 import bcrypt from "bcryptjs";
+import validator from "validator";
 
 export async function POST(req: Request) {
   try {
     const connect = await dbConnect();
 
     const { name, email, password, role } = await req.json();
+
+    if (!name || !email || !password || !role) {
+      return NextResponse.json({ message: "All fields required" });
+    }
+
+    if (!validator.isEmail(email)) {
+      return NextResponse.json(
+        { message: "Invalid email format" },
+        { status: 400 }
+      );
+    }
+
+    if (!validator.isStrongPassword(password)) {
+      return NextResponse.json({
+        message:
+          "Password must be at least 8 character long and include uppercase, lowercase, number, and special character",
+      });
+    }
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
