@@ -205,11 +205,24 @@ const Login = () => {
                       <FormLabel htmlFor="role">Role</FormLabel>
                       <Select
                         id="role"
+                        w-="100%"
                         value={formData.role}
                         onChange={handleChange}
+                        color="black"
+                        bg="white"
                       >
-                        <option value="customer">Customer</option>
-                        <option value="admin">Admin</option>
+                        <option
+                          value="customer"
+                          style={{ maxWidth: "200px !important", fontSize: "12px" }}
+                        >
+                          Customer
+                        </option>
+                        <option
+                          value="admin"
+                          style={{ width: "200px !important", fontSize: "12px" }}
+                        >
+                          Admin
+                        </option>
                       </Select>
                     </FormControl>
 

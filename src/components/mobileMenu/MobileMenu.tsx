@@ -25,7 +25,6 @@ function MobileMenu() {
 
   return (
     <>
-      {/* Hamburger button */}
       <IconButton
         ref={btnRef}
         aria-label="Open menu"
@@ -33,11 +32,10 @@ function MobileMenu() {
         variant="ghost"
         color="gray.500"
         onClick={onOpen}
-        display={{ base: "flex", md: "none" }} 
+        display={{ base: "flex", sm: "none" }} 
         mr={2}
       />
 
-      {/* Drawer */}
       <Drawer
         isOpen={isOpen}
         placement="right"

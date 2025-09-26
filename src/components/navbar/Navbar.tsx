@@ -41,7 +41,7 @@ const Navbar = () => {
           alignItems: "center",
           justifyContent: "center",
         }}
-        display={{ base: "none", md: "flex" }}
+        display={{ base: "none", sm: "flex" }}
       >
         <Link href="/">
           <li>Home</li>
@@ -63,7 +63,7 @@ const Navbar = () => {
       </Box>
 
       {status === "authenticated" ? (
-        <MyDrawer user={session.user} />
+        <MyDrawer />
       ) : (
         <li>
           <Login />

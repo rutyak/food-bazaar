@@ -1,9 +1,12 @@
 import { Button, Box } from "@chakra-ui/react";
 import "./Filter.scss";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const Filter = ({ setFilteredCard, filteredCard, allCard }: any) => {
-  
+  const restaurants = useSelector((state: RootState) => state.restaurants);
+
   const [togglebtn, setToggleBtn] = useState<any>({
     all: false,
     pureVeg: false,
@@ -22,30 +25,31 @@ const Filter = ({ setFilteredCard, filteredCard, allCard }: any) => {
       [type]: !togglebtn[type],
     });
 
-    let newFilteredCard = [];
+    let newFilteredCard: any[] = [];
+
     switch (type) {
       case "all":
-        newFilteredCard = allCard;
+        newFilteredCard = restaurants;
         break;
       case "pureVeg":
-        newFilteredCard = filteredCard.filter(
-          (card: any) => card?.info?.veg === true
+        newFilteredCard = restaurants.filter(
+          (card: any) => card?.veg === true
         );
         break;
       case "ratings":
-        newFilteredCard = filteredCard.filter(
+        newFilteredCard = restaurants.filter(
           (card: any) => card?.info?.avgRating > 4
         );
         break;
       case "fast":
-        newFilteredCard = filteredCard.filter((card: any) => {
+        newFilteredCard = restaurants.filter((card: any) => {
           if (card?.info?.sla?.slaString === "15-20 mins") {
             return card;
           }
         });
         break;
       case "lessThan200":
-        newFilteredCard = filteredCard.filter(
+        newFilteredCard = restaurants.filter(
           (card: any) =>
             card?.info?.costForTwo === "₹300 for two" ||
             card?.info?.costForTwo === "₹250 for two" ||
@@ -59,46 +63,46 @@ const Filter = ({ setFilteredCard, filteredCard, allCard }: any) => {
   return (
     <>
       <Box className="restaurant-grid-filter">
-          <Button
-            colorScheme="teal"
-            variant="outline"
-            onClick={() => handleFilter("all")}
-            bgColor={togglebtn.all ? "black" : "white"}
-          >
-            All
-          </Button>
-          <Button
-            colorScheme="teal"
-            variant="outline"
-            onClick={() => handleFilter("pureVeg")}
-            bgColor={togglebtn.pureVeg ? "black" : "white"}
-          >
-            Pure Veg
-          </Button>
-          <Button
-            colorScheme="teal"
-            variant="outline"
-            onClick={() => handleFilter("ratings")}
-            bgColor={togglebtn.ratings ? "black" : "white"}
-          >
-            Ratings 4.0+
-          </Button>
-          <Button
-            colorScheme="teal"
-            variant="outline"
-            onClick={() => handleFilter("fast")}
-            bgColor={togglebtn.fast ? "black" : "white"}
-          >
-            Fast Delivery
-          </Button>
-          <Button
-            colorScheme="teal"
-            variant="outline"
-            onClick={() => handleFilter("lessThan200")}
-            bgColor={togglebtn.lessThan200 ? "black" : "white"}
-          >
-            Less than Rs.200
-          </Button>
+        <Button
+          colorScheme="teal"
+          variant="outline"
+          onClick={() => handleFilter("all")}
+          bgColor={togglebtn.all ? "black" : "white"}
+        >
+          All
+        </Button>
+        <Button
+          colorScheme="teal"
+          variant="outline"
+          onClick={() => handleFilter("pureVeg")}
+          bgColor={togglebtn.pureVeg ? "black" : "white"}
+        >
+          Pure Veg
+        </Button>
+        <Button
+          colorScheme="teal"
+          variant="outline"
+          onClick={() => handleFilter("ratings")}
+          bgColor={togglebtn.ratings ? "black" : "white"}
+        >
+          Ratings 4.0+
+        </Button>
+        <Button
+          colorScheme="teal"
+          variant="outline"
+          onClick={() => handleFilter("fast")}
+          bgColor={togglebtn.fast ? "black" : "white"}
+        >
+          Fast Delivery
+        </Button>
+        <Button
+          colorScheme="teal"
+          variant="outline"
+          onClick={() => handleFilter("lessThan200")}
+          bgColor={togglebtn.lessThan200 ? "black" : "white"}
+        >
+          Less than Rs.200
+        </Button>
       </Box>
     </>
   );

@@ -25,7 +25,11 @@ const Header = () => {
       <div className="top">
         <div className="slogan">
           <Image src={foodIcon?.src} width={25} height={25} alt="foodIcon" />
-          <Text color="#ffebcd" className="slogan-title">
+          <Text
+            color="#ffebcd"
+            className="slogan-title"
+            display={{ base: "none", lg: "block" }}
+          >
             Good food, Good Monents
           </Text>
         </div>
