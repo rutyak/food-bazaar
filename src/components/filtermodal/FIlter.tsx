@@ -7,6 +7,8 @@ import { RootState } from "@/redux/store";
 const Filter = ({ setFilteredCard, filteredCard, allCard }: any) => {
   const restaurants = useSelector((state: RootState) => state.restaurants);
 
+  console.log("restaurants: ", restaurants);
+
   const [togglebtn, setToggleBtn] = useState<any>({
     all: false,
     pureVeg: false,
@@ -32,28 +34,21 @@ const Filter = ({ setFilteredCard, filteredCard, allCard }: any) => {
         newFilteredCard = restaurants;
         break;
       case "pureVeg":
-        newFilteredCard = restaurants.filter(
-          (card: any) => card?.veg === true
-        );
+        newFilteredCard = restaurants.filter((card: any) => card?.veg === true);
         break;
       case "ratings":
-        newFilteredCard = restaurants.filter(
-          (card: any) => card?.info?.avgRating > 4
-        );
+        newFilteredCard = restaurants.filter((card: any) => card?.rating > 4);
         break;
       case "fast":
         newFilteredCard = restaurants.filter((card: any) => {
-          if (card?.info?.sla?.slaString === "15-20 mins") {
+          if (card?.rating === "15-20 mins") {
             return card;
           }
         });
         break;
       case "lessThan200":
         newFilteredCard = restaurants.filter(
-          (card: any) =>
-            card?.info?.costForTwo === "₹300 for two" ||
-            card?.info?.costForTwo === "₹250 for two" ||
-            card?.info?.costForTwo === "₹350 for two"
+          (card: any) => card?.pricefortwo < 200
         );
         break;
     }

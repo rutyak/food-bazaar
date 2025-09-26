@@ -11,9 +11,11 @@ import {
   Box,
   Flex,
   Spinner,
+  Divider,
 } from "@chakra-ui/react";
+import { MdMyLocation } from "react-icons/md";
+import { GrLocationPin } from "react-icons/gr";
 import { FaLocationDot } from "react-icons/fa6";
-import { MdMyLocation, MdLocationOn } from "react-icons/md";
 import { motion } from "framer-motion";
 import React from "react";
 
@@ -43,61 +45,77 @@ const CustomPopover: React.FC<CustomPopoverProps> = ({
     >
       <PopoverTrigger>
         <Button
-          size="sm"
-          variant="outline"
-          colorScheme="teal"
+          size="md"
+          variant="solid"
+          color="white"
+          bg="linear-gradient(to-r, gray.900, blue.900)"
           onClick={onToggle}
-          leftIcon={<FaLocationDot size={18} color="red" />}
+          leftIcon={<FaLocationDot size={20} color="red" />}
           _hover={{
-            bg: "teal.50",
-            transform: "scale(1.02)",
+            bgGradient: "linear(to-r, teal.500, teal.600)",
+            transform: "scale(1.03)",
           }}
           _active={{
-            transform: "scale(0.98)",
+            transform: "scale(0.97)",
           }}
           transition="all 0.2s ease"
-          borderRadius="md"
-          px={4}
-          py={2}
+          borderRadius="xl"
+          px={5}
+          py={3}
+          fontWeight="semibold"
         >
           {text}
         </Button>
       </PopoverTrigger>
+
       <Portal>
         <MotionPopoverContent
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 10 }}
-          transition={{ duration: 0.2 }}
-          width="300px"
-          border="none"
-          boxShadow="xl"
+          initial={{ opacity: 0, y: 15, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 15, scale: 0.95 }}
+          transition={{ duration: 0.25, ease: "easeInOut" }}
+          borderRadius="xl"
+          boxShadow="2xl"
           bg="white"
-          _focus={{ boxShadow: "xl" }}
+          w="230px"
+          _focus={{ boxShadow: "2xl" }}
         >
           <PopoverArrow bg="white" />
-          <PopoverBody p={0}>
-            <Box p={4}>
+          <PopoverBody p={4}>
+            <Flex direction="column">
               <Button
-                size="sm"
+                size="md"
                 colorScheme="teal"
                 w="full"
                 onClick={onDetectLocation}
                 leftIcon={<MdMyLocation />}
                 isLoading={isLoading}
                 loadingText="Detecting"
-                variant="solid"
+                borderRadius="lg"
+                bgGradient="linear(to-r, teal.400, teal.500)"
+                _hover={{ bgGradient: "linear(to-r, teal.500, teal.600)" }}
+                color="white"
+                fontWeight="medium"
               >
                 Detect My Location
               </Button>
 
-              <Flex align="center" gap={3} mt={4}>
-                <Text fontSize="sm" color="gray.600">
+              <Divider my={2} />
+
+              <Flex align="center">
+                <GrLocationPin color="red" size={20} />
+                <Text
+                  fontSize="sm"
+                  fontWeight="medium"
+                  color="gray.700"
+                  ml={1}
+                  noOfLines={2}
+                >
                   {isLoading ? "Detecting your location..." : currentLocation}
                 </Text>
-                {isLoading && <Spinner size="sm" ml="auto" />}
+                {isLoading && <Spinner size="sm" ml="auto" color="teal.500" />}
               </Flex>
-            </Box>
+            </Flex>
           </PopoverBody>
         </MotionPopoverContent>
       </Portal>

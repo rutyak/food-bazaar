@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Body from "../container/home/body/Body";
 import Header from "../container/home/header/Header";
 import Footer from "../container/footer/Footer";
@@ -20,7 +20,6 @@ export default function Home() {
       const restaurants = res?.data?.restaurants;
 
       dispatch(setRestaurants(restaurants));
-
     } catch (error) {
       console.error(error);
     }

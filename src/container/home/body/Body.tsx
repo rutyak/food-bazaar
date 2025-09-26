@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { setRestaurants } from "@/redux/slices/restaurantSlice";
 import Card from "@/components/card/Card";
+import { useGlobalContext } from "@/context/GlobalContext";
 
 interface restaurant {
   _id: string;
@@ -22,12 +23,18 @@ interface restaurant {
   priceForTwo: number;
 }
 
-const Body = ({ setFilteredCard, filteredCard, allCard }: any) => {
+const Body = () => {
   const restaurants = useSelector((state: RootState) => state.restaurants);
   const menuItems = useSelector((state: RootState) => state.menu);
 
+  const { city } = useGlobalContext();
+  const currCity = city.split(",")[0];
+
+  console.log("currCity: ", currCity);
+
   const [data, setData] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<any>(false);
+  const [filteredCard, setFilteredCard] = useState<any[]>(restaurants);
   const eventRef = useRef<any>(null);
 
   const dispatch = useDispatch();
@@ -99,7 +106,7 @@ const Body = ({ setFilteredCard, filteredCard, allCard }: any) => {
     return () => removeEventListener("scroll", eventRef.current);
   }, []);
 
-  return allCard?.length === 0 ? (
+  return restaurants?.length === 0 ? (
     "Loading..."
   ) : (
     <Box className="home-page">
@@ -119,16 +126,12 @@ const Body = ({ setFilteredCard, filteredCard, allCard }: any) => {
       <Carousel suggestions={restaurants} title="Top Restaurants" />
       <Box mt="1rem" className="grid-card-heading">
         <Heading as="h2" fontSize={["xl", "2xl"]} mb="1rem">
-          Restaurants
+          Restaurants in {currCity}
         </Heading>
-        <Filter
-          setFilteredCard={setFilteredCard}
-          filteredCard={filteredCard}
-          allCard={allCard}
-        />
+        <Filter setFilteredCard={setFilteredCard} filteredCard={filteredCard} />
         <Box className="restaurant-grid-card">
-          {restaurants?.length > 0 &&
-            restaurants?.map((data: any) => {
+          {filteredCard?.length > 0 &&
+            filteredCard?.map((data: any) => {
               return <Card key={data?._id} {...data} grid="grid" />;
             })}
         </Box>

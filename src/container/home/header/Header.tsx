@@ -14,12 +14,6 @@ import MobileMenu from "@/components/mobileMenu/MobileMenu";
 const Header = () => {
   const [search, setSearch] = useState();
 
-  // const cartAll = useSelector((state: any) => state.cart.cartItems);
-
-  // useEffect(() => {
-  //   setCartLen(cartAll.length);
-  // }, [cartLen]);
-
   return (
     <div className="header">
       <div className="top">

@@ -14,7 +14,8 @@ import CustomPopover from "@/components/popover/CustomPopover";
 import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-const locationApi = process.env.NEXT_PUBLIC_LOCATION_API_URL;
+import { useGlobalContext } from "@/context/GlobalContext";
+const locationApi = process.env.NEXT_PUBLIC_LOCATION_API ?? "";
 
 interface SearchProps {
   setSearch: any;
@@ -25,9 +26,10 @@ interface SearchProps {
 const Search = ({ setSearch, search, cart }: SearchProps) => {
   const restaurants = useSelector((state: RootState) => state.restaurants);
 
+  const { city, setCity } = useGlobalContext();
+
   const [resultList, setResultList] = useState<any[]>([]);
   const [isLocating, setIsLocating] = useState(false);
-  const [city, setCity] = useState("");
 
   const styles: any = searchStyles;
 
@@ -67,22 +69,26 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
           const lng = position.coords.longitude;
           setIsLocating(false);
 
+          console.log("latitude: ", lat);
+          console.log("longitude: ", lng);
+
           try {
             const response = await fetch(
-              `${locationApi}&q=${lat},${lng}&aqi=yes`
+              `${locationApi}?latitude=${lat}&longitude=${lng}&localityLanguage=en`
             );
-            const data = await response.json();
-            // const city =
-            //   data.results[0]?.components?.city ||
-            //   data.results[0]?.components?.town ||
-            //   data.results[0]?.components?.village ||
-            //   "Unknown location";
 
-            setCity(data.results[0]?.components?.city);
+            if (!response.ok) {
+              throw new Error("Failed to fetch location data");
+            }
+
+            const data = await response.json();
+            const city = data?.city || data?.locality || "Unknown location";
+            const state = data?.principalSubdivision || "Unknown state";
+
+            setCity(`${city + ", " + state}`);
 
             toast({
               title: "Location detected",
-              // description: `City: ${city}`,
               status: "success",
               duration: 3000,
               isClosable: true,
