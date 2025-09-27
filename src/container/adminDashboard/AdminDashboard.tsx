@@ -56,6 +56,7 @@ function AdminDashboard() {
       price: "",
       image: "",
       category: "",
+      rating: 3,
       isVeg: false,
     },
   ]);
@@ -166,7 +167,7 @@ function AdminDashboard() {
   };
 
   function handleAddMore() {
-    setMenuItems((prev: any) => [
+    setMenuItems((prev: DataType[]) => [
       ...prev,
       {
         restaurantId: "",
@@ -175,7 +176,7 @@ function AdminDashboard() {
         price: "",
         image: "",
         category: "",
-        isVeg: "true",
+        isVeg: true,
       },
     ]);
   }
@@ -208,8 +209,6 @@ function AdminDashboard() {
               <MenuItemForm
                 data={menuItems}
                 setData={setMenuItems}
-                // addItem={handleAddMenuItem}
-                handleChangeFactory={handleChangeFactory}
               />
 
               {menuItems.length > 0 && (

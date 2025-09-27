@@ -7,6 +7,7 @@ export interface DataType {
   location?: string;
   categories?: string;
   restaurantId?: string;
+  rating?: number;
   price?: string;
   category?: string;
   isVeg?: boolean;

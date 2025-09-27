@@ -1,3 +1,4 @@
+import { DataType } from "@/types/admin";
 import {
   Button,
   FormControl,
@@ -9,9 +10,17 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-function MenuItemForm({ data, setData }: any) {
+interface MenuItemFormType {
+  data: DataType[];
+  setData: React.Dispatch<React.SetStateAction<DataType[]>>;
+}
+
+function MenuItemForm({
+  data,
+  setData,
+}: MenuItemFormType) {
   function handleRemoveMenuItem(index: number) {
-    const filteredItems = data.filter((_: any, i: number) => i !== index);
+    const filteredItems = data.filter((_, i) => i !== index);
     setData(filteredItems);
   }
 
@@ -22,7 +31,7 @@ function MenuItemForm({ data, setData }: any) {
     index: number
   ) {
     const { id, value, files } = e.target as HTMLInputElement;
-    setData((prev: any[]) =>
+    setData((prev: DataType[]) =>
       prev.map((item, i) =>
         i === index
           ? { ...item, [id]: files && files.length > 0 ? files[0] : value }
@@ -33,7 +42,7 @@ function MenuItemForm({ data, setData }: any) {
 
   return (
     <>
-      {data?.map((menuItem: any, idx: any) => {
+      {data?.map((menuItem: DataType, idx: number) => {
         return (
           <VStack
             mb={4}
@@ -43,7 +52,7 @@ function MenuItemForm({ data, setData }: any) {
             p={4}
             rounded="md"
           >
-            {data.length > 1 && (
+            {data?.length > 1 && (
               <Button
                 colorScheme="red"
                 size="sm"
@@ -114,7 +123,7 @@ function MenuItemForm({ data, setData }: any) {
               <FormLabel>Ratings</FormLabel>
               <Input
                 id="rating"
-                value={data.rating}
+                value={menuItem.rating}
                 onChange={(e) => handleChange(e, idx)}
               />
             </FormControl>

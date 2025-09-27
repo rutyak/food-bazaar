@@ -1,3 +1,4 @@
+import { DataType } from "@/types/admin";
 import {
   Button,
   FormControl,
@@ -6,6 +7,17 @@ import {
   Textarea,
   VStack,
 } from "@chakra-ui/react";
+import React from "react";
+
+interface RestaurantFormType {
+  data: DataType;
+  setData: React.Dispatch<React.SetStateAction<DataType>>;
+  onSubmit: () => void;
+  handleChangeFactory: (
+    setData: React.Dispatch<React.SetStateAction<DataType>>
+  ) => React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  loading: boolean;
+}
 
 function RestaurantForm({
   data,
@@ -13,7 +25,7 @@ function RestaurantForm({
   onSubmit,
   handleChangeFactory,
   loading,
-}: any) {
+}: RestaurantFormType) {
   const handleChange = handleChangeFactory(setData);
   return (
     <VStack spacing={4} align="stretch">
