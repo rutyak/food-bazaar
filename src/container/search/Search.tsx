@@ -3,7 +3,6 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  useToast,
 } from "@chakra-ui/react";
 import useFilter from "@/utils/useFilter";
 import SearchList from "./searchlist/SearchList";
@@ -16,11 +15,13 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { useGlobalContext } from "@/context/GlobalContext";
 import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
+import { RestaurantType } from "@/types/restaurant";
+import styles from "./Search.module.scss";
 const locationApi = process.env.NEXT_PUBLIC_LOCATION_API ?? "";
 
 interface SearchProps {
-  setSearch: any;
-  search: any;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  search: string;
   cart?: boolean;
 }
 
@@ -29,10 +30,10 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
 
   const { city, setCity } = useGlobalContext();
 
-  const [resultList, setResultList] = useState<any[]>([]);
+  const [resultList, setResultList] = useState<RestaurantType[]>([]);
   const [isLocating, setIsLocating] = useState(false);
 
-  const styles: any = searchStyles;
+  console.log("resultList: ", resultList);
 
   const successToast = useSuccessToast();
   const errorToast = useErrorToast();
@@ -41,12 +42,7 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
     const searchValue = e.target.value;
     setSearch(searchValue);
 
-    console.log("search value:", searchValue);
-    console.log("restaurants: ", restaurants);
-
     const filteredData = useFilter(searchValue, restaurants);
-
-    console.log("filteredData: ", filteredData);
 
     setResultList(filteredData);
   };
@@ -70,9 +66,6 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
           setIsLocating(false);
-
-          console.log("latitude: ", lat);
-          console.log("longitude: ", lng);
 
           try {
             const response = await fetch(
@@ -114,7 +107,7 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
   };
 
   return (
-    <div className={styles["search"]}>
+    <div className={styles.search}>
       <div style={{ border: "20px 0px 0px 20px" }}>
         <CustomPopover
           text="Location"

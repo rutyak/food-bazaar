@@ -1,20 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-interface restaurant {
-  name: string;
-  description: string;
-  image: string;
-  location: string;
-  categories: string[];
-  rating: number;
-  priceForTwo: number;
-}
+import { RestaurantType } from "@/types/restaurant";
 
 const restaurantSlice = createSlice({
   name: "restaurants",
-  initialState: [] as restaurant[],
+  initialState: [] as RestaurantType[],
   reducers: {
-    setRestaurants: (state, action: PayloadAction<restaurant[]>) => {
+    setRestaurants: (state, action: PayloadAction<RestaurantType[]>) => {
       return action.payload;
     },
   },

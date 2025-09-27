@@ -83,8 +83,14 @@
   background: #565f69;
 }
 
+@media (max-width: 1024px) {
+  .card-menu{
+    margin: auto 10px
+  }
+}
+
 @media (max-width: 768px) {
   .card-menu {
-    margin: 13px !important;
+    margin: 13px 13px;
   }
 }

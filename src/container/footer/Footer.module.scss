@@ -11,14 +11,14 @@
     padding: 0 15px;
   }
 
-  .footer-content {
+  .footerContent {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 30px;
   }
 }
 
-.footer-column {
+.footerColumn {
   h3 {
     font-size: 16px;
     margin-bottom: 15px;
@@ -39,14 +39,14 @@
   }
 }
 
-.footer-bottom {
+.footerBottom {
   margin-top: 30px;
   text-align: center;
   grid-column: 1 / -1;
 }
 
 @media (max-width: 768px) {
-  .footer-content {
+  .footerContent {
     grid-template-columns: repeat(2, 1fr);
     row-gap: 25px;
   }
@@ -58,7 +58,7 @@
     height: auto; 
   }
 
-  .footer-content {
+  .footerContent {
     grid-template-columns: 1fr;
     gap: 20px;
   }

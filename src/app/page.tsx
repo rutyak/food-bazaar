@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Body from "../container/home/body/Body";
 import Header from "../container/home/header/Header";
 import Footer from "../container/footer/Footer";

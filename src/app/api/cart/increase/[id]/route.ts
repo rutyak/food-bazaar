@@ -11,8 +11,6 @@ export async function POST(
     
     const { id } = params;
 
-    console.log("increase quantity hit: ", id);
-
     const existingItem = await Cart.findOne({ itemId: id });
     if (!existingItem) {
       return NextResponse.json(

@@ -6,7 +6,7 @@ import validator from "validator";
 
 export async function POST(req: Request) {
   try {
-    const connect = await dbConnect();
+    await dbConnect();
 
     const { name, email, password, role } = await req.json();
 

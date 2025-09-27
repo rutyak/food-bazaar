@@ -3,7 +3,6 @@
 import "./Menu.scss";
 import Menubody from "./menu-body/Menubody";
 import MenuNavbar from "./menuNavbar/MenuNavbar";
-import { useSelector } from "react-redux";
 
 const Menu = () => {
   return (

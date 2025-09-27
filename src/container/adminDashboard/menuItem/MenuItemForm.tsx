@@ -2,17 +2,15 @@ import {
   Button,
   FormControl,
   FormLabel,
-  HStack,
   Input,
   Select,
-  Stack,
   Textarea,
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
 
-function MenuItemForm({ data, setData, addItem, handleChangeFactory }: any) {
-  function handleRemoveMenuItem(index: any) {
+function MenuItemForm({ data, setData }: any) {
+  function handleRemoveMenuItem(index: number) {
     const filteredItems = data.filter((_: any, i: number) => i !== index);
     setData(filteredItems);
   }

@@ -1,12 +1,4 @@
-import {
-  Image,
-  Flex,
-  Box,
-  Text,
-  Heading,
-  Button,
-  useToast,
-} from "@chakra-ui/react";
+import { Image, Flex, Box, Text, Heading, Button } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useDispatch } from "react-redux";
 import "./CartItem.scss";
@@ -17,8 +9,11 @@ import {
 } from "@/redux/slices/cartSlice";
 import axios from "axios";
 import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
+import { CartType } from "@/types/cart";
 
-const CartItem = ({ item }: any) => {
+const CartItem = ({ item }: { item: CartType }) => {
+  console.log("item in cartItem: ", item);
+
   const dispatch = useDispatch();
 
   const successToast = useSuccessToast();

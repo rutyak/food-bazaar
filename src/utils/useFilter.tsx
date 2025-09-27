@@ -1,6 +1,7 @@
-const useFilter = (searchValue: any, restaurants: any) => {
-  
-  const filteredData = restaurants?.filter((data: any) => {
+import { RestaurantType } from "@/types/restaurant";
+
+const useFilter = (searchValue: string, restaurants: RestaurantType[]) => {
+  const filteredData = restaurants?.filter((data: RestaurantType) => {
     return data?.name
       ?.trim()
       .toLowerCase()

@@ -3,7 +3,6 @@
 import { Box, Button, Heading } from "@chakra-ui/react";
 import "./MenuNavbar.scss";
 import Login from "@/container/auth/Login";
-import { useContext } from "react";
 import Drawer from "@/components/drawer/Drawer";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -11,9 +10,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { useErrorToast } from "@/toasts/CustomeToasts";
 
-const MenuNavbar = ({ cart, cartLen }: any) => {
-  // const { user } = useContext(VariableContext);
+const MenuNavbar = () => {
   const carts = useSelector((state: RootState) => state.cart);
+  const cartsSize: number = carts?.length;
 
   const { data: session } = useSession();
   const router = useRouter();
@@ -55,13 +54,13 @@ const MenuNavbar = ({ cart, cartLen }: any) => {
           </Heading>
         </Box>
         <Box display="flex" gap="25px" alignItems="center" justifyContent="end">
-          {!cart && (
+          {!carts && (
             <Button
               colorScheme="teal"
               variant="ghost"
               onClick={handleCartRedirect}
             >
-              Cart ({carts?.length})
+              Cart ({cartsSize})
             </Button>
           )}
           <Button

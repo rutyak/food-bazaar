@@ -6,20 +6,17 @@ import {
   useState,
   useContext,
   useEffect,
+  SetStateAction,
 } from "react";
 
 interface GlobalContextType {
   city: string;
-  setCity: React.Dispatch<React.SetStateAction<string>>;
+  setCity: React.Dispatch<SetStateAction<string>>;
 }
 
 const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
 
-interface GlobalProviderProps {
-  children: ReactNode;
-}
-
-export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
+export function GlobalProvider({ children }: { children: ReactNode }) {
   const [city, setCity] = useState("");
 
   useEffect(() => {
@@ -40,7 +37,7 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
       {children}
     </GlobalContext.Provider>
   );
-};
+}
 
 export const useGlobalContext = () => {
   const context = useContext(GlobalContext);

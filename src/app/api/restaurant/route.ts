@@ -4,8 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const connect = await dbConnect();
-    console.log("mongoDB connection: ", connect);
+    await dbConnect();
 
     const { name, description, image, location, categories } = await req.json();
 

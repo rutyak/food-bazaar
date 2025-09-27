@@ -60,8 +60,6 @@ const Login = () => {
         password: formData.password,
       });
 
-      console.log("result from next-auth login: ", result);
-
       if (result?.error) {
         errorToast("Invalid credentials");
         return;

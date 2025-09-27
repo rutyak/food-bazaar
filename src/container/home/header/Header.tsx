@@ -8,7 +8,6 @@ import foodIcon from "@/assets/restaurant.png";
 import Navbar from "@/components/navbar/Navbar";
 import Image from "next/image";
 import Search from "@/container/search/Search";
-import { HamburgerIcon } from "@chakra-ui/icons";
 import MobileMenu from "@/components/mobileMenu/MobileMenu";
 
 const Header = () => {

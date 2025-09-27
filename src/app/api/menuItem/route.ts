@@ -5,7 +5,6 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   try {
     await dbConnect();
-    console.log("connection established");
 
     const menuItems = await req.json();
 

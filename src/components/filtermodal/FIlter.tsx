@@ -3,13 +3,24 @@ import "./Filter.scss";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { RestaurantType } from "@/types/restaurant";
 
-const Filter = ({ setFilteredCard, filteredCard, allCard }: any) => {
+interface toggleBtnType {
+  all: boolean;
+  pureVeg: boolean;
+  ratings: boolean;
+  fast: boolean;
+  lessThan200: boolean;
+}
+
+interface filteredCardType {
+  setFilteredCard: React.Dispatch<React.SetStateAction<RestaurantType[]>>;
+}
+
+function Filter({ setFilteredCard }: filteredCardType) {
   const restaurants = useSelector((state: RootState) => state.restaurants);
 
-  console.log("restaurants: ", restaurants);
-
-  const [togglebtn, setToggleBtn] = useState<any>({
+  const [togglebtn, setToggleBtn] = useState<toggleBtnType>({
     all: false,
     pureVeg: false,
     ratings: false,
@@ -17,38 +28,38 @@ const Filter = ({ setFilteredCard, filteredCard, allCard }: any) => {
     lessThan200: false,
   });
 
-  const handleFilter = (type: any) => {
+  const handleFilter = (type: string) => {
     setToggleBtn({
       all: false,
       pureVeg: false,
       ratings: false,
       fast: false,
       lessThan200: false,
-      [type]: !togglebtn[type],
+      [type]: !(togglebtn as any)[type],
     });
 
-    let newFilteredCard: any[] = [];
+    let newFilteredCard: RestaurantType[] = [];
 
     switch (type) {
       case "all":
         newFilteredCard = restaurants;
         break;
       case "pureVeg":
-        newFilteredCard = restaurants.filter((card: any) => card?.veg === true);
+        newFilteredCard = restaurants.filter((card: RestaurantType) => card?.veg === true);
         break;
       case "ratings":
-        newFilteredCard = restaurants.filter((card: any) => card?.rating > 4);
+        newFilteredCard = restaurants.filter((card: RestaurantType) => card?.rating > 4);
         break;
       case "fast":
-        newFilteredCard = restaurants.filter((card: any) => {
-          if (card?.rating === "15-20 mins") {
+        newFilteredCard = restaurants.filter((card: RestaurantType) => {
+          if (card?.deliveryTime === "15-20 mins") {
             return card;
           }
         });
         break;
       case "lessThan200":
         newFilteredCard = restaurants.filter(
-          (card: any) => card?.pricefortwo < 200
+          (card: RestaurantType) => card?.pricefortwo < 200
         );
         break;
     }
@@ -101,6 +112,6 @@ const Filter = ({ setFilteredCard, filteredCard, allCard }: any) => {
       </Box>
     </>
   );
-};
+}
 
 export default Filter;

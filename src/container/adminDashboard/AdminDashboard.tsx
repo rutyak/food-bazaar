@@ -18,16 +18,17 @@ import styles from "./AdminDashboard.module.css";
 import RestaurantForm from "./restaurant/RestaurantForm";
 import MenuItemForm from "./menuItem/MenuItemForm";
 import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
+import { DataType } from "@/types/admin";
 
 const handleChangeFactory =
-  (setState: React.Dispatch<React.SetStateAction<any>>) =>
+  (setState: React.Dispatch<React.SetStateAction<DataType>>) =>
   (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => {
     const { id, value, files } = e.target as HTMLInputElement;
-    setState((prev: any) => ({
+    setState((prev: DataType) => ({
       ...prev,
       [id]: files && files.length > 0 ? files[0] : value,
     }));
@@ -39,7 +40,7 @@ function AdminDashboard() {
 
   // States
   const [loading, setLoading] = useState(false);
-  const [restaurantData, setRestaurantData] = useState({
+  const [restaurantData, setRestaurantData] = useState<DataType>({
     name: "",
     description: "",
     image: null,
@@ -47,7 +48,7 @@ function AdminDashboard() {
     categories: "",
   });
 
-  const [menuItems, setMenuItems] = useState([
+  const [menuItems, setMenuItems] = useState<DataType[]>([
     {
       restaurantId: "",
       name: "",
@@ -55,12 +56,15 @@ function AdminDashboard() {
       price: "",
       image: "",
       category: "",
-      isVeg: "true",
+      isVeg: false,
     },
   ]);
 
   // API Submitters
-  const handleSubmit = async (endpoint: string, data: any) => {
+  const handleSubmit = async (
+    endpoint: string,
+    data: DataType | DataType[]
+  ) => {
     setLoading(true);
 
     try {
@@ -123,7 +127,7 @@ function AdminDashboard() {
             price: "",
             image: "",
             category: "",
-            isVeg: "true",
+            isVeg: false,
           },
         ]);
       }

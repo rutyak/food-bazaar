@@ -1,14 +1,15 @@
-import { Box, Text, Heading, Image, Button, useToast } from "@chakra-ui/react";
+import { Box, Text, Heading, Image, Button } from "@chakra-ui/react";
 import "./MenuCard.scss";
 import starIcon from "@/assets/star-icon.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import { addCart } from "@/redux/slices/cartSlice";
 import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
+import { ItemsType, MenuType } from "@/types/menu";
 
-const MenuCard = ({ _id, description, image, name, price, rating }: any) => {
+const MenuCard = ({ _id, description, image, name, price, rating }: ItemsType) => {
   const [quantity, setQuantity] = useState(1);
   const [isExpanded, setIsExpanded] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -18,15 +19,11 @@ const MenuCard = ({ _id, description, image, name, price, rating }: any) => {
 
   const successToast = useSuccessToast();
   const errorToast = useErrorToast();
-  // const cartData = useSelector((store: any) => store.cart.cartItems);
 
-  const handleAddToCart = async (_id: any) => {
+  const handleAddToCart = async (_id: string) => {
     if (status === "unauthenticated") {
       errorToast("Please login to access the cart!!");
     } else {
-      // let itemQuantity = cartData?.find((item: any) => item.id === id);
-
-      // let currentQuantity = itemQuantity?.quantity ?? 0;
 
       const itemDetails = {
         itemId: _id,

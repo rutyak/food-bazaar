@@ -1,27 +1,15 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
-import Carousel from "../../../components/carousel/Carousel";
 import { Heading, Box } from "@chakra-ui/react";
 import "./Body.scss";
 import Filter from "@/components/filtermodal/FIlter";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { setRestaurants } from "@/redux/slices/restaurantSlice";
 import Card from "@/components/card/Card";
 import { useGlobalContext } from "@/context/GlobalContext";
-
-interface restaurant {
-  _id: string;
-  name: string;
-  description: string;
-  image: string;
-  location: string;
-  categories: string[];
-  rating: number;
-  priceForTwo: number;
-}
+import Carousel from "@/components/carousel/Carousel";
+import { RestaurantType } from "@/types/restaurant";
 
 const Body = () => {
   const restaurants = useSelector((state: RootState) => state.restaurants);
@@ -30,12 +18,10 @@ const Body = () => {
   const { city } = useGlobalContext();
   const currCity = city.split(",")[0];
 
-  console.log("currCity: ", currCity);
-
-  const [data, setData] = useState<any>([]);
-  const [isLoading, setIsLoading] = useState<any>(false);
-  const [filteredCard, setFilteredCard] = useState<any[]>(restaurants);
-  const eventRef = useRef<any>(null);
+  const [data, setData] = useState<HTMLDivElement[]>([]);
+  const [filteredCard, setFilteredCard] =
+    useState<RestaurantType[]>(restaurants);
+  // const eventRef = useRef<(event: Event) => void>(null);
 
   const dispatch = useDispatch();
 
@@ -75,7 +61,6 @@ const Body = () => {
   //         `/api/restaurant?lat=${location.lat}&lng=${location.lng}`
   //       );
 
-  //       console.log();
   //       const data = await res.json();
 
   //       const newCards =
@@ -100,11 +85,16 @@ const Body = () => {
 
   // eventRef.current = debounce(handleInfiniteScroll, 100);
 
-  useEffect(() => {
-    addEventListener("scroll", eventRef.current);
+  // eventRef.current = (event: Event) => {
+  //   console.log("Scrolled!", event);
+  // };
 
-    return () => removeEventListener("scroll", eventRef.current);
-  }, []);
+  // useEffect(() => {
+  //   const handler = eventRef.current;
+  //   addEventListener("scroll", handler);
+
+  //   return () => removeEventListener("scroll", handler);
+  // }, []);
 
   return restaurants?.length === 0 ? (
     "Loading..."
@@ -128,11 +118,11 @@ const Body = () => {
         <Heading as="h2" fontSize={["xl", "2xl"]} mb="1rem">
           Restaurants in {currCity}
         </Heading>
-        <Filter setFilteredCard={setFilteredCard} filteredCard={filteredCard} />
+        <Filter setFilteredCard={setFilteredCard} />
         <Box className="restaurant-grid-card">
           {filteredCard?.length > 0 &&
-            filteredCard?.map((data: any) => {
-              return <Card key={data?._id} {...data} grid="grid" />;
+            filteredCard?.map((data: RestaurantType) => {
+              return <Card key={data?._id} {...data} />;
             })}
         </Box>
       </Box>

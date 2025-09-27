@@ -11,7 +11,6 @@ cloudinary.config({
 export async function POST(req: Request) {
   try {
     await dbConnect();
-    console.log("database connected");
 
     const data = await req.formData();
     const file = data.get("file") as File;

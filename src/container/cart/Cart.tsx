@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import {
   Box,
   Button,
   Flex,
   Heading,
-  Image,
   Input,
   Radio,
   RadioGroup,
@@ -21,7 +20,6 @@ import {
   ModalCloseButton,
   useDisclosure,
   Divider,
-  useToast,
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import CartItem from "./cartItem/CartItem";
@@ -29,6 +27,7 @@ import "./Cart.scss";
 import MenuNavbar from "../menu/menuNavbar/MenuNavbar";
 import { RootState } from "@/redux/store";
 import { useErrorToast } from "@/toasts/CustomeToasts";
+import { CartType } from "@/types/cart";
 
 const Cart = () => {
   const cart = useSelector((state: RootState) => state.cart);
@@ -49,7 +48,7 @@ const Cart = () => {
   const estimatedTime = 30;
 
   const calculateSubtotal = () => {
-    const subtotal = cart.reduce((acc: number, item: any) => {
+    const subtotal = cart.reduce((acc: number, item: CartType) => {
       return acc + item.price * item.quantity;
     }, 0);
 
@@ -60,11 +59,11 @@ const Cart = () => {
     return (calculateSubtotal() + deliveryCharge).toFixed(2);
   };
 
-  const handlePaymentMethodChange = (value: any) => {
+  const handlePaymentMethodChange = (value: string) => {
     setPaymentMethod(value);
   };
 
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setBillingDetails((prevDetails) => ({
       ...prevDetails,
@@ -83,7 +82,7 @@ const Cart = () => {
 
   return (
     <>
-      <MenuNavbar cart="cart" />
+      <MenuNavbar/>
       <Box
         p={6}
         m="auto"
@@ -101,8 +100,8 @@ const Cart = () => {
           Your Cart
         </Heading>
         <Stack spacing={4}>
-          {cart?.map((item: any, index: number) => (
-            <CartItem key={item._id + index} item={item} />
+          {cart?.map((item: CartType, index: number) => (
+            <CartItem key={item.itemId + index} item={item} />
           ))}
         </Stack>
         <Box mt={8} p={4} bg="white" borderRadius="md" boxShadow="sm">

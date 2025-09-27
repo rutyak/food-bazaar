@@ -2,14 +2,15 @@ import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import "./SearchList.scss";
 import { AiFillStar } from "react-icons/ai";
 import Link from "next/link";
+import { RestaurantType } from "@/types/restaurant";
 
-const SearchList = ({ resultList }: any) => {
+const SearchList = ({ resultList }: { resultList: RestaurantType[] }) => {
   return (
     <div className="searchList">
       {resultList?.length === 0 ? (
         <li>Not found</li>
       ) : (
-        resultList?.map((list: any) => {
+        resultList?.map((list: RestaurantType) => {
           return (
             <Box key={list?._id}>
               <Link href={`/menu/${list?._id}`} className="searchList-images">

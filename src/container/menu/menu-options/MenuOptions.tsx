@@ -8,10 +8,13 @@ import {
 } from "@chakra-ui/react";
 import MenuCard from "../menu-card/MenuCard";
 import "./MenuOptions.scss";
-import CustomAccordion from "@/components/accordian/CustomAccordion";
+import { ItemsType, MenuType } from "@/types/menu";
 
-const MenuOptions = ({ category, items }: any) => {
-
+interface MenuOptionType {
+  category: string;
+  items: ItemsType[];
+}
+const MenuOptions = ({ category, items }: MenuOptionType) => {
   return (
     <>
       <Accordion allowMultiple bg="white" className="acco-items">
@@ -28,18 +31,9 @@ const MenuOptions = ({ category, items }: any) => {
             </AccordionButton>
           </h2>
           <AccordionPanel>
-            {items?.map((item: any) => (
+            {items?.map((item: ItemsType) => (
               <MenuCard key={item?._id} {...item} />
             ))}
-            {/* {item.categories?.length > 0 &&
-                item?.categories?.map((cat: any, index: number) => {
-                  return (
-                    <CustomAccordion
-                      key={`${cat?.id || "custom-accordion"}-${index}`}
-                      {...cat}
-                    />
-                  );
-                })} */}
           </AccordionPanel>
         </AccordionItem>
       </Accordion>

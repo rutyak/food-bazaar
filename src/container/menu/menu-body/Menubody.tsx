@@ -8,13 +8,18 @@ import { useParams } from "next/navigation";
 import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { CategoryType, MenuType } from "@/types/menu";
+import { Params } from "next/dist/server/request/params";
 
+// interface Params {
+//   id: string;
+// }
 const Menubody = () => {
-  const query = useParams<any>();
+  const query = useParams<Params>();
   const menuData = useSelector((state: RootState) => state.menu);
 
   const menu = menuData?.filter(
-    (data: any) => data.restaurantId?.toString() === query?.id
+    (data: MenuType) => data.restaurantId?.toString() === query?.id
   );
 
   return menu?.length === 0 ? (
@@ -29,7 +34,7 @@ const Menubody = () => {
           <Box mb="23px">
             <Heading size="md" className="title-of-card">
               <Image src={starIcon?.src} alt="rating" />
-              {menu?.[0]?.restaurant?.rating as any} | ₹
+              {menu?.[0]?.restaurant?.rating as number} | ₹
               {menu?.[0]?.restaurant?.pricefortwo} for two
             </Heading>
             <Text py="2" className="cuisine">
@@ -66,19 +71,11 @@ const Menubody = () => {
             </Box>
           </Box>
           <Divider my="4" borderColor="gray.200" />{" "}
-          {/* <Box>
-            <Text className="dist-fees">
-              {" "}
-              {menu[2]?.card?.card?.info?.expectationNotifiers?.[0]?.enrichedText?.replace(
-                /<[^>]*>/g,
-                ""
-              )}
-            </Text>
-          </Box> */}
         </Box>
         <Box className="list-items">
           <>
-            {menu[0]?.categories?.map((data: any, index: number) => {
+            {console.log("menu[0]?.categories: ",menu[0]?.categories)}
+            {menu[0]?.categories?.map((data: CategoryType, index: number) => {
               return (
                 <MenuOptions
                   key={data?.category + index}

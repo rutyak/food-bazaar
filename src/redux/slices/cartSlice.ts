@@ -1,23 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AnyCaaRecord } from "dns";
-
-interface CartItem {
-  _id?: string;
-  itemId: string;
-  name: string;
-  price: number;
-  quantity: number;
-  image: string;
-}
+import { CartType } from "@/types/cart";
 
 const cartSlice = createSlice({
   name: "cartSlice",
-  initialState: [] as CartItem[],
+  initialState: [] as CartType[],
   reducers: {
-    setCarts: (state, action: PayloadAction<CartItem[]>) => {
+    setCarts: (state, action: PayloadAction<CartType[]>) => {
       return action.payload;
     },
-    addCart: (state, action: PayloadAction<CartItem>) => {
+    addCart: (state, action: PayloadAction<CartType>) => {
       const existingItem = state.find(
         (item) => item.itemId === action.payload.itemId
       );
