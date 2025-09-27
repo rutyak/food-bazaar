@@ -11,7 +11,7 @@ import Search from "@/container/search/Search";
 import MobileMenu from "@/components/mobileMenu/MobileMenu";
 
 const Header = () => {
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState<string>("");
 
   return (
     <div className="header">

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CartType } from "@/types/cart";
 
 const cartSlice = createSlice({
-  name: "cartSlice",
+  name: "cart",
   initialState: [] as CartType[],
   reducers: {
     setCarts: (state, action: PayloadAction<CartType[]>) => {

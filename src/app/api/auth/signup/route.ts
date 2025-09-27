@@ -21,11 +21,21 @@ export async function POST(req: Request) {
       );
     }
 
-    if (!validator.isStrongPassword(password)) {
-      return NextResponse.json({
-        message:
-          "Password must be at least 8 character long and include uppercase, lowercase, number, and special character",
-      });
+    if (
+      !validator.isStrongPassword(password, {
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+    ) {
+      return NextResponse.json(
+        {
+          message: "Password must be strong",
+        },
+        { status: 400 }
+      );
     }
 
     const existingUser = await User.findOne({ email });

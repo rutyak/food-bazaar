@@ -53,6 +53,12 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
     e.preventDefault();
     setIsLoading(true);
 
+    if (formData.password !== formData.confirmPassword) {
+      errorToast("Passwords are not matching");
+      setIsLoading(false);
+      return;
+    }
+
     try {
       const res = await fetch("/api/auth/signup", {
         method: "POST",
@@ -120,7 +126,6 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
               value={formData.password}
               onChange={handleChange}
               placeholder="••••••••"
-              minLength={8}
             />
           </FormControl>
 

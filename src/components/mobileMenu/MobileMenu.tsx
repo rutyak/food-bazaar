@@ -1,4 +1,5 @@
 import { RootState } from "@/redux/store";
+import { useErrorToast } from "@/toasts/CustomeToasts";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   IconButton,
@@ -13,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
 
@@ -20,9 +22,21 @@ function MobileMenu() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef<HTMLButtonElement>(null);
 
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const carts = useSelector((state: RootState) => state.cart);
 
+  const errorToast = useErrorToast();
+  const router = useRouter();
+
+  function handleCartClick(e: React.MouseEvent) {
+    e.preventDefault();
+    if (status === "unauthenticated") {
+      errorToast("Please login to access your cart");
+      router.push("/");
+    } else {
+      router.push("/cart");
+    }
+  }
   return (
     <>
       <IconButton
@@ -30,9 +44,9 @@ function MobileMenu() {
         aria-label="Open menu"
         icon={<HamburgerIcon />}
         variant="ghost"
-        color="gray.500"
+        color="white"
         onClick={onOpen}
-        display={{ base: "flex", sm: "none" }} 
+        display={{ base: "flex", sm: "none" }}
         mr={2}
       />
 
@@ -58,7 +72,7 @@ function MobileMenu() {
               <Link href="/help" onClick={onClose}>
                 Help
               </Link>
-              <Link href="/cart" onClick={onClose}>
+              <Link href="/cart" onClick={handleCartClick}>
                 Cart ({carts?.length})
               </Link>
               {session?.user?.role === "admin" && (

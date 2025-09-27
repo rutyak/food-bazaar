@@ -21,16 +21,20 @@ import {
   useDisclosure,
   Divider,
 } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CartItem from "./cartItem/CartItem";
 import "./Cart.scss";
 import MenuNavbar from "../menu/menuNavbar/MenuNavbar";
 import { RootState } from "@/redux/store";
-import { useErrorToast } from "@/toasts/CustomeToasts";
+import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
 import { CartType } from "@/types/cart";
+import axios from "axios";
+import { addOrder } from "@/redux/slices/orderSlice";
 
 const Cart = () => {
   const cart = useSelector((state: RootState) => state.cart);
+
+  console.log("cart in same container: ", cart);
 
   const [paymentMethod, setPaymentMethod] = useState("creditCard");
   const [billingDetails, setBillingDetails] = useState({
@@ -41,8 +45,12 @@ const Cart = () => {
     zipCode: "",
     country: "",
   });
+  const [loading, setLoading] = useState<boolean>(false);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const dispatch = useDispatch();
   const errorToast = useErrorToast();
+  const successToast = useSuccessToast();
 
   const deliveryCharge = 40;
   const estimatedTime = 30;
@@ -80,9 +88,29 @@ const Cart = () => {
     }
   };
 
+  async function handleConfirmPay() {
+    setLoading(true);
+
+    try {
+      const orders = await axios.post("api/order", cart);
+      await axios.delete("api/cart/delete");
+
+      dispatch(addOrder(orders?.data?.allOrders));
+
+      successToast(orders?.data?.message);
+      successToast("Payment successful");
+      onClose();
+    } catch (error: any) {
+      console.error(error.message);
+      errorToast(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <>
-      <MenuNavbar/>
+      <MenuNavbar />
       <Box
         p={6}
         m="auto"
@@ -281,8 +309,8 @@ const Cart = () => {
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={onClose}>
-                Confirm Pay
+              <Button colorScheme="blue" mr={3} onClick={handleConfirmPay}>
+                {loading ? "Processing..." : "Confirm Pay"}
               </Button>
               <Button variant="ghost" onClick={onClose}>
                 Cancel

@@ -25,7 +25,7 @@ export async function POST(
     await existingItem.save();
 
     return NextResponse.json(
-      { message: "Item quantity increased by 1" },
+      { message: "Item quantity increased by one" },
       { status: 200 }
     );
   } catch (error: any) {
