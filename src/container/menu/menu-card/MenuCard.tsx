@@ -1,4 +1,4 @@
-import { Box, Text, Heading, Image, Button } from "@chakra-ui/react";
+import { Box, Text, Heading, Button, Image } from "@chakra-ui/react";
 import "./MenuCard.scss";
 import starIcon from "@/assets/star-icon.svg";
 import { useDispatch } from "react-redux";
@@ -7,9 +7,16 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import { addCart } from "@/redux/slices/cartSlice";
 import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
-import { ItemsType, MenuType } from "@/types/menu";
+import { ItemsType } from "@/types/menu";
 
-const MenuCard = ({ _id, description, image, name, price, rating }: ItemsType) => {
+const MenuCard = ({
+  _id,
+  description,
+  image,
+  name,
+  price,
+  rating,
+}: ItemsType) => {
   const [quantity, setQuantity] = useState(1);
   const [isExpanded, setIsExpanded] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -24,7 +31,6 @@ const MenuCard = ({ _id, description, image, name, price, rating }: ItemsType) =
     if (status === "unauthenticated") {
       errorToast("Please login to access the cart!!");
     } else {
-
       const itemDetails = {
         itemId: _id,
         name,
@@ -69,7 +75,7 @@ const MenuCard = ({ _id, description, image, name, price, rating }: ItemsType) =
           </Box>
           <Box className="item-rating" mb={2}>
             <>
-              <Image src={starIcon} width={15} height={15} alt="rating" />
+              <img src={starIcon?.src} alt="rating" style={{ width: "16px" }} />
               <Text fontSize="sm">{rating}</Text>
             </>
           </Box>

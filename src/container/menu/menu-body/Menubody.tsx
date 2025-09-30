@@ -23,7 +23,9 @@ const Menubody = () => {
   );
 
   return menu?.length === 0 ? (
-    "Loading..."
+    <Box textAlign="center" textColor="gray" fontSize="20px">
+      Loading...
+    </Box>
   ) : (
     <>
       <div className="card-menu">
@@ -33,7 +35,7 @@ const Menubody = () => {
         <Box mt="4" className="restau-desc">
           <Box mb="23px">
             <Heading size="md" className="title-of-card">
-              <Image src={starIcon?.src} alt="rating" />
+              <img src={starIcon?.src} alt="rating" style={{ width: "17px" }} />
               {menu?.[0]?.restaurant?.rating as number} | ₹
               {menu?.[0]?.restaurant?.pricefortwo} for two
             </Heading>
@@ -74,7 +76,7 @@ const Menubody = () => {
         </Box>
         <Box className="list-items">
           <>
-            {console.log("menu[0]?.categories: ",menu[0]?.categories)}
+            {console.log("menu[0]?.categories: ", menu[0]?.categories)}
             {menu[0]?.categories?.map((data: CategoryType, index: number) => {
               return (
                 <MenuOptions

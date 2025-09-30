@@ -18,6 +18,8 @@ import {
   Divider,
   HStack,
   Icon,
+  Flex,
+  Image,
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import { signOut } from "next-auth/react";
@@ -25,8 +27,51 @@ import { FiLogOut, FiUser, FiShoppingCart } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
-const MyDrawer = () => {
+interface OrderCardTypes {
+  name: string;
+  price: number;
+  image: string;
+}
+
+function OrderCard({ name, price, image }: OrderCardTypes) {
+  return (
+    <Flex
+      alignItems="center"
+      justifyContent="space-between"
+      borderWidth="1px"
+      borderRadius="lg"
+      overflow="hidden"
+      p={3}
+      boxShadow="md"
+      _hover={{ boxShadow: "lg", transform: "scale(1.02)" }}
+      transition="all 0.2s"
+    >
+      <Flex alignItems="center" gap="10px">
+        <Image
+          src={image}
+          alt={name}
+          borderRadius="md"
+          w="70px"
+          h="70px"
+          objectFit="cover"
+        />
+        <Text fontWeight="semibold" fontSize="14px" mb={1}>
+          {name}
+        </Text>
+      </Flex>
+      <Text color="gray.600">₹{price}</Text>
+    </Flex>
+  );
+}
+
+const Profie = () => {
+  const orders = useSelector((state: RootState) => state.order);
+
+  console.log("orders: ", orders);
+
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -77,7 +122,7 @@ const MyDrawer = () => {
         size="md"
       >
         <DrawerOverlay backdropFilter="blur(5px)" />
-        <DrawerContent bg="gray.50" borderRadius="lg" overflow="hidden">
+        <DrawerContent bg="gray.50" overflow="hidden">
           <DrawerCloseButton size="lg" color="white" zIndex={2} />
 
           <DrawerHeader
@@ -144,7 +189,17 @@ const MyDrawer = () => {
                 </HStack>
                 <Divider my={3} />
                 <Text color="gray.500">
-                  Your recent orders will appear here
+                  {orders.length > 0
+                    ? orders.map((item) => (
+                        <Box key={item.itemId} mb={4}>
+                          <OrderCard
+                            name={item.name}
+                            price={item.price}
+                            image={item.image}
+                          />
+                        </Box>
+                      ))
+                    : "No orders found"}{" "}
                 </Text>
               </Box>
             </VStack>
@@ -172,4 +227,4 @@ const MyDrawer = () => {
   );
 };
 
-export default MyDrawer;
+export default Profie;

@@ -2,13 +2,13 @@ import React from "react";
 import "./Navbar.scss";
 import Link from "next/link";
 import Login from "@/container/auth/Login";
-import { Box, Toast, useToast } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
-import MyDrawer from "../drawer/Drawer";
+import MyDrawer from "../profile/Profie";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { RootState } from "@/redux/store";
-import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
+import { useErrorToast } from "@/toasts/CustomeToasts";
 
 const Navbar = () => {
   const carts = useSelector((state: RootState) => state.cart);
@@ -28,6 +28,7 @@ const Navbar = () => {
       router.push("/cart");
     }
   }
+
   return (
     <ul className="navbar">
       <Box

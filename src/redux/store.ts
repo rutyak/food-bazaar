@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 import restaurantReducer from "./slices/restaurantSlice";
 import menuReducer from "./slices/menuSlice";
 import cartReducer from "./slices/cartSlice";
+import orderReducer from "./slices/orderSlice";
 
 interface MenuType {
   restaurantId: string;
@@ -40,6 +41,7 @@ const rootReducer = combineReducers({
   restaurants: restaurantReducer,
   menu: menuReducer,
   cart: cartReducer,
+  order: orderReducer,
 });
 
 // Use type assertion to fix the TypeScript error

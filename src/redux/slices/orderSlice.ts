@@ -2,11 +2,11 @@ import { CartType } from "@/types/cart";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const orderSlice = createSlice({
-  name: "orders",
+  name: "order",
   initialState: [] as CartType[],
   reducers: {
     addOrder: (state, action: PayloadAction<CartType[]>) => {
-      return action.payload;
+      state.push(...action.payload);
     },
     clearOrders: () => {
       return [];
@@ -14,6 +14,6 @@ const orderSlice = createSlice({
   },
 });
 
-export const { addOrder } = orderSlice.actions;
+export const { addOrder, clearOrders } = orderSlice.actions;
 
 export default orderSlice.reducer;

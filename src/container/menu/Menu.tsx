@@ -7,7 +7,7 @@ import MenuNavbar from "./menuNavbar/MenuNavbar";
 const Menu = () => {
   return (
     <div className="menu">
-      <MenuNavbar cartLen={2} />
+      <MenuNavbar />
       <Menubody />
     </div>
   );

@@ -29,7 +29,8 @@ import { RootState } from "@/redux/store";
 import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
 import { CartType } from "@/types/cart";
 import axios from "axios";
-import { addOrder } from "@/redux/slices/orderSlice";
+import { addOrder, clearOrders } from "@/redux/slices/orderSlice";
+import { removeAllCart } from "@/redux/slices/cartSlice";
 
 const Cart = () => {
   const cart = useSelector((state: RootState) => state.cart);
@@ -94,8 +95,10 @@ const Cart = () => {
     try {
       const orders = await axios.post("api/order", cart);
       await axios.delete("api/cart/delete");
+      
+      dispatch(addOrder(orders?.data?.allOrders?.items));
 
-      dispatch(addOrder(orders?.data?.allOrders));
+      dispatch(removeAllCart());
 
       successToast(orders?.data?.message);
       successToast("Payment successful");

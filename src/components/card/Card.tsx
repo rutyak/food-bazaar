@@ -3,8 +3,8 @@ import "./Card.scss";
 
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { Flex, Text } from "@chakra-ui/react";
+import NextImage from "next/image";
+import { Flex, Image, Text } from "@chakra-ui/react";
 import { RestaurantType } from "@/types/restaurant";
 
 const Card = ({
@@ -16,23 +16,28 @@ const Card = ({
   categories,
   rating,
 }: RestaurantType) => {
-  
   return (
     <Link href={`/menu/${_id}`} style={{ textDecoration: "none" }}>
       <div className="grid-card">
         <div className="card-img">
-          <Image src={image} width={250} height={182} alt="card-image" />
+          {/* Restaurant image → Next.js Image */}
+          <NextImage
+            src={image}
+            width={250}
+            height={182}
+            alt={name}
+            className="restaurant-img"
+          />
         </div>
-        {!false && (
-          <div className="info">
-            <h2 className="title">{name}</h2>
-            <Flex className="rating" gap={5} alignItems="center">
-              <Image src={starIcon} width={15} height={15} alt="rating" />
-              <Text fontSize={13}>{rating}</Text>
-            </Flex>
-            <p className="cuisines">{categories?.join(", ")}</p>
-          </div>
-        )}
+        <div className="info">
+          <h2 className="title">{name}</h2>
+          <Flex className="rating" gap={2} alignItems="center">
+            {/* Star icon → Chakra Image is fine */}
+            <img src={starIcon?.src} alt="rating" style={{ width: "14px" }} />
+            <Text fontSize="13px">{rating}</Text>
+          </Flex>
+          <p className="cuisines">{categories?.join(", ")}</p>
+        </div>
       </div>
     </Link>
   );

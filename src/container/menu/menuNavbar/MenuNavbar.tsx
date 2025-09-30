@@ -3,7 +3,7 @@
 import { Box, Button, Heading } from "@chakra-ui/react";
 import "./MenuNavbar.scss";
 import Login from "@/container/auth/Login";
-import Drawer from "@/components/drawer/Drawer";
+import Drawer from "@/components/profile/Profie";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useSelector } from "react-redux";
@@ -54,15 +54,13 @@ const MenuNavbar = () => {
           </Heading>
         </Box>
         <Box display="flex" gap="25px" alignItems="center" justifyContent="end">
-          {!carts && (
-            <Button
-              colorScheme="teal"
-              variant="ghost"
-              onClick={handleCartRedirect}
-            >
-              Cart ({cartsSize})
-            </Button>
-          )}
+          <Button
+            colorScheme="teal"
+            variant="ghost"
+            onClick={handleCartRedirect}
+          >
+            Cart ({cartsSize})
+          </Button>
           <Button
             colorScheme="teal"
             variant="ghost"
