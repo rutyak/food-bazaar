@@ -8,13 +8,21 @@ import {
 } from "@chakra-ui/react";
 import MenuCard from "../menu-card/MenuCard";
 import "./MenuOptions.scss";
-import { ItemsType, MenuType } from "@/types/menu";
+import { ItemsType } from "@/types/menu";
 
 interface MenuOptionType {
   category: string;
   items: ItemsType[];
 }
 const MenuOptions = ({ category, items }: MenuOptionType) => {
+  function onEdit() {
+    console.log("menu onEdit clicked");
+  }
+
+  function onDelete() {
+    console.log("menu onDelete clicked");
+  }
+
   return (
     <>
       <Accordion allowMultiple bg="white" className="acco-items">
@@ -32,7 +40,12 @@ const MenuOptions = ({ category, items }: MenuOptionType) => {
           </h2>
           <AccordionPanel>
             {items?.map((item: ItemsType) => (
-              <MenuCard key={item?._id} {...item} />
+              <MenuCard
+                key={item?._id}
+                {...item}
+                onEdit={onEdit}
+                onDelete={onDelete}
+              />
             ))}
           </AccordionPanel>
         </AccordionItem>

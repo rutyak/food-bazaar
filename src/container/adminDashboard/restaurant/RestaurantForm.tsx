@@ -1,13 +1,10 @@
 import { DataType } from "@/types/admin";
 import {
   Button,
-  FormControl,
-  FormLabel,
-  Input,
-  Textarea,
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
+import FormInput from "@/components/formInput/FormInput";
 
 interface RestaurantFormType {
   data: DataType;
@@ -19,6 +16,11 @@ interface RestaurantFormType {
   loading: boolean;
 }
 
+interface ItemType {
+  label: string;
+  id: keyof DataType;
+}
+
 function RestaurantForm({
   data,
   setData,
@@ -27,45 +29,27 @@ function RestaurantForm({
   loading,
 }: RestaurantFormType) {
   const handleChange = handleChangeFactory(setData);
+
+  const fields: ItemType[] = [
+    { label: "Name", id: "name" },
+    { label: "Description", id: "description" },
+    { label: "Image", id: "image" },
+    { label: "Location", id: "location" },
+    { label: "Rating", id: "rating" },
+    { label: "Categories (comma separated)", id: "categories" },
+  ];
+
   return (
     <VStack spacing={4} align="stretch">
-      <FormControl isRequired>
-        <FormLabel>Name</FormLabel>
-        <Input id="name" value={data.name} onChange={handleChange} />
-      </FormControl>
-      <FormControl>
-        <FormLabel>Description</FormLabel>
-        <Textarea
-          id="description"
-          value={data.description}
-          onChange={handleChange}
+      {fields.map((item: ItemType) => (
+        <FormInput
+          key={item.id}
+          label={item.label}
+          id={item.id}
+          value={data[item.id] as any}
+          handleChange={handleChange}
         />
-      </FormControl>
-      <FormControl>
-        <FormLabel>Image</FormLabel>
-        <Input
-          id="image"
-          type="file"
-          accept="image/*"
-          onChange={handleChange}
-        />
-      </FormControl>
-      <FormControl isRequired>
-        <FormLabel>Location</FormLabel>
-        <Input id="location" value={data.location} onChange={handleChange} />
-      </FormControl>
-      <FormControl>
-        <FormLabel>Ratings</FormLabel>
-        <Input id="rating" value={data.rating} onChange={handleChange} />
-      </FormControl>
-      <FormControl>
-        <FormLabel>Categories (comma separated)</FormLabel>
-        <Input
-          id="categories"
-          value={data.categories}
-          onChange={handleChange}
-        />
-      </FormControl>
+      ))}
       <Button colorScheme="blue" onClick={onSubmit}>
         {loading ? "Saving..." : "Save Restaurant"}
       </Button>

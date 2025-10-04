@@ -1,3 +1,4 @@
+import FormInput from "@/components/formInput/FormInput";
 import { DataType } from "@/types/admin";
 import {
   Button,
@@ -15,10 +16,12 @@ interface MenuItemFormType {
   setData: React.Dispatch<React.SetStateAction<DataType[]>>;
 }
 
-function MenuItemForm({
-  data,
-  setData,
-}: MenuItemFormType) {
+interface ItemType {
+  label: string;
+  id: keyof DataType;
+}
+
+function MenuItemForm({ data, setData }: MenuItemFormType) {
   function handleRemoveMenuItem(index: number) {
     const filteredItems = data.filter((_, i) => i !== index);
     setData(filteredItems);
@@ -39,6 +42,16 @@ function MenuItemForm({
       )
     );
   }
+
+  const fields: ItemType[] = [
+    { label: "Restaurant ID", id: "restaurantId" },
+    { label: "Name", id: "name" },
+    { label: "Description", id: "description" },
+    { label: "Price", id: "price" },
+    { label: "Image", id: "image" },
+    { label: "Category", id: "category" },
+    { label: "Rating", id: "rating" },
+  ];
 
   return (
     <>
@@ -63,70 +76,16 @@ function MenuItemForm({
                 Remove
               </Button>
             )}
-            <FormControl isRequired>
-              <FormLabel>Restaurant ID</FormLabel>
-              <Input
-                id="restaurantId"
-                value={menuItem.restaurantId || ""}
-                onChange={(e) => handleChange(e, idx)}
-              />
-            </FormControl>
 
-            <FormControl isRequired>
-              <FormLabel>Name</FormLabel>
-              <Input
-                id="name"
-                value={menuItem.name || ""}
-                onChange={(e) => handleChange(e, idx)}
+            {fields?.map((item: ItemType) => (
+              <FormInput
+                key={item.id}
+                label={item.label}
+                id={item.id}
+                value={menuItem[item.id] as any}
+                handleChange={handleChange}
               />
-            </FormControl>
-
-            <FormControl>
-              <FormLabel>Description</FormLabel>
-              <Textarea
-                id="description"
-                value={menuItem.description || ""}
-                onChange={(e) => handleChange(e, idx)}
-              />
-            </FormControl>
-
-            <FormControl isRequired>
-              <FormLabel>Price</FormLabel>
-              <Input
-                type="number"
-                id="price"
-                value={menuItem.price || ""}
-                onChange={(e) => handleChange(e, idx)}
-              />
-            </FormControl>
-
-            <FormControl>
-              <FormLabel>Image</FormLabel>
-              <Input
-                id="image"
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleChange(e, idx)}
-              />
-            </FormControl>
-
-            <FormControl isRequired>
-              <FormLabel>Category</FormLabel>
-              <Input
-                id="category"
-                value={menuItem.category || ""}
-                onChange={(e) => handleChange(e, idx)}
-              />
-            </FormControl>
-
-            <FormControl>
-              <FormLabel>Ratings</FormLabel>
-              <Input
-                id="rating"
-                value={menuItem.rating}
-                onChange={(e) => handleChange(e, idx)}
-              />
-            </FormControl>
+            ))}
 
             <FormControl>
               <FormLabel>Is Vegetarian?</FormLabel>

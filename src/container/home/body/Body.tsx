@@ -96,6 +96,14 @@ const Body = () => {
   //   return () => removeEventListener("scroll", handler);
   // }, []);
 
+  function onEdit() {
+    console.log("On edit clicked");
+  }
+
+  function onDelete() {
+    console.log("On delete clicked");
+  }
+
   return restaurants?.length === 0 ? (
     "Loading..."
   ) : (
@@ -122,7 +130,14 @@ const Body = () => {
         <Box className="restaurant-grid-card">
           {filteredCard?.length > 0 &&
             filteredCard?.map((data: RestaurantType) => {
-              return <Card key={data?._id} {...data} />;
+              return (
+                <Card
+                  key={data?._id}
+                  {...data}
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                />
+              );
             })}
         </Box>
       </Box>

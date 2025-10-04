@@ -18,6 +18,8 @@ export interface ItemsType {
   rating: number;
   restaurant: RestaurantType;
   restaurantId: string;
+  onEdit?: (id: string) => void;
+  onDelete?: (id: string) => void;
 }
 
 export interface CategoryType {

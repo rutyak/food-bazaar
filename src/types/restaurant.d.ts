@@ -9,4 +9,6 @@ export interface RestaurantType {
   pricefortwo: number;
   veg: boolean;
   deliveryTime: string;
+  onEdit?: (id: string) => void;
+  onDelete?: (id: string) => void;
 }
