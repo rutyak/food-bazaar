@@ -2,10 +2,7 @@ import { dbConnect } from "@/lib/dbConnect";
 import Cart from "@/lib/models/Cart";
 import { NextResponse } from "next/server";
 
-export async function POST(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
+export async function POST(req: Request, { params }: any) {
   try {
     await dbConnect();
 
