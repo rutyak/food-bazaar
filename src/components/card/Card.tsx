@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Flex, Text, IconButton } from "@chakra-ui/react";
 import { MdDeleteOutline, MdEdit } from "react-icons/md";
 import { RestaurantType } from "@/types/restaurant";
+import { useSession } from "next-auth/react";
 
 const Card = ({
   _id,
@@ -19,34 +20,38 @@ const Card = ({
   onEdit,
   onDelete,
 }: RestaurantType) => {
+  const { data: sessesion, status } = useSession();
+  
   return (
     <div className="grid-card">
-      <Flex
-        position="absolute"
-        top="8px"
-        right="8px"
-        mt={2}
-        mr={2}
-        gap={2}
-        zIndex={10}
-      >
-        <IconButton
-          aria-label="Edit item"
-          icon={<MdEdit size={16} />}
-          size="sm"
-          colorScheme="yellow"
-          variant="solid"
-          onClick={() => onEdit?.(_id as string)}
-        />
-        <IconButton
-          aria-label="Delete item"
-          icon={<MdDeleteOutline size={16} />}
-          size="sm"
-          colorScheme="red"
-          variant="solid"
-          onClick={() => onDelete?.(_id as string)}
-        />
-      </Flex>
+      {sessesion?.user.role === "admin" && (
+        <Flex
+          position="absolute"
+          top="8px"
+          right="8px"
+          mt={2}
+          mr={2}
+          gap={2}
+          zIndex={10}
+        >
+          <IconButton
+            aria-label="Edit item"
+            icon={<MdEdit size={16} />}
+            size="sm"
+            colorScheme="yellow"
+            variant="solid"
+            onClick={() => onEdit?.(_id as string)}
+          />
+          <IconButton
+            aria-label="Delete item"
+            icon={<MdDeleteOutline size={16} />}
+            size="sm"
+            colorScheme="red"
+            variant="solid"
+            onClick={() => onDelete?.(_id as string)}
+          />
+        </Flex>
+      )}
       <Link href={`/menu/${_id}`} style={{ textDecoration: "none" }}>
         <div className="card-img">
           <Image

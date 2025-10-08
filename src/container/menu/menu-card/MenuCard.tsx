@@ -28,6 +28,7 @@ const MenuCard = ({
   onEdit,
   onDelete,
 }: ItemsType) => {
+  const { data: session } = useSession();
   const [isExpanded, setIsExpanded] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -42,6 +43,7 @@ const MenuCard = ({
       errorToast("Please login to access the cart!!");
     } else {
       const itemDetails = {
+        userId: session?.user.id,
         itemId: _id,
         name,
         price,

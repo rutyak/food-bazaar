@@ -31,11 +31,13 @@ import { CartType } from "@/types/cart";
 import axios from "axios";
 import { addOrder, clearOrders } from "@/redux/slices/orderSlice";
 import { removeAllCart } from "@/redux/slices/cartSlice";
+import { useSession } from "next-auth/react";
 
 const Cart = () => {
-  const cart = useSelector((state: RootState) => state.cart);
+  const { data: session } = useSession();
+  console.log("sessions data in cart: ", session);
 
-  console.log("cart in same container: ", cart);
+  const cart = useSelector((state: RootState) => state.cart);
 
   const [paymentMethod, setPaymentMethod] = useState("creditCard");
   const [billingDetails, setBillingDetails] = useState({
@@ -93,9 +95,14 @@ const Cart = () => {
     setLoading(true);
 
     try {
-      const orders = await axios.post("api/order", cart);
+      const data = await axios.post("api/order", cart);
       await axios.delete("api/cart/delete");
-      
+
+      const orders = data?.data?.allOrders?.items;
+
+      const userOrders = orders?.filter(
+        (item: CartType) => item?.userId === session?.user.id
+      );
       dispatch(addOrder(orders?.data?.allOrders?.items));
 
       dispatch(removeAllCart());

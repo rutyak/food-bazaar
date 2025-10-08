@@ -188,7 +188,7 @@ const Profie = () => {
                   <Text fontWeight="medium">My Orders</Text>
                 </HStack>
                 <Divider my={3} />
-                <Text color="gray.500">
+                <Box color="gray.500">
                   {orders.length > 0
                     ? orders.map((item) => (
                         <Box key={item.itemId} mb={4}>
@@ -200,7 +200,7 @@ const Profie = () => {
                         </Box>
                       ))
                     : "No orders found"}{" "}
-                </Text>
+                </Box>
               </Box>
             </VStack>
           </DrawerBody>

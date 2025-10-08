@@ -4,9 +4,7 @@ import {
   Button,
   FormControl,
   FormLabel,
-  Input,
   Select,
-  Textarea,
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
@@ -83,7 +81,9 @@ function MenuItemForm({ data, setData }: MenuItemFormType) {
                 label={item.label}
                 id={item.id}
                 value={menuItem[item.id] as any}
-                handleChange={handleChange}
+                handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleChange(e, idx)
+                }
               />
             ))}
 

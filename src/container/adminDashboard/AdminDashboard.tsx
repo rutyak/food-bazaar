@@ -68,6 +68,8 @@ function AdminDashboard() {
   ) => {
     setLoading(true);
 
+    console.log("menuItems in frontend: ", menuItems);
+
     try {
       if (Array.isArray(data)) {
         const uploadedItems = [];
@@ -86,6 +88,8 @@ function AdminDashboard() {
           }
           uploadedItems.push({ ...item, image: imageUrl });
         }
+
+        console.log("uploadedItems in frontend: ", uploadedItems);
 
         const res = await axios.post(`/api/${endpoint}`, uploadedItems);
 
@@ -206,10 +210,7 @@ function AdminDashboard() {
             </TabPanel>
 
             <TabPanel>
-              <MenuItemForm
-                data={menuItems}
-                setData={setMenuItems}
-              />
+              <MenuItemForm data={menuItems} setData={setMenuItems} />
 
               {menuItems.length > 0 && (
                 <>

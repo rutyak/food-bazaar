@@ -6,9 +6,10 @@ export async function POST(req: Request) {
   try {
     await dbConnect();
 
-    const { itemId, name, price, image, isVeg, quantity } = await req.json();
+    const { userId, itemId, name, price, image, isVeg, quantity } =
+      await req.json();
 
-    if (!itemId || !name || !price || !image || !quantity) {
+    if (!userId || !itemId || !name || !price || !image || !quantity) {
       return NextResponse.json(
         { message: "All fields required" },
         { status: 400 }

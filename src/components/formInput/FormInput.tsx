@@ -23,7 +23,7 @@ function FormInput({ label, id, value, handleChange }: FormInputType) {
       return (
         <FormControl>
           <FormLabel>{label}</FormLabel>
-          <Textarea id={id} value={value as string} onChange={handleChange} />
+          <Textarea id={id} value={value} onChange={handleChange} />
         </FormControl>
       );
 

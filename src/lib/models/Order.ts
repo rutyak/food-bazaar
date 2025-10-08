@@ -5,6 +5,10 @@ const orderSchema = new mongoose.Schema(
     items: {
       type: [
         {
+          userId: {
+            type: String,
+            ref: "User",
+          },
           itemId: { type: String },
           name: { type: String },
           price: { type: Number },
