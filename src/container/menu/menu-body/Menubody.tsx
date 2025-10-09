@@ -1,6 +1,6 @@
 "use client";
 
-import { Heading, Text, Box, Image, Divider } from "@chakra-ui/react";
+import { Heading, Text, Box, Divider } from "@chakra-ui/react";
 import MenuOptions from "../menu-options/MenuOptions";
 import starIcon from "@/assets/star-icon.svg";
 import Footer from "@/container/footer/Footer";
@@ -9,13 +9,14 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { CategoryType, MenuType } from "@/types/menu";
-import { Params } from "next/dist/server/request/params";
 
-// interface Params {
-//   id: string;
-// }
+// Define your own Params interface
+interface Params {
+  id: string;
+}
+
 const Menubody = () => {
-  const query = useParams<Params>();
+  const query = useParams() as unknown as Params;
   const menuData = useSelector((state: RootState) => state.menu);
 
   const menu = menuData?.filter(
@@ -23,7 +24,7 @@ const Menubody = () => {
   );
 
   return menu?.length === 0 ? (
-    <Box textAlign="center" textColor="gray" fontSize="20px">
+    <Box textAlign="center" color="gray" fontSize="20px">
       Loading...
     </Box>
   ) : (
@@ -35,8 +36,12 @@ const Menubody = () => {
         <Box mt="4" className="restau-desc">
           <Box mb="23px">
             <Heading size="md" className="title-of-card">
-              <img src={starIcon?.src} alt="rating" style={{ width: "17px" }} />
-              {menu?.[0]?.restaurant?.rating as number} | ₹
+              <img
+                src={starIcon?.src}
+                alt="rating"
+                style={{ width: "17px" }}
+              />
+              {menu?.[0]?.restaurant?.rating} | ₹
               {menu?.[0]?.restaurant?.pricefortwo} for two
             </Heading>
             <Text py="2" className="cuisine">
@@ -72,21 +77,16 @@ const Menubody = () => {
               <Text fontSize="14px">45 - 50</Text>
             </Box>
           </Box>
-          <Divider my="4" borderColor="gray.200" />{" "}
+          <Divider my="4" borderColor="gray.200" />
         </Box>
         <Box className="list-items">
-          <>
-            {console.log("menu[0]?.categories: ", menu[0]?.categories)}
-            {menu[0]?.categories?.map((data: CategoryType, index: number) => {
-              return (
-                <MenuOptions
-                  key={data?.category + index}
-                  category={data.category}
-                  items={data.items}
-                />
-              );
-            })}
-          </>
+          {menu[0]?.categories?.map((data: CategoryType, index: number) => (
+            <MenuOptions
+              key={data?.category + index}
+              category={data.category}
+              items={data.items}
+            />
+          ))}
         </Box>
       </div>
       <Footer />
