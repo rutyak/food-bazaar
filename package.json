@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@auth/core": "^0.39.0",
-    "@auth/mongodb-adapter": "^3.9.1",
     "@chakra-ui/icons": "^2.2.4",
     "@chakra-ui/react": "2.10.7",
     "@chakra-ui/styled-system": "^2.12.0",
