@@ -29,6 +29,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/container/menu/menu-card/MenuCard.js"
-  ],
+, "next.config.js"  ],
   "exclude": ["node_modules"]
 }
