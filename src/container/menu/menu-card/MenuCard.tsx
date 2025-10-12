@@ -71,24 +71,26 @@ const MenuCard = ({
   return (
     <>
       <Box className="item-card" pb={10} pt={5}>
-        <Flex gap={2} w="100%">
-          <IconButton
-            aria-label="Edit item"
-            icon={<MdEdit size={16} />}
-            size="sm"
-            colorScheme="yellow"
-            variant="solid"
-            onClick={() => onEdit?.(_id as string)}
-          />
-          <IconButton
-            aria-label="Delete item"
-            icon={<MdDeleteOutline size={16} />}
-            size="sm"
-            colorScheme="red"
-            variant="solid"
-            onClick={() => onDelete?.(_id as string)}
-          />
-        </Flex>
+        {session?.user.role === "admin" && (
+          <Flex gap={2} w="100%">
+            <IconButton
+              aria-label="Edit item"
+              icon={<MdEdit size={16} />}
+              size="sm"
+              colorScheme="yellow"
+              variant="solid"
+              onClick={() => onEdit?.(_id as string)}
+            />
+            <IconButton
+              aria-label="Delete item"
+              icon={<MdDeleteOutline size={16} />}
+              size="sm"
+              colorScheme="red"
+              variant="solid"
+              onClick={() => onDelete?.(_id as string)}
+            />
+          </Flex>
+        )}
         <Flex width="100%" justifyContent="space-between" alignItems="center">
           <Box className="card-text" mb={4}>
             <Box mb={2}>
