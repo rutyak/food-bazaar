@@ -143,13 +143,16 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
           {/* New Role Selection */}
           <FormControl isRequired>
             <FormLabel htmlFor="role">Role</FormLabel>
-            <Select id="role" value={formData.role} onChange={handleChange}>
-              <option value="customer" color="black">
-                Customer
-              </option>
-              <option value="admin" color="black">
-                Admin
-              </option>
+            <Select
+              id="role"
+              w="100%"
+              value={formData.role}
+              onChange={handleChange}
+              color="black"
+              bg="white"
+            >
+              <option value="customer">Customer</option>
+              <option value="admin">Admin</option>
             </Select>
           </FormControl>
 
