@@ -24,11 +24,9 @@ import { CartType } from "@/types/cart";
 import axios from "axios";
 import { addOrder } from "@/redux/slices/orderSlice";
 import { removeAllCart } from "@/redux/slices/cartSlice";
-import { useSession } from "next-auth/react";
 import PaymentModal from "@/components/customeModal/PaymentModal";
 
 const Cart = () => {
-  const { data: session } = useSession();
   const cart = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch();
 

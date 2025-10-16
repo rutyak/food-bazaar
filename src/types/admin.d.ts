@@ -6,7 +6,7 @@ export interface DataType {
   description?: string;
   image?: ImageType | null;
   location?: string;
-  categories?: string;
+  categories?: string | string[];
   category?: string;
   restaurantId?: string;
   rating?: number;

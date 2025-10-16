@@ -14,17 +14,17 @@ import { MdDeleteOutline } from "react-icons/md";
 import { FocusableElement } from "@chakra-ui/utils";
 
 interface DeleteAlertProps {
-  onDelete: () => void;
+  id: string;
 }
 
-const DeleteAlert: React.FC<DeleteAlertProps> = ({ onDelete }) => {
+const DeleteAlert: React.FC<DeleteAlertProps> = ({ id }: DeleteAlertProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef<any>(null);
 
   const handleDelete = () => {
-    onDelete();
     onClose();
   };
+
 
   return (
     <>

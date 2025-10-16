@@ -36,17 +36,17 @@ const Card = ({
           gap={2}
           zIndex={10}
         >
-          <EditModal onEdit={() => onEdit?.(_id as string)} />
-          <DeleteAlert onDelete={() => onDelete?.(_id as string)} />
+          <EditModal id={_id as string} />
+          <DeleteAlert id={_id as string} />
         </Flex>
       )}
       <Link href={`/menu/${_id}`} style={{ textDecoration: "none" }}>
         <div className="card-img">
           <Image
-            src={image}
+            src={image as string}
             width={250}
             height={182}
-            alt={name}
+            alt={name as string}
             className="restaurant-img"
           />
         </div>

@@ -6,9 +6,19 @@ export async function POST(req: Request) {
   try {
     await dbConnect();
 
-    const { name, description, image, location, categories } = await req.json();
+    const { name, description, image, location, categories, rating } =
+      await req.json();
 
-    if (!name || !description || !image || !location || !categories) {
+    console.log("description: ", description);
+
+    if (
+      !name ||
+      !description ||
+      !image ||
+      !location ||
+      !categories ||
+      !rating
+    ) {
       throw new Error("All fields required");
     }
 

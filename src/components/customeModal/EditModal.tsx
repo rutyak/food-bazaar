@@ -1,5 +1,8 @@
 import RestaurantForm from "@/container/adminDashboard/restaurant/RestaurantForm";
+import { RootState } from "@/redux/store";
+import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
 import { DataType } from "@/types/admin";
+import { RestaurantType } from "@/types/restaurant";
 import {
   IconButton,
   Modal,
@@ -10,23 +13,32 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
+import axios from "axios";
 import React, { useState } from "react";
 import { MdEdit } from "react-icons/md";
+import { useSelector } from "react-redux";
 
 interface EditModalType {
-  onEdit: () => void;
+  id: string;
 }
 
-function EditModal({ onEdit }: EditModalType) {
+function EditModal({ id }: EditModalType) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const errorToast = useErrorToast();
+  const successToast = useSuccessToast();
+
+  const allRestaurants = useSelector((state: RootState) => state?.restaurants);
+  const restaurant = allRestaurants?.filter((restau) => restau._id === id);
+
+  console.log("restaurant from redux :", restaurant, id);
 
   const [loading, setLoading] = useState(false);
   const [restaurantData, setRestaurantData] = useState<DataType>({
-    name: "",
-    description: "",
+    name: restaurant[0].name,
+    description: restaurant[0].description,
     image: null,
-    location: "",
-    categories: "",
+    location: restaurant[0].location,
+    categories: restaurant[0].categories,
   });
 
   const [menuItems, setMenuItems] = useState<DataType[]>([
@@ -42,13 +54,22 @@ function EditModal({ onEdit }: EditModalType) {
     },
   ]);
 
-  function handleEdit() {
-    onClose();
-    onEdit();
-  }
+  async function handleRestaurantEdit() {
+    console.log("submit clicked: ", restaurantData.image);
 
-  function handleSubmit(type: string, data: any) {
-    console.log("submit clicked: ", data);
+    try {
+      // const formData = new FormData();
+      // formData.append("file", restaurantDat.image);
+
+      // const imageRes = await axios.post("/api/upload", formData, {
+      //   headers: { "Content-Type": "multipart/form-data" },
+      // });
+
+      const res = await axios.patch(`/api/restaurant/${id}`, restaurantData);
+    } catch (error) {
+      console.error(error);
+      errorToast("Edit restaurant failed");
+    }
   }
 
   const handleChangeFactory =
@@ -85,7 +106,7 @@ function EditModal({ onEdit }: EditModalType) {
             <RestaurantForm
               data={restaurantData}
               setData={setRestaurantData}
-              onSubmit={() => handleSubmit("restaurant", restaurantData)}
+              onSubmit={handleRestaurantEdit}
               handleChangeFactory={handleChangeFactory}
               loading={loading}
             />
