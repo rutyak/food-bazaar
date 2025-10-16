@@ -190,7 +190,7 @@ const Profie = () => {
                 <Divider my={3} />
                 <Box color="gray.500">
                   {orders.length > 0
-                    ? orders.map((item) => (
+                    ? orders.map((item: any) => (
                         <Box key={item.itemId} mb={4}>
                           <OrderCard
                             name={item.name}

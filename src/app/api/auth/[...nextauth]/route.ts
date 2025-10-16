@@ -30,6 +30,7 @@ const handler = NextAuth({
 
         if (!user) throw new Error("User not found");
         if (!user.password) throw new Error("User has no password set");
+        if(user.role !== credentials.role) throw new Error("Please choose correct role");
 
         const isValid = await bcrypt.compare(
           credentials.password,

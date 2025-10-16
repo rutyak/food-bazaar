@@ -8,6 +8,8 @@ import { Flex, Text, IconButton } from "@chakra-ui/react";
 import { MdDeleteOutline, MdEdit } from "react-icons/md";
 import { RestaurantType } from "@/types/restaurant";
 import { useSession } from "next-auth/react";
+import EditModal from "../customeModal/EditModal";
+import DeleteAlert from "../customeModal/DeleteAlert";
 
 const Card = ({
   _id,
@@ -21,7 +23,7 @@ const Card = ({
   onDelete,
 }: RestaurantType) => {
   const { data: sessesion, status } = useSession();
-  
+
   return (
     <div className="grid-card">
       {sessesion?.user.role === "admin" && (
@@ -34,22 +36,8 @@ const Card = ({
           gap={2}
           zIndex={10}
         >
-          <IconButton
-            aria-label="Edit item"
-            icon={<MdEdit size={16} />}
-            size="sm"
-            colorScheme="yellow"
-            variant="solid"
-            onClick={() => onEdit?.(_id as string)}
-          />
-          <IconButton
-            aria-label="Delete item"
-            icon={<MdDeleteOutline size={16} />}
-            size="sm"
-            colorScheme="red"
-            variant="solid"
-            onClick={() => onDelete?.(_id as string)}
-          />
+          <EditModal onEdit={() => onEdit?.(_id as string)} />
+          <DeleteAlert onDelete={() => onDelete?.(_id as string)} />
         </Flex>
       )}
       <Link href={`/menu/${_id}`} style={{ textDecoration: "none" }}>

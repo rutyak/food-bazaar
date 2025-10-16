@@ -53,15 +53,18 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
 
+    console.log("login formData: ", formData);
+
     try {
       const result = await signIn("credentials", {
         redirect: false,
         email: formData.email,
         password: formData.password,
+        role: formData.role,
       });
 
       if (result?.error) {
-        errorToast("Invalid credentials");
+        errorToast(result?.error || "Invalid credentials");
         return;
       }
 
@@ -93,6 +96,21 @@ const Login = () => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
   }
+
+  const signupFields = [
+    {
+      id: "email",
+      label: "Email",
+      type: "email",
+      placeholder: "your@email.com",
+    },
+    {
+      id: "password",
+      label: "Password",
+      type: "password",
+      placeholder: "••••••••",
+    },
+  ];
 
   return (
     <>
@@ -147,43 +165,18 @@ const Login = () => {
               <TabPanel>
                 <form onSubmit={handleSubmit}>
                   <Stack spacing={4}>
-                    <FormControl isRequired>
-                      <FormLabel htmlFor="email">Email</FormLabel>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="Enter your email"
-                        onChange={handleChange}
-                        value={formData.email}
-                        bg="gray.800"
-                        borderColor="gray.600"
-                        _hover={{ borderColor: "gray.500" }}
-                        _focus={{
-                          borderColor: "orange.500",
-                          boxShadow: "0 0 0 1px orange.500",
-                        }}
-                        autoComplete="email"
-                      />
-                    </FormControl>
-
-                    <FormControl isRequired>
-                      <FormLabel htmlFor="password">Password</FormLabel>
-                      <Input
-                        id="password"
-                        type="password"
-                        placeholder="Enter your password"
-                        onChange={handleChange}
-                        value={formData.password}
-                        bg="gray.800"
-                        borderColor="gray.600"
-                        _hover={{ borderColor: "gray.500" }}
-                        _focus={{
-                          borderColor: "orange.500",
-                          boxShadow: "0 0 0 1px orange.500",
-                        }}
-                        autoComplete="current-password"
-                      />
-                    </FormControl>
+                    {signupFields?.map(({ id, label, type, placeholder }) => (
+                      <FormControl key={id} isRequired>
+                        <FormLabel htmlFor={id}>{label}</FormLabel>
+                        <Input
+                          id={id}
+                          type={type}
+                          value={formData[id as keyof typeof formData]}
+                          onChange={handleChange}
+                          placeholder={placeholder}
+                        />
+                      </FormControl>
+                    ))}
 
                     <FormControl isRequired>
                       <FormLabel htmlFor="role">Role</FormLabel>

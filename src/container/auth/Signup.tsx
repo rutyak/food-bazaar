@@ -92,53 +92,49 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
     }
   };
 
+  const signupFields = [
+    {
+      id: "name",
+      label: "Full Name",
+      type: "text",
+      placeholder: "John Doe",
+    },
+    {
+      id: "email",
+      label: "Email",
+      type: "email",
+      placeholder: "your@email.com",
+    },
+    {
+      id: "password",
+      label: "Password",
+      type: "password",
+      placeholder: "••••••••",
+    },
+    {
+      id: "confirmPassword",
+      label: "Confirm Password",
+      type: "password",
+      placeholder: "••••••••",
+    },
+  ];
+
   return (
     <TabPanel className={styles.signupBody}>
       <form onSubmit={handleSubmit}>
         <Stack spacing={4}>
-          <FormControl isRequired>
-            <FormLabel htmlFor="name">Full Name</FormLabel>
-            <Input
-              id="name"
-              type="text"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="John Doe"
-            />
-          </FormControl>
-
-          <FormControl isRequired>
-            <FormLabel htmlFor="email">Email</FormLabel>
-            <Input
-              id="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="your@email.com"
-            />
-          </FormControl>
-
-          <FormControl isRequired>
-            <FormLabel htmlFor="password">Password</FormLabel>
-            <Input
-              id="password"
-              type="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="••••••••"
-            />
-          </FormControl>
-
-          <FormControl isRequired>
-            <FormLabel htmlFor="confirmPassword">Confirm Password</FormLabel>
-            <Input
-              id="confirmPassword"
-              type="password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              placeholder="••••••••"
-            />
-          </FormControl>
+          {signupFields?.map(({ id, label, type, placeholder }) => (
+            <FormControl key={id} isRequired>
+              <FormLabel htmlFor={id}>{label}</FormLabel>
+              <Input
+                id={id}
+                type={type}
+                value={formData[id as keyof typeof formData]}
+                onChange={handleChange}
+                placeholder={placeholder}
+              />
+            </FormControl>
+          ))}
 
           {/* New Role Selection */}
           <FormControl isRequired>
