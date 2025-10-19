@@ -70,8 +70,6 @@ function OrderCard({ name, price, image }: OrderCardTypes) {
 const Profie = () => {
   const orders = useSelector((state: RootState) => state.order);
 
-  console.log("orders: ", orders);
-
   const { data: session } = useSession();
   const user = session?.user;
 

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState } from "react";
 import { Heading, Box } from "@chakra-ui/react";
 import "./Body.scss";
 import Filter from "@/components/filtermodal/FIlter";
@@ -13,20 +13,14 @@ import { RestaurantType } from "@/types/restaurant";
 
 const Body = () => {
   const restaurants = useSelector((state: RootState) => state.restaurants);
-  const menuItems = useSelector((state: RootState) => state.menu);
 
   const { city } = useGlobalContext();
   const currCity = city.split(",")[0];
 
-  const [data, setData] = useState<HTMLDivElement[]>([]);
   const [filteredCard, setFilteredCard] =
     useState<RestaurantType[]>(restaurants);
-  // const eventRef = useRef<(event: Event) => void>(null);
 
   const dispatch = useDispatch();
-
-  // const toast = useToast();
-  // const loc = useLocation();
 
   // const isToastActive = useRef(false);
 

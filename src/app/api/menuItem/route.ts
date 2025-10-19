@@ -8,8 +8,6 @@ export async function POST(req: Request) {
 
     const menuItems = await req.json();
 
-    console.log("menuItems in backend: ", menuItems);
-
     const addedMenuItems = [];
 
     for (let item of menuItems) {

@@ -7,9 +7,15 @@ interface RestaurantType {
   pricefortwo: number;
 }
 
+export interface CategoryType {
+  category: string;
+  items: ItemsType[];
+}
+
 export interface ItemsType {
   _id: string;
-  category: string;
+  category?: string;
+  categories?: CategoryType;
   description: string;
   image: string;
   isVeg: boolean;
@@ -22,10 +28,6 @@ export interface ItemsType {
   onDelete?: (id: string) => void;
 }
 
-export interface CategoryType {
-  category: string;
-  items: ItemsType[];
-}
 
 export interface MenuType {
   _id?: string;

@@ -10,7 +10,7 @@ export interface DataType {
   category?: string;
   restaurantId?: string;
   rating?: number;
-  price?: string;
+  price?: number;
   category?: string;
   isVeg?: boolean;
 }

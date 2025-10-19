@@ -1,6 +1,6 @@
 import { Button, Box } from "@chakra-ui/react";
 import "./Filter.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { RestaurantType } from "@/types/restaurant";
@@ -21,7 +21,7 @@ function Filter({ setFilteredCard }: filteredCardType) {
   const restaurants = useSelector((state: RootState) => state.restaurants);
 
   const [togglebtn, setToggleBtn] = useState<toggleBtnType>({
-    all: false,
+    all: true,
     pureVeg: false,
     ratings: false,
     fast: false,
@@ -35,36 +35,38 @@ function Filter({ setFilteredCard }: filteredCardType) {
       ratings: false,
       fast: false,
       lessThan200: false,
-      [type]: !(togglebtn as any)[type],
     });
+  };
 
+  useEffect(() => {
     let newFilteredCard: RestaurantType[] = [];
 
-    switch (type) {
-      case "all":
-        newFilteredCard = restaurants;
-        break;
-      case "pureVeg":
-        newFilteredCard = restaurants.filter((card: RestaurantType) => card?.veg === true);
-        break;
-      case "ratings":
-        newFilteredCard = restaurants.filter((card: RestaurantType) => card?.rating > 4);
-        break;
-      case "fast":
-        newFilteredCard = restaurants.filter((card: RestaurantType) => {
-          if (card?.deliveryTime === "15-20 mins") {
-            return card;
-          }
-        });
-        break;
-      case "lessThan200":
-        newFilteredCard = restaurants.filter(
-          (card: RestaurantType) => card?.pricefortwo < 200
-        );
-        break;
+    if (togglebtn.all) {
+      newFilteredCard = restaurants;
+    } else if (togglebtn.pureVeg) {
+      newFilteredCard = restaurants?.filter(
+        (card: RestaurantType) => card?.veg === true
+      );
+    } else if (togglebtn.ratings) {
+      newFilteredCard = restaurants?.filter(
+        (card: RestaurantType) => (card?.rating as number) > 4
+      );
+    } else if (togglebtn.fast) {
+      newFilteredCard = restaurants?.filter((card: RestaurantType) => {
+        if (card?.deliveryTime === "15-20 mins") {
+          return card;
+        }
+      });
+    } else if (togglebtn.lessThan200) {
+      newFilteredCard = restaurants?.filter(
+        (card: RestaurantType) => (card?.pricefortwo as number) < 200
+      );
+    } else {
+      newFilteredCard = restaurants;
     }
+
     setFilteredCard(newFilteredCard);
-  };
+  }, [togglebtn, restaurants]);
 
   return (
     <>

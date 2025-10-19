@@ -1,7 +1,11 @@
+import MenuItemForm from "@/container/adminDashboard/menuItem/MenuItemForm";
 import RestaurantForm from "@/container/adminDashboard/restaurant/RestaurantForm";
+import { updateMenu } from "@/redux/slices/menuSlice";
+import { updateRestaurant } from "@/redux/slices/restaurantSlice";
 import { RootState } from "@/redux/store";
 import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
 import { DataType } from "@/types/admin";
+import { CategoryType, ItemsType, MenuType } from "@/types/menu";
 import { RestaurantType } from "@/types/restaurant";
 import {
   IconButton,
@@ -16,59 +20,113 @@ import {
 import axios from "axios";
 import React, { useState } from "react";
 import { MdEdit } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 interface EditModalType {
+  modalTitle: string;
   id: string;
+  restaurantId: string;
+  category: string;
 }
 
-function EditModal({ id }: EditModalType) {
+function EditModal({ modalTitle, id, restaurantId, category }: EditModalType) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const errorToast = useErrorToast();
   const successToast = useSuccessToast();
 
-  const allRestaurants = useSelector((state: RootState) => state?.restaurants);
-  const restaurant = allRestaurants?.filter((restau) => restau._id === id);
+  console.log("restaurantId in from menu ^^^^: ", restaurantId);
+  console.log("item id in edit modal @@@@@: ", id);
 
-  console.log("restaurant from redux :", restaurant, id);
+  const dispatch = useDispatch();
+
+  const allRestaurants = useSelector((state: RootState) => state?.restaurants);
+  const restaurant = allRestaurants?.filter(
+    (restau: RestaurantType) => restau._id === id
+  );
+
+  const allMenu = useSelector((state: RootState) => state?.menu);
+  // console.log("all menu in edit modal ###: ", allMenu);
+
+  const restauMenu = allMenu?.filter(
+    (restau: MenuType) => restau?.restaurantId === restaurantId
+  );
+
+  const catItem = restauMenu?.[0]?.categories?.filter(
+    (cat: CategoryType) => cat.category === category
+  );
+
+  console.log("menu item of goind to edit %%%%%%", catItem);
+
+  const editItem = catItem?.[0]?.items?.filter(
+    (item: ItemsType) => item._id === id
+  );
+
+  console.log("final item: ", editItem);
 
   const [loading, setLoading] = useState(false);
   const [restaurantData, setRestaurantData] = useState<DataType>({
-    name: restaurant[0].name,
-    description: restaurant[0].description,
-    image: null,
-    location: restaurant[0].location,
-    categories: restaurant[0].categories,
+    name: restaurant?.[0]?.name,
+    description: restaurant?.[0]?.description,
+    image: restaurant?.[0]?.image,
+    location: restaurant?.[0]?.location,
+    categories: restaurant?.[0]?.categories,
   });
 
   const [menuItems, setMenuItems] = useState<DataType[]>([
     {
-      restaurantId: "",
-      name: "",
-      description: "",
-      price: "",
-      image: "",
-      category: "",
-      rating: 3,
-      isVeg: false,
+      restaurantId: editItem?.[0]?.restaurantId,
+      name: editItem?.[0]?.name,
+      description: editItem?.[0]?.description,
+      price: editItem?.[0]?.price,
+      image: editItem?.[0]?.image,
+      category: editItem?.[0]?.category,
+      rating: editItem?.[0]?.rating,
+      isVeg: editItem?.[0]?.isVeg,
     },
   ]);
 
-  async function handleRestaurantEdit() {
-    console.log("submit clicked: ", restaurantData.image);
+  async function handleEdit(endpoint: string, data: any) {
+    console.log("data in edit $$$$$$$: ", data);
 
+    setLoading(true);
     try {
-      // const formData = new FormData();
-      // formData.append("file", restaurantDat.image);
+      data = endpoint === "menuItem" ? data[0] : data;
+      console.log("data after convert ******", data);
+      const imageFile = data.image;
+      let imageUrl;
 
-      // const imageRes = await axios.post("/api/upload", formData, {
-      //   headers: { "Content-Type": "multipart/form-data" },
-      // });
+      if (typeof imageFile !== "string" && imageFile !== null) {
+        const formData = new FormData();
+        formData.append("file", imageFile as any);
 
-      const res = await axios.patch(`/api/restaurant/${id}`, restaurantData);
+        const imageRes = await axios.post("/api/upload", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+
+        imageUrl = imageRes.data.uploadRes.url;
+      }
+
+      const res = await axios.patch(`/api/${endpoint}/${id}`, {
+        ...data,
+        image: imageUrl ? imageUrl : imageFile,
+      });
+
+      if (res.status === 200) {
+        console.log("res.status: ", res.status);
+        if (modalTitle === "Edit Restaurant") {
+          const restaurant = res.data?.restaurant;
+          dispatch(updateRestaurant({ id, restaurant }));
+        } else {
+          const menuItem = res.data?.menuItem;
+          dispatch(updateMenu({ id, restaurantId, category, menuItem }));
+        }
+      }
+      onClose();
     } catch (error) {
       console.error(error);
       errorToast("Edit restaurant failed");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -100,16 +158,26 @@ function EditModal({ id }: EditModalType) {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent maxH={"600px"} overflow={"auto"}>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>{modalTitle}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <RestaurantForm
-              data={restaurantData}
-              setData={setRestaurantData}
-              onSubmit={handleRestaurantEdit}
-              handleChangeFactory={handleChangeFactory}
-              loading={loading}
-            />
+            {modalTitle === "Edit Restaurant" ? (
+              <RestaurantForm
+                data={restaurantData}
+                setData={setRestaurantData}
+                onEditSubmit={() => handleEdit("restaurant", restaurantData)}
+                handleChangeFactory={handleChangeFactory}
+                loading={loading}
+              />
+            ) : (
+              <MenuItemForm
+                editMode={true}
+                data={menuItems}
+                setData={setMenuItems}
+                onEditSumit={() => handleEdit("menuItem", menuItems)}
+                loading={loading}
+              />
+            )}
           </ModalBody>
         </ModalContent>
       </Modal>

@@ -19,6 +19,10 @@ const Menubody = () => {
   const query = useParams() as unknown as Params;
   const menuData = useSelector((state: RootState) => state.menu);
 
+  console.log("menu data !!!!!!!:", menuData);
+  
+  console.log("Restaurant id: ", query?.id);
+
   const menu = menuData?.filter(
     (data: MenuType) => data.restaurantId?.toString() === query?.id
   );
@@ -36,11 +40,7 @@ const Menubody = () => {
         <Box mt="4" className="restau-desc">
           <Box mb="23px">
             <Heading size="md" className="title-of-card">
-              <img
-                src={starIcon?.src}
-                alt="rating"
-                style={{ width: "17px" }}
-              />
+              <img src={starIcon?.src} alt="rating" style={{ width: "17px" }} />
               {menu?.[0]?.restaurant?.rating} | ₹
               {menu?.[0]?.restaurant?.pricefortwo} for two
             </Heading>

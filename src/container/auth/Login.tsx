@@ -53,8 +53,6 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    console.log("login formData: ", formData);
-
     try {
       const result = await signIn("credentials", {
         redirect: false,

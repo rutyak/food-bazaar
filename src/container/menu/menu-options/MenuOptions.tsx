@@ -14,6 +14,7 @@ interface MenuOptionType {
   category: string;
   items: ItemsType[];
 }
+
 const MenuOptions = ({ category, items }: MenuOptionType) => {
   function onEdit() {
     console.log("menu onEdit clicked");
@@ -45,6 +46,7 @@ const MenuOptions = ({ category, items }: MenuOptionType) => {
                 {...item}
                 onEdit={onEdit}
                 onDelete={onDelete}
+                category={category}
               />
             ))}
           </AccordionPanel>

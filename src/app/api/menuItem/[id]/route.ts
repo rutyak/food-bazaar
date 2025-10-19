@@ -1,9 +1,9 @@
 import { dbConnect } from "@/lib/dbConnect";
-import Restaurant from "@/lib/models/Restaurant";
+import MenuItem from "@/lib/models/MenuItem";
 import { NextResponse } from "next/server";
 
 export async function PATCH(req: Request, { params }: any) {
-  console.log("edit restaurant hit");
+  console.log("edit menu hit");
 
   try {
     await dbConnect();
@@ -14,24 +14,14 @@ export async function PATCH(req: Request, { params }: any) {
       return NextResponse.json({ message: "Id required" }, { status: 400 });
     }
 
-    const { name, description, image, location, categories, rating } =
-      await req.json();
+    const body = await req.json();
 
-    const restaurant = await Restaurant.findByIdAndUpdate(
-      id,
-      {
-        name,
-        description,
-        image,
-        location,
-        categories,
-        rating,
-      },
-      { new: true }
-    );
+    const menuItem = await MenuItem.findByIdAndUpdate(id, body, {
+      new: true,
+    });
 
     return NextResponse.json(
-      { message: "Restaurant updated successully", restaurant },
+      { message: "Menu updated successfully", menuItem },
       { status: 200 }
     );
   } catch (error) {

@@ -53,7 +53,7 @@ function AdminDashboard() {
       restaurantId: "",
       name: "",
       description: "",
-      price: "",
+      price: 0,
       image: "",
       category: "",
       rating: 3,
@@ -88,8 +88,6 @@ function AdminDashboard() {
           }
           uploadedItems.push({ ...item, image: imageUrl });
         }
-
-        console.log("uploadedItems in frontend: ", uploadedItems);
 
         const res = await axios.post(`/api/${endpoint}`, uploadedItems);
 
@@ -129,7 +127,7 @@ function AdminDashboard() {
             restaurantId: "",
             name: "",
             description: "",
-            price: "",
+            price: 0,
             image: "",
             category: "",
             isVeg: false,
@@ -165,11 +163,6 @@ function AdminDashboard() {
   //   });
   // };
 
-  const handleSaveAllMenuItems = () => {
-    successToast("All menu items saved");
-    setMenuItems([]);
-  };
-
   function handleAddMore() {
     setMenuItems((prev: DataType[]) => [
       ...prev,
@@ -177,7 +170,7 @@ function AdminDashboard() {
         restaurantId: "",
         name: "",
         description: "",
-        price: "",
+        price: 0,
         image: "",
         category: "",
         isVeg: true,
@@ -203,33 +196,20 @@ function AdminDashboard() {
               <RestaurantForm
                 data={restaurantData}
                 setData={setRestaurantData}
-                onSubmit={() => handleSubmit("restaurant", restaurantData)}
+                onEditSubmit={() => handleSubmit("restaurant", restaurantData)}
                 handleChangeFactory={handleChangeFactory}
                 loading={loading}
               />
             </TabPanel>
 
             <TabPanel>
-              <MenuItemForm data={menuItems} setData={setMenuItems} />
-
-              {menuItems.length > 0 && (
-                <>
-                  <Stack spacing={4} mt={4}>
-                    <Button colorScheme="blue" onClick={handleAddMore}>
-                      Add More
-                    </Button>
-
-                    <Button
-                      colorScheme="blue"
-                      onClick={() => handleSubmit("menuItem", menuItems)}
-                    >
-                      {loading
-                        ? "Saving all menu items..."
-                        : "Save All Menu Items"}
-                    </Button>
-                  </Stack>
-                </>
-              )}
+              <MenuItemForm
+                data={menuItems}
+                setData={setMenuItems}
+                loading={loading}
+                handleAddMore={handleAddMore}
+                handleSubmit={handleSubmit as any}
+              />
             </TabPanel>
           </TabPanels>
         </Tabs>

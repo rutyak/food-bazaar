@@ -9,7 +9,7 @@ import FormInput from "@/components/formInput/FormInput";
 interface RestaurantFormType {
   data: DataType;
   setData: React.Dispatch<React.SetStateAction<DataType>>;
-  onSubmit: () => void;
+  onEditSubmit: () => void;
   handleChangeFactory: (
     setData: React.Dispatch<React.SetStateAction<DataType>>
   ) => React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
@@ -24,7 +24,7 @@ interface ItemType {
 function RestaurantForm({
   data,
   setData,
-  onSubmit,
+  onEditSubmit,
   handleChangeFactory,
   loading,
 }: RestaurantFormType) {
@@ -50,7 +50,7 @@ function RestaurantForm({
           handleChange={handleChange}
         />
       ))}
-      <Button colorScheme="blue" onClick={onSubmit}>
+      <Button colorScheme="blue" onClick={onEditSubmit}>
         {loading ? "Saving..." : "Save Restaurant"}
       </Button>
     </VStack>

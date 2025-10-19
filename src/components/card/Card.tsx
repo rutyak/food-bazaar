@@ -36,7 +36,7 @@ const Card = ({
           gap={2}
           zIndex={10}
         >
-          <EditModal id={_id as string} />
+          <EditModal modalTitle="Edit Restaurant" id={_id as string} />
           <DeleteAlert id={_id as string} />
         </Flex>
       )}

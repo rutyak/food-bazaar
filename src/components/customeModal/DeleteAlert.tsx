@@ -11,20 +11,34 @@ import {
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import { MdDeleteOutline } from "react-icons/md";
-import { FocusableElement } from "@chakra-ui/utils";
+import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
 
 interface DeleteAlertProps {
   id: string;
+  restaurantId?: string;
+  category?: string;
 }
 
-const DeleteAlert: React.FC<DeleteAlertProps> = ({ id }: DeleteAlertProps) => {
+const DeleteAlert: React.FC<DeleteAlertProps> = ({
+  id,
+  restaurantId,
+  category,
+}: DeleteAlertProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef<any>(null);
 
+  const successToast = useSuccessToast();
+  const errorToast = useErrorToast();
+
   const handleDelete = () => {
+    try {
+      // const res = await axios.delete("api/restaurant/delete", id);
+    } catch (error: any) {
+      console.error(error.message);
+      errorToast("Delete failed");
+    }
     onClose();
   };
-
 
   return (
     <>

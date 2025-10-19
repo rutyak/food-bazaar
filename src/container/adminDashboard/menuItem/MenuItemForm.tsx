@@ -5,13 +5,19 @@ import {
   FormControl,
   FormLabel,
   Select,
+  Stack,
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
 
 interface MenuItemFormType {
+  editMode?: boolean;
   data: DataType[];
   setData: React.Dispatch<React.SetStateAction<DataType[]>>;
+  loading?: boolean;
+  onEditSumit?: () => Promise<void>;
+  handleAddMore?: () => void;
+  handleSubmit?: any;
 }
 
 interface ItemType {
@@ -19,9 +25,17 @@ interface ItemType {
   id: keyof DataType;
 }
 
-function MenuItemForm({ data, setData }: MenuItemFormType) {
+function MenuItemForm({
+  editMode,
+  data,
+  setData,
+  loading,
+  onEditSumit,
+  handleAddMore,
+  handleSubmit
+}: MenuItemFormType) {
   function handleRemoveMenuItem(index: number) {
-    const filteredItems = data.filter((_, i) => i !== index);
+    const filteredItems = data?.filter((_, i) => i !== index);
     setData(filteredItems);
   }
 
@@ -59,8 +73,8 @@ function MenuItemForm({ data, setData }: MenuItemFormType) {
             mb={4}
             align="stretch"
             key={idx}
-            borderWidth="1px"
-            p={4}
+            borderWidth={editMode ? "" : "1px"}
+            p={editMode ? 0 : 4}
             rounded="md"
           >
             {data?.length > 1 && (
@@ -101,6 +115,32 @@ function MenuItemForm({ data, setData }: MenuItemFormType) {
           </VStack>
         );
       })}
+
+      {data?.length > 0 && !editMode && (
+        <>
+          <Stack spacing={4} mt={4}>
+            <Button colorScheme="blue" onClick={handleAddMore}>
+              Add More
+            </Button>
+            <Button
+              colorScheme="blue"
+              onClick={() => handleSubmit("menuItem", data)}
+            >
+              {loading ? "Saving all menu items..." : "Save All Menu Items"}
+            </Button>
+          </Stack>
+        </>
+      )}
+
+      {editMode && (
+        <Button
+          w={"100%"}
+          colorScheme="blue"
+          onClick={onEditSumit}
+        >
+          {loading ? "Saving menu item..." : "Save menu item"}
+        </Button>
+      )}
     </>
   );
 }

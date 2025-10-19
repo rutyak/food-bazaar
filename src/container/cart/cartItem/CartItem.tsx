@@ -12,7 +12,6 @@ import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
 import { CartType } from "@/types/cart";
 
 const CartItem = ({ item }: { item: CartType }) => {
-  console.log("item in cartItem: ", item);
 
   const dispatch = useDispatch();
 

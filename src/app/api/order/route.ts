@@ -6,8 +6,6 @@ export async function POST(req: Request) {
   try {
     const orders: CartType[] = await req.json();
 
-    console.log("cart in order api: ", orders);
-
     if (!Array.isArray(orders) || orders.length === 0) {
       return NextResponse.json(
         { message: "orders must be a non-empty array" },

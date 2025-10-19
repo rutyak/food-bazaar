@@ -9,8 +9,6 @@ export async function POST(req: Request) {
     const { name, description, image, location, categories, rating } =
       await req.json();
 
-    console.log("description: ", description);
-
     if (
       !name ||
       !description ||

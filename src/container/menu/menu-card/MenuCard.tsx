@@ -6,6 +6,7 @@ import {
   Image,
   IconButton,
   Flex,
+  useQuery,
 } from "@chakra-ui/react";
 import "./MenuCard.scss";
 import starIcon from "@/assets/star-icon.svg";
@@ -17,7 +18,9 @@ import { addCart } from "@/redux/slices/cartSlice";
 import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
 import { ItemsType } from "@/types/menu";
 import { MdEdit, MdDeleteOutline } from "react-icons/md";
-
+import DeleteAlert from "@/components/customeModal/DeleteAlert";
+import EditModal from "@/components/customeModal/EditModal";
+import { useParams } from "next/navigation";
 const MenuCard = ({
   _id,
   description,
@@ -27,7 +30,11 @@ const MenuCard = ({
   rating,
   onEdit,
   onDelete,
+  category,
 }: ItemsType) => {
+  const params = useParams() as unknown;
+  const restaurantId = params;
+
   const { data: session } = useSession();
   const [isExpanded, setIsExpanded] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -73,21 +80,16 @@ const MenuCard = ({
       <Box className="item-card" pb={10} pt={5}>
         {session?.user.role === "admin" && (
           <Flex gap={2} w="100%">
-            <IconButton
-              aria-label="Edit item"
-              icon={<MdEdit size={16} />}
-              size="sm"
-              colorScheme="yellow"
-              variant="solid"
-              onClick={() => onEdit?.(_id as string)}
+            <EditModal
+              modalTitle="Edit Menu"
+              id={_id as string}
+              restaurantId={(restaurantId as any).id as string}
+              category={category as string}
             />
-            <IconButton
-              aria-label="Delete item"
-              icon={<MdDeleteOutline size={16} />}
-              size="sm"
-              colorScheme="red"
-              variant="solid"
-              onClick={() => onDelete?.(_id as string)}
+            <DeleteAlert
+              id={_id as string}
+              restaurantId={(restaurantId as any).id as string}
+              category={category as string}
             />
           </Flex>
         )}

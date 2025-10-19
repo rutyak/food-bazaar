@@ -33,8 +33,6 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
   const [resultList, setResultList] = useState<RestaurantType[]>([]);
   const [isLocating, setIsLocating] = useState(false);
 
-  console.log("resultList: ", resultList);
-
   const successToast = useSuccessToast();
   const errorToast = useErrorToast();
 

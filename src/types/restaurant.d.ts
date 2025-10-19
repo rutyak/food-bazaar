@@ -6,7 +6,7 @@ export interface RestaurantType {
   location?: string;
   categories?: string[];
   rating?: number;
-  pricefortwo?: number;
+  pricefortwo?: number | undefined;
   veg?: boolean;
   deliveryTime?: string;
   onEdit?: (id: string) => void;
