@@ -20,7 +20,6 @@ const orderSchema = new mongoose.Schema(
       default: [],
     },
   },
-  { timestamps: true }
 );
 
 export default mongoose.models.Order || mongoose.model("Order", orderSchema);

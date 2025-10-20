@@ -18,11 +18,7 @@ interface Params {
 const Menubody = () => {
   const query = useParams() as unknown as Params;
   const menuData = useSelector((state: RootState) => state.menu);
-
-  console.log("menu data !!!!!!!:", menuData);
   
-  console.log("Restaurant id: ", query?.id);
-
   const menu = menuData?.filter(
     (data: MenuType) => data.restaurantId?.toString() === query?.id
   );

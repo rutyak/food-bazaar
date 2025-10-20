@@ -28,7 +28,7 @@ const MenuNavbar = () => {
   }
 
   return (
-    <Box className="menu-header" mb={{ base: "0px", md: "30px" }}>
+    <Box className="menu-header" mb={{ base: "20px", md: "30px" }}>
       <div className="menu-inner-header">
         <Box
           className="menu-title"

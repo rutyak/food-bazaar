@@ -25,17 +25,14 @@ import { useDispatch, useSelector } from "react-redux";
 interface EditModalType {
   modalTitle: string;
   id: string;
-  restaurantId: string;
-  category: string;
+  restaurantId?: string;
+  category?: string;
 }
 
 function EditModal({ modalTitle, id, restaurantId, category }: EditModalType) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const errorToast = useErrorToast();
   const successToast = useSuccessToast();
-
-  console.log("restaurantId in from menu ^^^^: ", restaurantId);
-  console.log("item id in edit modal @@@@@: ", id);
 
   const dispatch = useDispatch();
 
@@ -45,7 +42,6 @@ function EditModal({ modalTitle, id, restaurantId, category }: EditModalType) {
   );
 
   const allMenu = useSelector((state: RootState) => state?.menu);
-  // console.log("all menu in edit modal ###: ", allMenu);
 
   const restauMenu = allMenu?.filter(
     (restau: MenuType) => restau?.restaurantId === restaurantId
@@ -55,13 +51,9 @@ function EditModal({ modalTitle, id, restaurantId, category }: EditModalType) {
     (cat: CategoryType) => cat.category === category
   );
 
-  console.log("menu item of goind to edit %%%%%%", catItem);
-
   const editItem = catItem?.[0]?.items?.filter(
     (item: ItemsType) => item._id === id
   );
-
-  console.log("final item: ", editItem);
 
   const [loading, setLoading] = useState(false);
   const [restaurantData, setRestaurantData] = useState<DataType>({
@@ -86,12 +78,10 @@ function EditModal({ modalTitle, id, restaurantId, category }: EditModalType) {
   ]);
 
   async function handleEdit(endpoint: string, data: any) {
-    console.log("data in edit $$$$$$$: ", data);
 
     setLoading(true);
     try {
       data = endpoint === "menuItem" ? data[0] : data;
-      console.log("data after convert ******", data);
       const imageFile = data.image;
       let imageUrl;
 
@@ -112,19 +102,27 @@ function EditModal({ modalTitle, id, restaurantId, category }: EditModalType) {
       });
 
       if (res.status === 200) {
-        console.log("res.status: ", res.status);
         if (modalTitle === "Edit Restaurant") {
           const restaurant = res.data?.restaurant;
           dispatch(updateRestaurant({ id, restaurant }));
+          successToast("Restaurant updated successfully");
         } else {
           const menuItem = res.data?.menuItem;
-          dispatch(updateMenu({ id, restaurantId, category, menuItem }));
+          dispatch(
+            updateMenu({
+              id,
+              restaurantId: restaurantId as string,
+              category: category as string,
+              menuItem,
+            })
+          );
+          successToast("MenuItem updated successfully");
         }
       }
       onClose();
     } catch (error) {
       console.error(error);
-      errorToast("Edit restaurant failed");
+      errorToast("Edit failed");
     } finally {
       setLoading(false);
     }

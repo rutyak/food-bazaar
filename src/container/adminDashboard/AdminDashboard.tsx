@@ -68,8 +68,6 @@ function AdminDashboard() {
   ) => {
     setLoading(true);
 
-    console.log("menuItems in frontend: ", menuItems);
-
     try {
       if (Array.isArray(data)) {
         const uploadedItems = [];
@@ -105,7 +103,7 @@ function AdminDashboard() {
           imageUrl = imageRes.data.uploadRes.url;
         }
 
-        const res = await axios.post(`api/${endpoint}`, {
+        const res = await axios.post(`/api/${endpoint}`, {
           ...data,
           image: imageUrl,
         });

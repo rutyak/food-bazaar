@@ -80,7 +80,6 @@ const Body = () => {
   // eventRef.current = debounce(handleInfiniteScroll, 100);
 
   // eventRef.current = (event: Event) => {
-  //   console.log("Scrolled!", event);
   // };
 
   // useEffect(() => {

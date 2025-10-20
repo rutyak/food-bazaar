@@ -6,9 +6,13 @@ export async function DELETE(req: Request) {
     await Cart.deleteMany({});
 
     return NextResponse.json({ message: "Cart deleted successfully" });
-  } catch (error: any) {
-    return NextResponse.json({
-      message: error.message || "Internal server error",
-    });
+  } catch (error: unknown) {
+    console.error(error);
+    return NextResponse.json(
+      {
+        message: "Internal server error",
+      },
+      { status: 500 }
+    );
   }
 }

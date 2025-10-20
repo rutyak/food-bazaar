@@ -90,6 +90,7 @@ const MenuCard = ({
               id={_id as string}
               restaurantId={(restaurantId as any).id as string}
               category={category as string}
+              type="menuItem"
             />
           </Flex>
         )}

@@ -20,8 +20,9 @@ export async function POST(req: Request) {
       allOrders,
     });
   } catch (error: any) {
+    console.error(error);
     return NextResponse.json(
-      { message: error.message || "Internal server error" },
+      { message: "Internal server error" },
       { status: 500 }
     );
   }

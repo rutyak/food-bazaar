@@ -33,20 +33,13 @@ export async function POST(req: Request) {
       restaurant: restaurantInfo,
     });
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      return NextResponse.json(
-        {
-          message: "Internal server error",
-          error: error.message,
-        },
-        { status: 500 }
-      );
-    }
-
-    return NextResponse.json({
-      message: "Internal server error",
-      error: String(error),
-    });
+    console.error(error);
+    return NextResponse.json(
+      {
+        message: "Internal server error",
+      },
+      { status: 500 }
+    );
   }
 }
 
@@ -60,9 +53,10 @@ export async function GET(req: Request) {
       message: "Restaurants fetched successfully",
       restaurants,
     });
-  } catch (error) {
+  } catch (error: unknown) {
+    console.error(error);
     return NextResponse.json(
-      { message: "Internal server error", error: String(error) },
+      { message: "Internal server error" },
       { status: 500 }
     );
   }

@@ -8,6 +8,12 @@ interface UpdateMenuType {
   menuItem: ItemsType;
 }
 
+interface DeleteMenuType {
+  id: string;
+  restaurantId: string;
+  category: string;
+}
+
 const menuSlice = createSlice({
   name: "menu",
   initialState: [] as MenuType[],
@@ -20,24 +26,37 @@ const menuSlice = createSlice({
 
       const restaurant = state?.find(
         (restau) => restau?.restaurantId === restaurantId
-      )
-      if(!restaurant) return;
-      
+      );
+      if (!restaurant) return;
+
       const cat = restaurant?.categories?.find(
         (cat) => cat.category === category
-      )
-      if(!cat) return;
-
-      const itemIndex = cat?.items?.findIndex((item) =>
-        item._id === id 
       );
+      if (!cat) return;
 
-      if(itemIndex !== -1){
-        cat.items[itemIndex] = menuItem;
+      const itemIndex = cat?.items?.findIndex((item) => item._id === id);
+
+      if (itemIndex !== -1) {
+        cat.items[itemIndex as any] = menuItem;
       }
+    },
+    deleteMenu: (state, action: PayloadAction<DeleteMenuType>) => {
+      const { id, restaurantId, category } = action.payload;
+
+      const restaurant = state?.find(
+        (restau) => restau?.restaurantId === restaurantId
+      );
+      if (!restaurant) return;
+
+      const cat = restaurant?.categories?.find(
+        (cat) => cat.category === category
+      );
+      if (!cat) return;
+
+      cat.items = cat?.items?.filter((item) => item._id !== id);
     },
   },
 });
 
-export const { setMenu, updateMenu } = menuSlice.actions;
+export const { setMenu, updateMenu, deleteMenu } = menuSlice.actions;
 export default menuSlice.reducer;

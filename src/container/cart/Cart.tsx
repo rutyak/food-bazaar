@@ -25,9 +25,13 @@ import axios from "axios";
 import { addOrder } from "@/redux/slices/orderSlice";
 import { removeAllCart } from "@/redux/slices/cartSlice";
 import PaymentModal from "@/components/customeModal/PaymentModal";
+import { useSession } from "next-auth/react";
+import User from "@/lib/models/User";
 
 const Cart = () => {
   const cart = useSelector((state: RootState) => state.cart);
+  const { data: session } = useSession();
+
   const dispatch = useDispatch();
 
   const [paymentMethod, setPaymentMethod] = useState("creditCard");
@@ -49,9 +53,13 @@ const Cart = () => {
   const estimatedTime = 30;
 
   const calculateSubtotal = () =>
-    cart.reduce((acc: number, item: CartType) => acc + item.price * item.quantity, 0);
+    cart.reduce(
+      (acc: number, item: CartType) => acc + item.price * item.quantity,
+      0
+    );
 
-  const calculateTotal = () => (calculateSubtotal() + deliveryCharge).toFixed(2);
+  const calculateTotal = () =>
+    (calculateSubtotal() + deliveryCharge).toFixed(2);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -70,10 +78,18 @@ const Cart = () => {
   const handleConfirmPay = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.post("api/order", cart);
-      await axios.delete("api/cart/delete");
+      if (!session?.user?.id) {
+        throw new Error("User not logged in.");
+      }
 
-      const orders = data?.allOrders?.items;
+      const orders = cart.map((item) => ({
+        ...item,
+        userId: session.user.id,
+      }));
+
+      const { data } = await axios.post("/api/order", orders);
+      await axios.delete("/api/cart/delete");
+
       dispatch(addOrder(orders));
       dispatch(removeAllCart());
       successToast("Payment successful");
@@ -114,15 +130,17 @@ const Cart = () => {
             Billing Details
           </Heading>
           <Stack spacing={4}>
-            {["name", "email", "address", "city", "zipCode", "country"].map((field, idx) => (
-              <Input
-                key={idx}
-                name={field}
-                placeholder={field[0].toUpperCase() + field.slice(1)}
-                bg="gray.100"
-                onChange={handleInputChange}
-              />
-            ))}
+            {["name", "email", "address", "city", "zipCode", "country"].map(
+              (field, idx) => (
+                <Input
+                  key={idx}
+                  name={field}
+                  placeholder={field[0].toUpperCase() + field.slice(1)}
+                  bg="gray.100"
+                  onChange={handleInputChange}
+                />
+              )
+            )}
           </Stack>
         </Box>
 
@@ -165,7 +183,12 @@ const Cart = () => {
           </Text>
         </Flex>
 
-        <Button colorScheme="teal" size="lg" width="100%" onClick={handleCheckout}>
+        <Button
+          colorScheme="teal"
+          size="lg"
+          width="100%"
+          onClick={handleCheckout}
+        >
           Pay
         </Button>
 

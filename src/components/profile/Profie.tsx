@@ -21,7 +21,7 @@ import {
   Flex,
   Image,
 } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { signOut } from "next-auth/react";
 import { FiLogOut, FiUser, FiShoppingCart } from "react-icons/fi";
 import { useRouter } from "next/navigation";
@@ -29,6 +29,8 @@ import { useSession } from "next-auth/react";
 import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { clearOrders } from "@/redux/slices/orderSlice";
+import { useDispatch } from "react-redux";
 
 interface OrderCardTypes {
   name: string;
@@ -69,9 +71,17 @@ function OrderCard({ name, price, image }: OrderCardTypes) {
 
 const Profie = () => {
   const orders = useSelector((state: RootState) => state.order);
-
   const { data: session } = useSession();
+
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(clearOrders());
+  // }, []);
+
   const user = session?.user;
+
+  const userOrders = orders.filter((order) => order.userId === user?.id);
 
   const successToast = useSuccessToast();
   const errorToast = useErrorToast();
@@ -187,8 +197,8 @@ const Profie = () => {
                 </HStack>
                 <Divider my={3} />
                 <Box color="gray.500">
-                  {orders.length > 0
-                    ? orders.map((item: any) => (
+                  {userOrders.length > 0
+                    ? userOrders?.map((item: any) => (
                         <Box key={item.itemId} mb={4}>
                           <OrderCard
                             name={item.name}

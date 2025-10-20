@@ -22,10 +22,10 @@ export async function DELETE(req: Request, { params }: any) {
       { status: 200 }
     );
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
       {
         message: "Internal server error",
-        error: String(error),
       },
       { status: 500 }
     );

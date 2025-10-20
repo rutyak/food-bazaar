@@ -41,9 +41,9 @@ export async function POST(req: Request) {
       { status: 201 }
     );
   } catch (error) {
+    console.error(error);
     return NextResponse.json({
       message: "Internal server error",
-      error: String(error),
     });
   }
 }
@@ -51,7 +51,6 @@ export async function POST(req: Request) {
 export async function GET(req: Request) {
   try {
     const carts = await Cart.find();
-
     return NextResponse.json(
       {
         message: "Carts fetched successfully",
@@ -60,10 +59,10 @@ export async function GET(req: Request) {
       { status: 200 }
     );
   } catch (error: any) {
+    console.error(error);
     return NextResponse.json(
       {
         message: "Internal server error",
-        error: error?.message,
       },
       { status: 500 }
     );

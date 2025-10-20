@@ -26,10 +26,10 @@ export async function POST(req: Request, { params }: any) {
       { status: 200 }
     );
   } catch (error: any) {
+    console.error(error);
     return NextResponse.json(
       {
         message: "Internal server error",
-        error: String(error),
       },
       { status: 500 }
     );

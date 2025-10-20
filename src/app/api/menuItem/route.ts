@@ -56,10 +56,10 @@ export async function POST(req: Request) {
       { status: 201 }
     );
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
       {
         message: "Internal server error",
-        error: String(error),
       },
       { status: 500 }
     );
@@ -115,10 +115,10 @@ export async function GET(req: Request) {
 
     return NextResponse.json({ message: "Menu fetched successfully", allMenu });
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
       {
         message: "Internal server error",
-        error: String(error),
       },
       { status: 500 }
     );
