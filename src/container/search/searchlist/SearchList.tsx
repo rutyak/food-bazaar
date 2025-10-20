@@ -15,7 +15,7 @@ const SearchList = ({ resultList }: { resultList: RestaurantType[] }) => {
             <Box key={list?._id}>
               <Link href={`/menu/${list?._id}`} className="searchList-images">
                 <Image
-                  src={list?.image}
+                  src={list?.image as string}
                   alt="list-img"
                   boxSize={{ base: "50px", md: "73px" }}
                   objectFit="cover"
