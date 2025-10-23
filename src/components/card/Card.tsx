@@ -4,8 +4,7 @@ import "./Card.scss";
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Flex, Text, IconButton } from "@chakra-ui/react";
-import { MdDeleteOutline, MdEdit } from "react-icons/md";
+import { Flex, Text } from "@chakra-ui/react";
 import { RestaurantType } from "@/types/restaurant";
 import { useSession } from "next-auth/react";
 import EditModal from "../customeModal/EditModal";
@@ -14,13 +13,9 @@ import DeleteAlert from "../customeModal/DeleteAlert";
 const Card = ({
   _id,
   name,
-  description,
   image,
-  location,
   categories,
   rating,
-  onEdit,
-  onDelete,
 }: RestaurantType) => {
   const { data: sessesion, status } = useSession();
 

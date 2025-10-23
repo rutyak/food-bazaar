@@ -26,7 +26,6 @@ import { addOrder } from "@/redux/slices/orderSlice";
 import { removeAllCart } from "@/redux/slices/cartSlice";
 import PaymentModal from "@/components/customeModal/PaymentModal";
 import { useSession } from "next-auth/react";
-import User from "@/lib/models/User";
 
 const Cart = () => {
   const cart = useSelector((state: RootState) => state.cart);
@@ -113,6 +112,7 @@ const Cart = () => {
         boxShadow="md"
         maxW="700px"
         className="cart-container"
+        mb={"20px"}
       >
         <Heading as="h2" size="xl" mb={6} textAlign="center">
           Your Cart

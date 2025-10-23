@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { Heading, Box } from "@chakra-ui/react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Heading, Box, Skeleton, SkeletonText } from "@chakra-ui/react";
 import "./Body.scss";
 import Filter from "@/components/filtermodal/FIlter";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,129 +10,158 @@ import Card from "@/components/card/Card";
 import { useGlobalContext } from "@/context/GlobalContext";
 import Carousel from "@/components/carousel/Carousel";
 import { RestaurantType } from "@/types/restaurant";
+import axios from "axios";
+import { addRestaurants, removeCards } from "@/redux/slices/restaurantSlice";
 
 const Body = () => {
   const restaurants = useSelector((state: RootState) => state.restaurants);
+  const dispatch = useDispatch();
 
   const { city } = useGlobalContext();
   const currCity = city.split(",")[0];
 
-  const [filteredCard, setFilteredCard] =
-    useState<RestaurantType[]>(restaurants);
+  const [filteredCard, setFilteredCard] = useState<RestaurantType[]>(restaurants);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
-  const dispatch = useDispatch();
+  const observer = useRef<IntersectionObserver | null>(null);
 
-  // const isToastActive = useRef(false);
+  const lastCardRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
 
-  // if (!user && loc.state?.message && !isToastActive.current) {
-  //   isToastActive.current = true;
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPage((prev) => prev + 1);
+        }
+      });
 
-  //   toast({
-  //     title: "Please login to access the cart!!",
-  //     status: "error",
-  //     duration: 3000,
-  //     isClosable: true,
-  //     onCloseComplete: () => {
-  //       isToastActive.current = false;
-  //     },
-  //   });
-  // }
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMore]
+  );
 
-  // const handleInfiniteScroll = async () => {
-  //   const scrollPosition =
-  //     document.documentElement.scrollTop + window.innerHeight;
-  //   const scrollHeight = document.documentElement.scrollHeight;
+  const handleScroll = useCallback(() => {
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+    if (scrollTop + clientHeight >= scrollHeight - 200 && !loading && hasMore) {
+      setPage((prev) => prev + 1);
+    }
+  }, [loading, hasMore]);
 
-  //   if (scrollPosition + 1 >= scrollHeight) {
-  //     removeEventListener("scroll", eventRef.current);
-  //     return;
-  //   }
-
-  //   if (scrollPosition + 300 >= scrollHeight) {
-  //     setIsLoading(true);
-  //     try {
-  //       const res = await fetch(
-  //         `/api/restaurant?lat=${location.lat}&lng=${location.lng}`
-  //       );
-
-  //       const data = await res.json();
-
-  //       const newCards =
-  //         data?.data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-  //           ?.restaurants;
-
-  //       setAllCard((prevCard: any) => [
-  //         ...(prevCard || []),
-  //         ...(newCards || []),
-  //       ]);
-  //       setFilteredCard((prevCard: any) => [
-  //         ...(prevCard || []),
-  //         ...(newCards || []),
-  //       ]);
-  //     } catch (error) {
-  //       console.error("There was a problem with your fetch operation:", error);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   }
-  // };
-
-  // eventRef.current = debounce(handleInfiniteScroll, 100);
-
-  // eventRef.current = (event: Event) => {
-  // };
-
-  // useEffect(() => {
-  //   const handler = eventRef.current;
-  //   addEventListener("scroll", handler);
-
-  //   return () => removeEventListener("scroll", handler);
-  // }, []);
-
-  function onEdit() {
-    console.log("On edit clicked");
+  async function getRestaurants(page: number) {
+    try {
+      setLoading(true);
+      const res = await axios.get(`/api/restaurant?page=${page}&limit=8`);
+      const newRestaurants = res?.data?.restaurants || [];
+      setHasMore(res?.data?.hasMore);
+      dispatch(addRestaurants(newRestaurants));
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
-  function onDelete() {
-    console.log("On delete clicked");
-  }
+  useEffect(() => {
+    if (hasMore) getRestaurants(page);
+  }, [page]);
+
+  useEffect(() => {
+    if (restaurants.length === 0) getRestaurants(1);
+    else setFilteredCard(restaurants);
+  }, [restaurants]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(removeCards());
+    };
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
+  const ShimmerCards = () => {
+    return (
+      <Box
+        className="restaurant-grid-card"
+        display="grid"
+        gridTemplateColumns="repeat(auto-fill, minmax(250px, 1fr))"
+        gap="1.5rem"
+      >
+        {[...Array(8)].map((_, index) => (
+          <Box
+            key={index}
+            p="4"
+            borderRadius="2xl"
+            boxShadow="md"
+            bg="white"
+            display="flex"
+            flexDirection="column"
+          >
+            <Skeleton height="150px" borderRadius="xl" mb="4" />
+            <SkeletonText mt="2" noOfLines={3} spacing="3" skeletonHeight="3" />
+          </Box>
+        ))}
+      </Box>
+    );
+  };
 
   return restaurants?.length === 0 ? (
-    "Loading..."
+    <Box textAlign="center" color="gray" fontSize="20px">
+      Loading...
+    </Box>
   ) : (
     <Box className="home-page">
-      {/* {window.innerWidth > 885 &&
-      data?.cards[0]?.card?.card?.gridElements?.infoWithStyle?.info?.length >
-        0 ? (
-        <Carousel
-          suggestions={
-            data?.cards[0]?.card?.card?.gridElements?.infoWithStyle?.info
-          }
-          title={data?.cards[0]?.card?.card.header?.title}
-        />
-      ) : (
-        " "
-      )} */}
-
       <Carousel suggestions={restaurants} title="Top Restaurants" />
       <Box mt="1rem" className="grid-card-heading">
         <Heading as="h2" fontSize={["xl", "2xl"]} mb="1rem">
           Restaurants in {currCity}
         </Heading>
         <Filter setFilteredCard={setFilteredCard} />
+
         <Box className="restaurant-grid-card">
-          {filteredCard?.length > 0 &&
-            filteredCard?.map((data: RestaurantType) => {
-              return (
-                <Card
-                  key={data?._id}
-                  {...data}
-                  onEdit={onEdit}
-                  onDelete={onDelete}
-                />
-              );
-            })}
+          {filteredCard?.length > 0 ? (
+            filteredCard.map((data: RestaurantType, index: number) => {
+              if (index === filteredCard.length - 1) {
+                return (
+                  <div ref={lastCardRef} key={data?._id}>
+                    <Card {...data} />
+                  </div>
+                );
+              } else {
+                return <Card key={data?._id} {...data} />;
+              }
+            })
+          ) : (
+            <Box
+              h="300px"
+              w="100%"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              flexDirection="column"
+              color="gray.600"
+              fontSize="xl"
+              fontWeight="semibold"
+              gap={3}
+            >
+              <Box fontSize="3xl" color="gray.400">
+                🍽️
+              </Box>
+              <Box>No restaurants found</Box>
+              <Box fontSize="sm" color="gray.500">
+                Try adjusting your filters or search criteria.
+              </Box>
+            </Box>
+          )}
         </Box>
+
+        {/* 👇 Replace spinner with shimmer while loading more */}
+        {loading && <ShimmerCards />}
       </Box>
     </Box>
   );

@@ -13,18 +13,6 @@ import { setCarts } from "@/redux/slices/cartSlice";
 export default function Home() {
   const dispatch = useDispatch();
 
-  async function getRestaurant() {
-    try {
-      const res = await axios.get(`/api/restaurant`);
-
-      const restaurants = res?.data?.restaurants;
-
-      dispatch(setRestaurants(restaurants));
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   async function getMenu() {
     try {
       const res = await axios.get("/api/menuItem");
@@ -45,7 +33,6 @@ export default function Home() {
   }
 
   useEffect(() => {
-    getRestaurant();
     getMenu();
     getCarts();
   }, []);

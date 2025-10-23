@@ -6,7 +6,6 @@ import {
 } from "@chakra-ui/react";
 import useFilter from "@/utils/useFilter";
 import SearchList from "./searchlist/SearchList";
-import * as searchStyles from "./Search.module.scss";
 import { useState } from "react";
 import { GoSearch } from "react-icons/go";
 import CustomPopover from "@/components/popover/CustomPopover";

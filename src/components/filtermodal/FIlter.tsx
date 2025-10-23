@@ -35,6 +35,7 @@ function Filter({ setFilteredCard }: filteredCardType) {
       ratings: false,
       fast: false,
       lessThan200: false,
+      [type]: true,
     });
   };
 
@@ -59,7 +60,7 @@ function Filter({ setFilteredCard }: filteredCardType) {
       });
     } else if (togglebtn.lessThan200) {
       newFilteredCard = restaurants?.filter(
-        (card: RestaurantType) => (card?.pricefortwo as number) < 200
+        (card: RestaurantType) => (card?.pricefortwo as number) < 150
       );
     } else {
       newFilteredCard = restaurants;
@@ -109,7 +110,7 @@ function Filter({ setFilteredCard }: filteredCardType) {
           onClick={() => handleFilter("lessThan200")}
           bgColor={togglebtn.lessThan200 ? "black" : "white"}
         >
-          Less than Rs.200
+          Less than Rs.150
         </Button>
       </Box>
     </>

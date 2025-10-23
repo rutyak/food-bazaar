@@ -1,13 +1,4 @@
-import {
-  Box,
-  Text,
-  Heading,
-  Button,
-  Image,
-  IconButton,
-  Flex,
-  useQuery,
-} from "@chakra-ui/react";
+import { Box, Text, Heading, Button, Image, Flex } from "@chakra-ui/react";
 import "./MenuCard.scss";
 import starIcon from "@/assets/star-icon.svg";
 import { useDispatch } from "react-redux";
@@ -17,7 +8,6 @@ import axios from "axios";
 import { addCart } from "@/redux/slices/cartSlice";
 import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
 import { ItemsType } from "@/types/menu";
-import { MdEdit, MdDeleteOutline } from "react-icons/md";
 import DeleteAlert from "@/components/customeModal/DeleteAlert";
 import EditModal from "@/components/customeModal/EditModal";
 import { useParams } from "next/navigation";

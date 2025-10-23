@@ -14,8 +14,11 @@ const restaurantSlice = createSlice({
   name: "restaurants",
   initialState: [] as RestaurantType[],
   reducers: {
-    setRestaurants: (state, action: PayloadAction<RestaurantType[]>) => {
-      return action.payload;
+    addRestaurants: (state, action: PayloadAction<RestaurantType[]>) => {
+      const newRestaurants = action.payload?.filter(
+        (newRestau) => !state.some((existing) => existing._id === newRestau._id)
+      );
+      state.push(...newRestaurants);
     },
     updateRestaurant: (state, action: PayloadAction<UpdateRestauType>) => {
       const { id, restaurant } = action.payload;
@@ -25,9 +28,16 @@ const restaurantSlice = createSlice({
       const { id } = action.payload;
       return state.filter((restau) => restau._id !== id);
     },
+    removeCards: (state) => {
+      return state.slice(0, 8);
+    },
   },
 });
 
-export const { setRestaurants, updateRestaurant, deleteRestaurant } =
-  restaurantSlice.actions;
+export const {
+  addRestaurants,
+  updateRestaurant,
+  deleteRestaurant,
+  removeCards,
+} = restaurantSlice.actions;
 export default restaurantSlice.reducer;

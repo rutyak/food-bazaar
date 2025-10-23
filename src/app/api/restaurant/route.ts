@@ -47,11 +47,23 @@ export async function GET(req: Request) {
   try {
     await dbConnect();
 
-    const restaurants = await Restaurant.find();
+    const { searchParams } = new URL(req.url);
+    const page = parseInt(searchParams.get("page") || "1", 10);
+    const limit = parseInt(searchParams.get("limit") || "1", 10);
+    const skip = (page - 1) * limit;
+
+    const totalRestaurants = await Restaurant.countDocuments();
+
+    const restaurants = await Restaurant.find().skip(skip).limit(limit);
+
+    const hasMore = skip + restaurants.length < totalRestaurants;
 
     return NextResponse.json({
       message: "Restaurants fetched successfully",
       restaurants,
+      page,
+      total: totalRestaurants,
+      hasMore,
     });
   } catch (error: unknown) {
     console.error(error);
