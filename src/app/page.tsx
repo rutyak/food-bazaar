@@ -6,7 +6,6 @@ import Header from "../container/home/header/Header";
 import Footer from "../container/footer/Footer";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-import { setRestaurants } from "@/redux/slices/restaurantSlice";
 import { setMenu } from "@/redux/slices/menuSlice";
 import { setCarts } from "@/redux/slices/cartSlice";
 
