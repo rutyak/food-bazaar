@@ -13,6 +13,32 @@ import { RestaurantType } from "@/types/restaurant";
 import axios from "axios";
 import { addRestaurants, removeCards } from "@/redux/slices/restaurantSlice";
 
+const ShimmerCards = () => {
+  return (
+    <Box
+      className="restaurant-grid-card"
+      display="grid"
+      gridTemplateColumns="repeat(auto-fill, minmax(250px, 1fr))"
+      gap="1.5rem"
+    >
+      {[...Array(8)].map((_, index) => (
+        <Box
+          key={index}
+          p="4"
+          borderRadius="2xl"
+          boxShadow="md"
+          bg="white"
+          display="flex"
+          flexDirection="column"
+        >
+          <Skeleton height="150px" borderRadius="xl" mb="4" />
+          <SkeletonText mt="2" noOfLines={3} spacing="3" skeletonHeight="3" />
+        </Box>
+      ))}
+    </Box>
+  );
+};
+
 const Body = () => {
   const restaurants = useSelector((state: RootState) => state.restaurants);
   const dispatch = useDispatch();
@@ -20,7 +46,8 @@ const Body = () => {
   const { city } = useGlobalContext();
   const currCity = city.split(",")[0];
 
-  const [filteredCard, setFilteredCard] = useState<RestaurantType[]>(restaurants);
+  const [filteredCard, setFilteredCard] =
+    useState<RestaurantType[]>(restaurants);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -43,13 +70,6 @@ const Body = () => {
     [loading, hasMore]
   );
 
-  const handleScroll = useCallback(() => {
-    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-    if (scrollTop + clientHeight >= scrollHeight - 200 && !loading && hasMore) {
-      setPage((prev) => prev + 1);
-    }
-  }, [loading, hasMore]);
-
   async function getRestaurants(page: number) {
     try {
       setLoading(true);
@@ -65,50 +85,14 @@ const Body = () => {
   }
 
   useEffect(() => {
-    if (hasMore) getRestaurants(page);
+    getRestaurants(page);
   }, [page]);
-
-  useEffect(() => {
-    if (restaurants.length === 0) getRestaurants(1);
-    else setFilteredCard(restaurants);
-  }, [restaurants]);
 
   useEffect(() => {
     return () => {
       dispatch(removeCards());
     };
   }, []);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
-
-  const ShimmerCards = () => {
-    return (
-      <Box
-        className="restaurant-grid-card"
-        display="grid"
-        gridTemplateColumns="repeat(auto-fill, minmax(250px, 1fr))"
-        gap="1.5rem"
-      >
-        {[...Array(8)].map((_, index) => (
-          <Box
-            key={index}
-            p="4"
-            borderRadius="2xl"
-            boxShadow="md"
-            bg="white"
-            display="flex"
-            flexDirection="column"
-          >
-            <Skeleton height="150px" borderRadius="xl" mb="4" />
-            <SkeletonText mt="2" noOfLines={3} spacing="3" skeletonHeight="3" />
-          </Box>
-        ))}
-      </Box>
-    );
-  };
 
   return restaurants?.length === 0 ? (
     <Box textAlign="center" color="gray" fontSize="20px">
