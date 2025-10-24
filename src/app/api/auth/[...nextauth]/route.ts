@@ -30,7 +30,8 @@ const handler = NextAuth({
 
         if (!user) throw new Error("User not found");
         if (!user.password) throw new Error("User has no password set");
-        if(user.role !== credentials.role) throw new Error("Please choose correct role");
+        if (user.role !== credentials.role)
+          throw new Error("Please choose correct role");
 
         const isValid = await bcrypt.compare(
           credentials.password,
@@ -50,11 +51,32 @@ const handler = NextAuth({
 
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60 * 48, 
+    maxAge: 60 * 60 * 48,
     updateAge: 15 * 60,
   },
 
   callbacks: {
+    async signIn({ user, account }: any) {
+      await dbConnect();
+
+      if (account?.provider === "google") {
+        let existingUser = await User.findOne({ email: user.email });
+        if (!existingUser) {
+          existingUser = await User.create({
+            name: user.name,
+            email: user.email,
+            provider: "google",
+            role: "user",
+          });
+        }
+
+        user.id = existingUser._id.toString();
+        user.role = existingUser.role;
+      }
+
+      return true;
+    },
+
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id ?? token.id;
