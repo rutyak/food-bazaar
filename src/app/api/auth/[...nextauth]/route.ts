@@ -20,7 +20,7 @@ const handler = NextAuth({
         role: { label: "Role", type: "select" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
+        if (!credentials?.email) return null;
 
         await dbConnect();
 
@@ -29,15 +29,12 @@ const handler = NextAuth({
         });
 
         if (!user) throw new Error("User not found");
-        if (!user.password) throw new Error("User has no password set");
-        if (user.role !== credentials.role)
-          throw new Error("Please choose correct role");
+        if (user.role !== credentials.role) throw new Error("Please choose correct role");
 
-        const isValid = await bcrypt.compare(
-          credentials.password,
-          user.password
-        );
-        if (!isValid) throw new Error("Invalid credentials");
+        if (user.password) {
+          const isValid = await bcrypt.compare(credentials.password, user.password);
+          if (!isValid) throw new Error("Invalid credentials");
+        }
 
         return {
           id: user._id.toString(),
@@ -61,12 +58,13 @@ const handler = NextAuth({
 
       if (account?.provider === "google") {
         let existingUser = await User.findOne({ email: user.email });
+
         if (!existingUser) {
           existingUser = await User.create({
             name: user.name,
             email: user.email,
-            provider: "google",
-            role: "user",
+            provider: account.provider,
+            role: "customer", 
           });
         }
 
@@ -84,6 +82,7 @@ const handler = NextAuth({
       }
       return token;
     },
+
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
@@ -91,11 +90,15 @@ const handler = NextAuth({
       }
       return session;
     },
+
+    async redirect({ url, baseUrl }) {
+      return baseUrl + "/";
+    },
   },
 
   pages: {
     signIn: "/auth/login",
-    error: "/auth/login",
+    error: "/error", // you can redirect errors to a custom page
   },
 
   secret: process.env.NEXTAUTH_SECRET,

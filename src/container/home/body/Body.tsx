@@ -21,7 +21,7 @@ const ShimmerCards = () => {
       gridTemplateColumns="repeat(auto-fill, minmax(250px, 1fr))"
       gap="1.5rem"
     >
-      {[...Array(8)].map((_, index) => (
+      {[...Array(4)].map((_, index) => (
         <Box
           key={index}
           p="4"
@@ -92,7 +92,7 @@ const Body = () => {
     return () => {
       dispatch(removeCards());
     };
-  }, []);
+  }, [dispatch]);
 
   return restaurants?.length === 0 ? (
     <Box textAlign="center" color="gray" fontSize="20px">

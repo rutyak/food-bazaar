@@ -10,7 +10,7 @@ const Footer = () => {
       <div className={styles.container}>
         <div className={styles.footerContent}>
           <div className={styles.footerColumn}>
-            <Text color="#4be7e7">About Us</Text>
+            <Text color="#4be7e7"> Us</Text>
             <p>
               Indias fastest delivery app, Providing good food with rewards.
               free registration and enjoy enjoy meal. Buy 2 items get free

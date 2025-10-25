@@ -37,7 +37,7 @@ const Navbar = () => {
           alignItems: "center",
           justifyContent: "center",
         }}
-        display={{ base: "none", sm: "flex" }}
+        display={{ base: "none", md: "flex" }}
       >
         <Link href="/">
           <li>Home</li>

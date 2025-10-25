@@ -7,8 +7,8 @@
   list-style-type: none;
   display: flex;
   align-items: center;
-  position: absolute;
-  right: 35px;
+  // position: absolute;
+  margin-right: 35px;
 
   a {
     text-decoration: none;
@@ -20,8 +20,8 @@
     transform: scale(1.1);
   }
 
-  @media (max-width: 480px) {
-    right: 60px;
+  @media (max-width: 768px) {
+    margin-right: 0px;
   }
 }
 

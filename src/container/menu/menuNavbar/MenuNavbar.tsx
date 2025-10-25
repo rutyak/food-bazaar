@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { useErrorToast } from "@/toasts/CustomeToasts";
+import MobileMenu from "@/components/mobileMenu/MobileMenu";
 
 const MenuNavbar = () => {
   const carts = useSelector((state: RootState) => state.cart);
@@ -28,7 +29,7 @@ const MenuNavbar = () => {
   }
 
   return (
-    <Box className="menu-header" mb={{ base: "20px", md: "30px" }}>
+    <Box className="menu-header">
       <div className="menu-inner-header">
         <Box
           className="menu-title"
@@ -53,22 +54,44 @@ const MenuNavbar = () => {
             </Box>
           </Heading>
         </Box>
-        <Box display="flex" gap="25px" alignItems="center" justifyContent="end">
-          <Button
-            colorScheme="teal"
-            variant="ghost"
-            onClick={handleCartRedirect}
-          >
-            Cart ({cartsSize})
-          </Button>
-          <Button
-            colorScheme="teal"
-            variant="ghost"
-            onClick={() => router.push("/help")}
-          >
-            Help
-          </Button>
+        <Box
+          display="flex"
+          gap={{ base: "10px", md: "25px" }}
+          alignItems="center"
+          justifyContent="end"
+        >
+          <Box display={{ base: "none", md: "flex" }}>
+            <Button
+              colorScheme="teal"
+              variant="ghost"
+              onClick={() => router.push("/")}
+            >
+              Home
+            </Button>
+            <Button
+              colorScheme="teal"
+              variant="ghost"
+              onClick={handleCartRedirect}
+            >
+              Cart ({cartsSize})
+            </Button>
+            <Button
+              colorScheme="teal"
+              variant="ghost"
+              onClick={() => router.push("/about")}
+            >
+              About
+            </Button>
+            <Button
+              colorScheme="teal"
+              variant="ghost"
+              onClick={() => router.push("/help")}
+            >
+              Help
+            </Button>
+          </Box>
           {session?.user ? <Drawer /> : <Login />}
+          <MobileMenu />
         </Box>
       </div>
     </Box>

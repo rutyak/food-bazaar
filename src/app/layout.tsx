@@ -3,6 +3,8 @@ import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProviders } from "@/components/auth/session-provider";
 import { AppProviders } from "@/provider/AppProvider";
+import MenuNavbar from "@/container/menu/menuNavbar/MenuNavbar";
+import { useParams, usePathname } from "next/navigation";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -16,7 +18,7 @@ const robotoMono = Roboto_Mono({
 
 export const metadata: Metadata = {
   title: "Food Bazaar",
-  description: "Your favorite food delivery app", // Add description for better SEO
+  description: "Your favorite food delivery app",
 };
 
 export const viewport: Viewport = {
@@ -31,12 +33,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.variable} ${robotoMono.variable} antialiased`}
-      >
-        <AppProviders>
-          <AuthProviders>{children}</AuthProviders>
-        </AppProviders>
+      <body className={`${inter.variable} ${robotoMono.variable} antialiased`}>
+        <AppProviders>{children}</AppProviders>
       </body>
     </html>
   );

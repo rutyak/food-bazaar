@@ -53,10 +53,6 @@ const CustomPopover: React.FC<CustomPopoverProps> = ({
           leftIcon={<FaLocationDot size={20} color="red" />}
           _hover={{
             bgGradient: "linear(to-r, teal.500, teal.600)",
-            transform: "scale(1.03)",
-          }}
-          _active={{
-            transform: "scale(0.97)",
           }}
           transition="all 0.2s ease"
           borderRadius="xl"

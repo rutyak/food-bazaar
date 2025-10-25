@@ -44,10 +44,12 @@ function MobileMenu() {
         aria-label="Open menu"
         icon={<HamburgerIcon />}
         variant="ghost"
-        color="white"
+        color="gray"
+        bg="while"
+        borderRadius="5px"
         onClick={onOpen}
-        display={{ base: "flex", sm: "none" }}
-        mr={2}
+        display={{ base: "flex", md: "none" }}
+        mr={{ base: 2, md: 4 }}
       />
 
       <Drawer

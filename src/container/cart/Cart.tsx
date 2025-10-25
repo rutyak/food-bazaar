@@ -17,7 +17,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import CartItem from "./cartItem/CartItem";
 import "./Cart.scss";
-import MenuNavbar from "../menu/menuNavbar/MenuNavbar";
 import { RootState } from "@/redux/store";
 import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
 import { CartType } from "@/types/cart";
@@ -102,8 +101,6 @@ const Cart = () => {
 
   return (
     <>
-      <MenuNavbar />
-
       <Box
         p={6}
         m="auto"
@@ -112,6 +109,7 @@ const Cart = () => {
         boxShadow="md"
         maxW="700px"
         className="cart-container"
+        mt={{ base: "none", md: "30px" }}
         mb={"20px"}
       >
         <Heading as="h2" size="xl" mb={6} textAlign="center">

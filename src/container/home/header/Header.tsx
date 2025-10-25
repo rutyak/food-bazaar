@@ -26,7 +26,7 @@ const Header = () => {
             Good food, Good Monents
           </Text>
         </div>
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "center", gap:"5px"}}>
           <Navbar />
           <MobileMenu />
         </div>

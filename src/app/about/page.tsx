@@ -1,5 +1,5 @@
 "use client";
- 
+
 import React from "react";
 import {
   Box,
@@ -27,13 +27,13 @@ const About = () => {
   return (
     <Box
       p={{ base: 6, md: 10 }}
-      maxW="1200px"
+      maxW="1350px"
       mx="auto"
+      mb={{ base: "none", xl: "20px" }}
       bgGradient={bgGradient}
-      borderRadius="lg"
+      borderRadius={{ base: "none", xl: "lg" }}
       boxShadow="2xl"
     >
-      {/* Title */}
       <Heading
         as="h1"
         mb={10}
@@ -44,7 +44,6 @@ const About = () => {
         About FoodBazaar
       </Heading>
 
-      {/* Intro Section */}
       <Flex
         direction={{ base: "column", md: "row" }}
         align="center"

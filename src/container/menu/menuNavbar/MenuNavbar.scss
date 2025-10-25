@@ -17,6 +17,9 @@
 }
 
 .menu-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   background-color: #ffffff;
   justify-content: space-between;
   width: 100%;
@@ -64,5 +67,9 @@
 
   .menu-title {
     visibility: hidden;
+  }
+
+  .menu-inner-header {
+    padding: 10px;
   }
 }
