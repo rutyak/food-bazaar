@@ -8,15 +8,14 @@ import {
   Portal,
   Text,
   useDisclosure,
-  Box,
   Flex,
   Spinner,
   Divider,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { MdMyLocation } from "react-icons/md";
 import { GrLocationPin } from "react-icons/gr";
 import { FaLocationDot } from "react-icons/fa6";
-import { motion } from "framer-motion";
 import React from "react";
 
 interface CustomPopoverProps {
@@ -26,8 +25,6 @@ interface CustomPopoverProps {
   currentLocation?: string;
 }
 
-const MotionPopoverContent = motion(PopoverContent);
-
 const CustomPopover: React.FC<CustomPopoverProps> = ({
   text,
   onDetectLocation,
@@ -35,6 +32,7 @@ const CustomPopover: React.FC<CustomPopoverProps> = ({
   currentLocation = "Location not detected",
 }) => {
   const { isOpen, onToggle, onClose } = useDisclosure();
+  const iconSize = useBreakpointValue({ base: 14, md: 20 });
 
   return (
     <Popover
@@ -48,28 +46,33 @@ const CustomPopover: React.FC<CustomPopoverProps> = ({
           size="md"
           variant="solid"
           color="white"
-          bg="linear-gradient(to-r, gray.900, blue.900)"
           onClick={onToggle}
-          leftIcon={<FaLocationDot size={20} color="red" />}
+          leftIcon={
+            <FaLocationDot
+              size={iconSize}
+              color="red"
+              style={{
+                marginBottom: "2px",
+              }}
+            />
+          }
+          iconSpacing="1px"
           _hover={{
             bgGradient: "linear(to-r, teal.500, teal.600)",
           }}
-          transition="all 0.2s ease"
           borderRadius="xl"
-          px={5}
-          py={3}
+          px={4}
+          py={{ base: 3, md: 6 }}
           fontWeight="semibold"
+          alignItems="center"
+          display="flex"
         >
           {text}
         </Button>
       </PopoverTrigger>
 
       <Portal>
-        <MotionPopoverContent
-          initial={{ opacity: 0, y: 15, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 15, scale: 0.95 }}
-          transition={{ duration: 0.25, ease: "easeInOut" }}
+        <PopoverContent
           borderRadius="xl"
           boxShadow="2xl"
           bg="white"
@@ -77,7 +80,7 @@ const CustomPopover: React.FC<CustomPopoverProps> = ({
           _focus={{ boxShadow: "2xl" }}
         >
           <PopoverArrow bg="white" />
-          <PopoverBody p={4}>
+          <PopoverBody p={{ base: 3, md: 4 }}>
             <Flex direction="column">
               <Button
                 size="md"
@@ -92,6 +95,8 @@ const CustomPopover: React.FC<CustomPopoverProps> = ({
                 _hover={{ bgGradient: "linear(to-r, teal.500, teal.600)" }}
                 color="white"
                 fontWeight="medium"
+                p={{ base: 2, md: 4 }}
+                fontSize={{ base: "13px", md: "14px" }}
               >
                 Detect My Location
               </Button>
@@ -101,11 +106,11 @@ const CustomPopover: React.FC<CustomPopoverProps> = ({
               <Flex align="center">
                 <GrLocationPin color="red" size={20} />
                 <Text
-                  fontSize="sm"
                   fontWeight="medium"
                   color="gray.700"
                   ml={1}
                   noOfLines={2}
+                  fontSize={{ base: "13px", md: "14px" }}
                 >
                   {isLoading ? "Detecting your location..." : currentLocation}
                 </Text>
@@ -113,7 +118,7 @@ const CustomPopover: React.FC<CustomPopoverProps> = ({
               </Flex>
             </Flex>
           </PopoverBody>
-        </MotionPopoverContent>
+        </PopoverContent>
       </Portal>
     </Popover>
   );

@@ -24,7 +24,7 @@ const Menubody = () => {
   );
 
   return menu?.length === 0 ? (
-    <Box textAlign="center" color="gray" fontSize="20px">
+    <Box textAlign="center" color="gray" fontSize="20px" alignItems="center">
       Loading...
     </Box>
   ) : (
