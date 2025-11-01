@@ -27,6 +27,7 @@ const Help = () => {
         maxW="1350px"
         mx="auto"
         mb={{ base: "none", xl: "20px" }}
+        mt={{ base: "none", xl: "20px" }}
         bgGradient={bgGradient}
         borderRadius={{ base: "none", xl: "lg" }}
         boxShadow="2xl"
