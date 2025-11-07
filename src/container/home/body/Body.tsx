@@ -144,7 +144,6 @@ const Body = () => {
           )}
         </Box>
 
-        {/* 👇 Replace spinner with shimmer while loading more */}
         {loading && <ShimmerCards />}
       </Box>
     </Box>

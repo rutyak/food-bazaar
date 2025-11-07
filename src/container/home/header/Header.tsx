@@ -4,7 +4,7 @@ import React from "react";
 import { useState } from "react";
 import "./Header.scss";
 import { Heading, Text } from "@chakra-ui/react";
-import foodIcon from "@/assets/restaurant.png";
+import foodIcon from "../../../../public/appIcon.png";
 import Navbar from "@/components/navbar/Navbar";
 import Image from "next/image";
 import Search from "@/container/search/Search";

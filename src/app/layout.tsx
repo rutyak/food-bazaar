@@ -19,6 +19,9 @@ const robotoMono = Roboto_Mono({
 export const metadata: Metadata = {
   title: "Food Bazaar",
   description: "Your favorite food delivery app",
+  icons: {
+    icon: "appIcon.png",
+  },
 };
 
 export const viewport: Viewport = {
