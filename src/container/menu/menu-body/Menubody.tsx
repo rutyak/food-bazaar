@@ -9,6 +9,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { CategoryType, MenuType } from "@/types/menu";
+import NotFound from "@/components/notFound/NotFound";
 
 // Define your own Params interface
 interface Params {
@@ -18,15 +19,16 @@ interface Params {
 const Menubody = () => {
   const query = useParams() as unknown as Params;
   const menuData = useSelector((state: RootState) => state.menu);
-  
+
   const menu = menuData?.filter(
     (data: MenuType) => data.restaurantId?.toString() === query?.id
   );
 
   return menu?.length === 0 ? (
-    <Box textAlign="center" color="gray" fontSize="20px" alignItems="center">
-      Loading...
-    </Box>
+    <NotFound
+      title="Menu not available"
+      message="Try searching other restaurants..."
+    />
   ) : (
     <>
       <div className="card-menu">

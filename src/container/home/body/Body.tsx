@@ -12,6 +12,7 @@ import Carousel from "@/components/carousel/Carousel";
 import { RestaurantType } from "@/types/restaurant";
 import axios from "axios";
 import { addRestaurants, removeCards } from "@/redux/slices/restaurantSlice";
+import NotFound from "@/components/notFound/NotFound";
 
 const ShimmerCards = () => {
   return (
@@ -89,10 +90,12 @@ const Body = () => {
   }, [page]);
 
   useEffect(() => {
+    dispatch(removeCards());
+
     return () => {
       dispatch(removeCards());
     };
-  }, [dispatch]);
+  }, []);
 
   return restaurants?.length === 0 ? (
     <Box textAlign="center" color="gray" fontSize="20px">
@@ -121,26 +124,10 @@ const Body = () => {
               }
             })
           ) : (
-            <Box
-              h="300px"
-              w="100%"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              flexDirection="column"
-              color="gray.600"
-              fontSize="xl"
-              fontWeight="semibold"
-              gap={3}
-            >
-              <Box fontSize="3xl" color="gray.400">
-                🍽️
-              </Box>
-              <Box>No restaurants found</Box>
-              <Box fontSize="sm" color="gray.500">
-                Try adjusting your filters or search criteria.
-              </Box>
-            </Box>
+            <NotFound
+              title="No restaurants found"
+              message="Try adjusting your filters or search criteria."
+            />
           )}
         </Box>
 
