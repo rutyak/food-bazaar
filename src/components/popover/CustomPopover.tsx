@@ -12,6 +12,7 @@ import {
   Spinner,
   Divider,
   useBreakpointValue,
+  Icon,
 } from "@chakra-ui/react";
 import { MdMyLocation } from "react-icons/md";
 import { GrLocationPin } from "react-icons/gr";
@@ -32,40 +33,35 @@ const CustomPopover: React.FC<CustomPopoverProps> = ({
   currentLocation = "Location not detected",
 }) => {
   const { isOpen, onToggle, onClose } = useDisclosure();
-  const iconSize = useBreakpointValue({ base: 14, md: 20 });
+
+  const triggerIconSize = useBreakpointValue({ base: 14, md: 18 });
+  const textSize = useBreakpointValue({ base: "13px", md: "14px" });
 
   return (
     <Popover
       isOpen={isOpen}
       onClose={onClose}
       placement="bottom-start"
-      closeOnBlur={true}
+      closeOnBlur
     >
       <PopoverTrigger>
         <Button
-          size="md"
-          variant="solid"
-          color="white"
           onClick={onToggle}
           leftIcon={
-            <FaLocationDot
-              size={iconSize}
-              color="red"
-              style={{
-                marginBottom: "2px",
-              }}
+            <Icon
+              as={FaLocationDot}
+              boxSize={triggerIconSize}
+              color="red.500"
             />
           }
-          iconSpacing="1px"
-          _hover={{
-            bgGradient: "linear(to-r, teal.500, teal.600)",
-          }}
+          px={{ base: 4, md: 5 }}
+          py={{ base: 3, md: 4 }}
           borderRadius="xl"
-          px={4}
-          py={{ base: 3, md: 6 }}
           fontWeight="semibold"
-          alignItems="center"
-          display="flex"
+          color="white"
+          bg="teal.500"
+          _hover={{ bg: "teal.600" }}
+          _active={{ bg: "teal.700" }}
         >
           {text}
         </Button>
@@ -73,48 +69,60 @@ const CustomPopover: React.FC<CustomPopoverProps> = ({
 
       <Portal>
         <PopoverContent
+          w={{ base: "240px", md: "280px" }}
           borderRadius="xl"
-          boxShadow="2xl"
-          bg="white"
-          w="230px"
-          _focus={{ boxShadow: "2xl" }}
+          boxShadow="lg"
+          _focus={{ boxShadow: "lg" }}
         >
-          <PopoverArrow bg="white" />
-          <PopoverBody p={{ base: 3, md: 4 }}>
-            <Flex direction="column">
+          <PopoverArrow />
+          <PopoverBody p={4}>
+            <Flex direction="column" gap={4}>
+              {/* Detect Button */}
               <Button
-                size="md"
-                colorScheme="teal"
-                w="full"
                 onClick={onDetectLocation}
                 leftIcon={<MdMyLocation />}
                 isLoading={isLoading}
                 loadingText="Detecting"
+                w="full"
+                size="md"
+                fontSize={textSize}
                 borderRadius="lg"
-                bgGradient="linear(to-r, teal.400, teal.500)"
-                _hover={{ bgGradient: "linear(to-r, teal.500, teal.600)" }}
-                color="white"
-                fontWeight="medium"
-                p={{ base: 2, md: 4 }}
-                fontSize={{ base: "13px", md: "14px" }}
+                colorScheme="teal"
               >
                 Detect My Location
               </Button>
 
-              <Divider my={2} />
+              <Divider />
 
-              <Flex align="center">
-                <GrLocationPin color="red" size={20} />
+              {/* Location Display */}
+              <Flex align="flex-start" gap={2}>
+                <Icon
+                  as={GrLocationPin}
+                  boxSize={4}
+                  color="red.500"
+                  mt="2px"
+                />
+
                 <Text
+                  flex="1"
+                  fontSize={textSize}
                   fontWeight="medium"
                   color="gray.700"
-                  ml={1}
+                  lineHeight="1.4"
                   noOfLines={2}
-                  fontSize={{ base: "13px", md: "14px" }}
                 >
-                  {isLoading ? "Detecting your location..." : currentLocation}
+                  {isLoading
+                    ? "Detecting your location..."
+                    : currentLocation}
                 </Text>
-                {isLoading && <Spinner size="sm" ml="auto" color="teal.500" />}
+
+                {isLoading && (
+                  <Spinner
+                    size="sm"
+                    color="teal.500"
+                    mt="2px"
+                  />
+                )}
               </Flex>
             </Flex>
           </PopoverBody>

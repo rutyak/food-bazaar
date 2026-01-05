@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Heading, Box, Skeleton, SkeletonText } from "@chakra-ui/react";
+import { Heading, Box, Skeleton, SkeletonText, VStack, Spinner, Text } from "@chakra-ui/react";
 import "./Body.scss";
 import Filter from "@/components/filtermodal/FIlter";
 import { useDispatch, useSelector } from "react-redux";
@@ -98,9 +98,18 @@ const Body = () => {
   }, []);
 
   return restaurants?.length === 0 ? (
-    <Box textAlign="center" color="gray" fontSize="20px">
-      Loading...
-    </Box>
+    <VStack spacing={3} justify="center" align="center" h="100vh">
+      <Spinner
+        thickness="4px"
+        speed="0.8s"
+        emptyColor="gray.200"
+        color="teal.500"
+        size="xl"
+      />
+      <Text fontSize="20px" color="gray.600">
+        Loading...
+      </Text>
+    </VStack>
   ) : (
     <Box className="home-page">
       <Carousel suggestions={restaurants} title="Top Restaurants" />
