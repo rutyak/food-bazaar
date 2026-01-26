@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import Body from "../container/home/body/Body";
-import Header from "../container/home/header/Header";
+import Dashboard from "../container/dashboard/Dashbaord"
+import Header from "../container/dashboard/header/Header";
 import Footer from "../container/footer/Footer";
 import { useDispatch } from "react-redux";
 import axios from "axios";
@@ -39,7 +39,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Body />
+      <Dashboard />
       <Footer />
     </>
   );

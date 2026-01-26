@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Heading, Box, Skeleton, SkeletonText, VStack, Spinner, Text } from "@chakra-ui/react";
-import "./Body.scss";
+import "./Dashboard.scss";
 import Filter from "@/components/filtermodal/FIlter";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
@@ -40,7 +40,7 @@ const ShimmerCards = () => {
   );
 };
 
-const Body = () => {
+const Dashboard = () => {
   const restaurants = useSelector((state: RootState) => state.restaurants);
   const dispatch = useDispatch();
 
@@ -146,4 +146,4 @@ const Body = () => {
   );
 };
 
-export default Body;
+export default Dashboard;

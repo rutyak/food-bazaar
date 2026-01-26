@@ -1,177 +1,78 @@
 .search {
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  display: flex;
-  position: absolute;
-  top: 10rem;
-  margin: auto;
-
-  Input {
-    border: none;
-    background: #fff;
-    border-radius: 0 20px 20px 0;
-    width: 500px;
-    height: 41px;
-    padding-left: 43px;
-
-    &:focus {
-      border-color: green;
-    }
-  }
-
-  Input::placeholder {
-    font-size: 14px;
-    padding-bottom: 4px;
-  }
-
-  Button {
-    background-color: #ffffff;
-    border-radius: 20px 0 0 20px;
-    align-items: center;
-    gap: 9px;
-    justify-content: center;
-    height: 41px;
-    display: flex;
-    box-shadow: 0 6px 20px rgba(38, 57, 77, 0.3);
-    font-size: 15px;
-    font-weight: 600;
-    color: #4a5568;
-    transition: all 0.3s ease;
-    padding: 0 16px;
-    cursor: pointer;
-    border: none;
-
-    &:hover {
-      background-color: #163c48;
-      color: white;
-      box-shadow: 0 8px 24px rgba(22, 60, 72, 0.4);
-    }
-  }
-
-  @media (max-width: 780px) {
-    Input {
-      width: 400px;
-    }
-  }
-
-  @media (max-width: 768px) {
-    Button {
-      height: 36px;
-      font-size: 13px;
-    }
-
-    Input {
-      width: 200px;
-      height: 36px;
-    }
-
-    Input::placeholder {
-      font-size: 13px;
-      padding-bottom: 4px;
-    }
-  }
-}
-
-.accordian-panal {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50px;
-  margin-top: 3px;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  cursor: pointer;
+  margin: 0 auto;
 
-  &:hover {
-    background-color: rgb(237, 233, 233);
-    color: red;
-  }
-}
-
-.search-icon {
-  z-index: 26;
-  position: absolute;
-  top: 11px;
-  left: 11px;
-  width: 27px;
-  height: 27px;
-  padding-bottom: 5px;
-  object-fit: contain;
-}
-
-// @media (max-width: 480px) {
-//   .search {
-//     width: calc(100% + 34px);
-//   }
-//   .search Input {
-//     width: 251px;
-//     height: 36px;
-//   }
-//   .location-detector {
-//     button {
-//       font-size: 14px;
-//       height: 36px;
-//       cursor: pointer;
-//     }
-//   }
-//   .search-icon {
-//     top: 7;
-//   }
-// }
-
-@media (max-width: 439px) {
-  .search {
+  .searchBarWrapper {
     display: flex;
+    filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.2));
   }
 
-  .searchList {
-    width: 355px !important;
-  }
-
-  .accordian-panal-detect {
-    img {
-      width: 22px;
-      height: 20px;
-    }
-
-    p {
-      font-size: 13px;
-    }
-  }
-
-  .location-detector {
+  .locationSection {
     button {
-      cursor: pointer;
-      height: 35px;
-      font-size: 14px;
-      border-radius: 8px;
-      background: black;
-      color: azure;
+      height: 54px;
+      background-color: #ffffff !important;
+      border-radius: 30px 0 0 30px !important;
+      border: none !important;
+      border-right: 1px solid #edf2f7 !important;
+      padding: 0 25px !important;
+      font-weight: 600;
+      color: #2d3748;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background-color: #f7fafc !important;
+        color: #ff4d4d;
+      }
     }
+  }
+
+  .inputSection {
+    flex: 1;
+    max-width: 550px;
+
+    input {
+      height: 54px !important;
+      border: none !important;
+      background: #ffffff !important;
+      border-radius: 0 30px 30px 0 !important;
+      padding-left: 50px !important;
+      font-size: 16px;
+      box-shadow: none !important;
+
+      &:focus {
+        box-shadow: inset 0 0 0 2px #ff4d4d !important;
+      }
+      
+      &::placeholder {
+        color: #a0aec0;
+      }
+    }
+  }
+
+  .dropdownContainer {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
+    z-index: 100;
   }
 }
 
-@media (max-width: 360px) {
-  .accordian-panal-detect {
-    img {
-      width: 22px;
-      height: 20px;
-    }
-
-    p {
-      font-size: 13px;
-    }
+// Mobile responsiveness for alignment
+@media (max-width: 600px) {
+  .searchBarWrapper {
+    flex-direction: column;
+    gap: 10px;
+    filter: none;
   }
 
-  .location-detector {
-    button {
-      cursor: pointer;
-      height: 35px;
-      font-size: 14px;
-      border-radius: 8px;
-      background: black;
-      color: azure;
-    }
+  .locationSection button, 
+  .inputSection input {
+    border-radius: 15px !important;
+    width: 100%;
+    height: 48px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
   }
 }
