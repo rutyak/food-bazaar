@@ -29,6 +29,9 @@ const locationApi = process.env.NEXT_PUBLIC_LOCATION_API ?? "";
 
 const Search = ({ setSearch, search, cart }: SearchProps) => {
   const restaurants = useSelector((state: RootState) => state.restaurants);
+
+  console.log("restaurants: ", restaurants);
+
   const { city, setCity } = useGlobalContext();
   const [resultList, setResultList] = useState<RestaurantType[]>([]);
   const [isLocating, setIsLocating] = useState(false);
@@ -40,6 +43,7 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
     const searchValue = e.target.value;
     setSearch(searchValue);
     const filteredData = useFilter(searchValue, restaurants);
+    console.log("filteredData: ", filteredData);
     setResultList(filteredData);
   };
 
@@ -76,35 +80,40 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
           }
         },
         () => {
+          errorToast("Location access denied");
           setIsLocating(false);
-          errorToast("Location error");
         },
       );
     }
   };
+  console.log("seraching : ", search);
 
   return (
-    <Box w="full" maxW="750px" className={styles.search}>
+    <Box w="full" px={{ base: 4, md: 0 }} className={styles.search}>
       <Flex
         w="full"
+        maxW="850px"
         justify="center"
         align="center"
-        gap={0}
         className={styles.searchBarWrapper}
       >
         <div className={styles.locationSection}>
           <CustomPopover
-            text={isLocating ? "Locating..." : "Location"}
+            text={isLocating ? "Locating..." : city || "Location"}
             onDetectLocation={handleDetectLocation}
             currentLocation={city}
           />
         </div>
 
-        <Box position="relative" className={styles.inputSection}>
+        <Box className={styles.inputSection}>
           {!cart && (
-            <InputGroup size="lg">
-              <InputLeftElement pointerEvents="none" h="full" px={4}>
-                <GoSearch color="gray.500" size={20} />
+            <InputGroup size={{ base: "md", md: "lg" }}>
+              <InputLeftElement
+                pointerEvents="none"
+                h="full"
+                px={{ base: 2, md: 4 }}
+              >
+                <GoSearch color="gray.400" size={18} />
               </InputLeftElement>
               <Input
                 placeholder="Search for a restaurant..."
@@ -115,11 +124,7 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
             </InputGroup>
           )}
 
-          {search?.trim() && (
-            <Box className={styles.dropdownContainer}>
-              <SearchList resultList={resultList} />
-            </Box>
-          )}
+          {search?.trim() && <SearchList resultList={resultList} />}
         </Box>
       </Flex>
     </Box>

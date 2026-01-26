@@ -4,6 +4,14 @@
   width: 100%;
   overflow: hidden;
 
+  @media (max-width: 780px) {
+    min-height: 460px;
+  }
+
+  @media (max-width: 480px){
+    min-height: 380px
+  }
+
   .bg-image-wrapper {
     position: absolute;
     inset: 0;
@@ -47,10 +55,6 @@
 
     // @media (max-width: 1024px) {
     //   font-size: 80px;
-    // }
-
-    // @media (max-width: 680px) {
-    //   font-size: 50px;
     // }
 
     // @media (max-width: 360px) {

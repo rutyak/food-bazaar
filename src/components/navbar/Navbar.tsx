@@ -32,7 +32,7 @@ const Navbar = () => {
     <HStack as="nav" spacing={8} className="navbar-container">
       <HStack 
         spacing={8} 
-        display={{ base: "none", md: "flex" }} 
+        display={{ base: "none", lg: "flex" }} 
         className="nav-links"
       >
         <Link href="/" className="nav-item">Home</Link>

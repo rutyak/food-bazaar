@@ -6,73 +6,97 @@
 
   .searchBarWrapper {
     display: flex;
-    filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.2));
+    width: 100%;
+    filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.1));
+    background: #ffffff;
+    border-radius: 30px;
+    // overflow: hidden;
+
+    @media (max-width: 480px) {
+      border-radius: 12px;
+    }
   }
 
   .locationSection {
-    button {
-      height: 54px;
-      background-color: #ffffff !important;
-      border-radius: 30px 0 0 30px !important;
+    flex-shrink: 0;
+
+    // Targeting the button inside CustomPopover
+    :global(.location-trigger-btn) {
+      height: 54px !important;
+      background-color: transparent !important;
+      border-radius: 0 !important; // Controlled by wrapper
       border: none !important;
       border-right: 1px solid #edf2f7 !important;
-      padding: 0 25px !important;
+      padding: 0 20px !important;
       font-weight: 600;
       color: #2d3748;
-      transition: all 0.3s ease;
       
-      &:hover {
-        background-color: #f7fafc !important;
-        color: #ff4d4d;
+      @media (max-width: 768px) {
+        height: 48px !important;
+        padding: 0 15px !important;
+        font-size: 13px !important;
+      }
+
+      @media (max-width: 480px) {
+        height: 44px !important;
+        padding: 0 10px !important;
+        max-width: 100px;
       }
     }
   }
 
   .inputSection {
     flex: 1;
-    max-width: 550px;
+    position: relative;
+    z-index: 10;
 
     input {
       height: 54px !important;
       border: none !important;
-      background: #ffffff !important;
-      border-radius: 0 30px 30px 0 !important;
-      padding-left: 50px !important;
+      background: transparent !important;
+      border-radius: 0 !important;
+      padding-left: 45px !important;
       font-size: 16px;
       box-shadow: none !important;
 
       &:focus {
-        box-shadow: inset 0 0 0 2px #ff4d4d !important;
+        box-shadow: none !important;
       }
-      
+
       &::placeholder {
         color: #a0aec0;
+        font-size: 15px;
+      }
+
+      @media (max-width: 768px) {
+        height: 48px !important;
+        font-size: 14px;
+        
+        &::placeholder {
+          font-size: 13px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        height: 44px !important;
+        padding-left: 35px !important;
+        font-size: 12px;
+
+        &::placeholder {
+          font-size: 11px;
+        }
       }
     }
   }
 
   .dropdownContainer {
     position: absolute;
-    top: calc(100% + 10px);
+    top: 100%;
     left: 0;
     right: 0;
-    z-index: 100;
-  }
-}
-
-// Mobile responsiveness for alignment
-@media (max-width: 600px) {
-  .searchBarWrapper {
-    flex-direction: column;
-    gap: 10px;
-    filter: none;
-  }
-
-  .locationSection button, 
-  .inputSection input {
-    border-radius: 15px !important;
-    width: 100%;
-    height: 48px !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+    z-index: 1000 !important;
+    margin-top: 8px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    border-radius: 12px;
   }
 }

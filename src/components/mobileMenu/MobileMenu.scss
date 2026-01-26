@@ -1,0 +1,60 @@
+.mobile-hamburger-btn {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  transition: all 0.2s ease !important;
+
+  &:active {
+    transform: scale(0.9);
+    background: rgba(255, 204, 0, 0.1) !important;
+  }
+}
+
+.mobile-drawer-content {
+  background: #0f0f0f !important;
+  color: white !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+
+  .mobile-nav-link {
+    width: 100%;
+    text-decoration: none !important;
+    color: rgba(255, 255, 255, 0.8);
+    transition: all 0.2s ease;
+    border-radius: 12px;
+    padding: 0 12px;
+
+    .icon-wrapper {
+      color: rgba(255, 255, 255, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    &:hover, &:active {
+      background: rgba(255, 255, 255, 0.05);
+      color: #ffcc00;
+
+      .icon-wrapper {
+        color: #ffcc00;
+        transform: translateX(3px);
+      }
+    }
+  }
+
+  .mobile-cart-badge {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #ff4d4d;
+    color: white;
+    font-size: 11px;
+    font-weight: 800;
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 77, 77, 0.4);
+  }
+}

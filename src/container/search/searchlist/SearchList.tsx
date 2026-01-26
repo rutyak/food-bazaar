@@ -1,47 +1,59 @@
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
-import "./SearchList.scss";
+"use client";
+
+import React from "react";
+import { Box, Flex, Image, Text, VStack, Badge } from "@chakra-ui/react";
 import { AiFillStar } from "react-icons/ai";
 import Link from "next/link";
 import { RestaurantType } from "@/types/restaurant";
+import "./SearchList.scss";
 
 const SearchList = ({ resultList }: { resultList: RestaurantType[] }) => {
   return (
-    <div className="searchList">
+    <Box className="searchList" zIndex={100}>
       {resultList?.length === 0 ? (
-        <li>Not found</li>
+        <Box p={6} textAlign="center">
+          <Text color="gray.500" fontWeight="500">
+            No restaurants found
+          </Text>
+        </Box>
       ) : (
-        resultList?.map((list: RestaurantType) => {
-          return (
-            <Box key={list?._id}>
-              <Link href={`/menu/${list?._id}`} className="searchList-images">
+        <VStack align="stretch" spacing={0}>
+          {resultList?.map((list: RestaurantType) => (
+            <Link 
+              key={list?._id} 
+              href={`/menu/${list?._id}`} 
+              className="search-item-link"
+            >
+              <Flex className="search-item-content">
                 <Image
                   src={list?.image as string}
-                  alt="list-img"
-                  boxSize={{ base: "50px", md: "73px" }}
+                  alt={list?.name}
+                  boxSize="60px"
+                  borderRadius="10px"
                   objectFit="cover"
+                  fallbackSrc="https://via.placeholder.com/60"
                 />
-                <Flex direction="column" gap="3px">
-                  <Text fontWeight="600" fontSize={{ base: 11, md: 12 }}>
+                
+                <Flex direction="column" flex="1" gap="2px">
+                  <Text className="restaurant-name">
                     {list?.name}
                   </Text>
-                  <Flex
-                    fontWeight="300"
-                    fontSize={{ base: 9, md: 12 }}
-                    gap="4px"
-                    alignItems="center"
-                  >
-                    <AiFillStar color="gold" /> {list?.rating}
+                  
+                  <Flex align="center" gap="8px">
+                    <Flex align="center" gap="1" color="orange.400" fontSize="xs" fontWeight="bold">
+                      <AiFillStar /> {list?.rating || "N/A"}
+                    </Flex>
+                    <Text fontSize="xs" color="gray.500" isTruncated>
+                      • {list?.categories}
+                    </Text>
                   </Flex>
-                  <Text fontWeight="300" fontSize={{ base: 9, md: 12 }}>
-                    {list?.categories}
-                  </Text>
                 </Flex>
-              </Link>
-            </Box>
-          );
-        })
+              </Flex>
+            </Link>
+          ))}
+        </VStack>
       )}
-    </div>
+    </Box>
   );
 };
 

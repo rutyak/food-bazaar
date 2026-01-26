@@ -1,25 +1,53 @@
 .searchList {
   width: 100%;
-  max-width: 450px;
-  cursor: pointer;
+  background: #c4c4be;
+  border-radius: 16px;
+  max-height: 450px;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  border: 1px solid #edf2f7;
+  margin-top: 5px;
   position: absolute;
-  background: #e8e3cd;
-  border-radius: 4px;
-  max-height: 497px;
-  margin-top: 16px;
-  padding: 13px 13px 0;
-  overflow: auto;
-  z-index: 100 !important;
+  z-index: 1000 !important;
 
-  li {
-    list-style: none;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 10px;
   }
 
-  &-images {
+  .search-item-link {
+    display: block;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid #f7fafc;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background-color: #f8fafc;
+
+      .restaurant-name {
+        color: #ff4d4d;
+      }
+    }
+  }
+
+  .search-item-content {
+    padding: 12px 16px;
     align-items: center;
-    gap: 14px;
-    margin-bottom: 19px;
-    display: flex;
+    gap: 15px;
+  }
+
+  .restaurant-name {
+    font-weight: 700;
+    font-size: 14px;
+    color: #2d3748;
+    transition: color 0.2s ease;
+    text-align: left;
   }
 }
-

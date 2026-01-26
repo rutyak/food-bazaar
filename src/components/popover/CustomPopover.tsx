@@ -1,3 +1,6 @@
+"use client";
+
+import React from "react";
 import {
   Button,
   Popover,
@@ -11,13 +14,13 @@ import {
   Flex,
   Spinner,
   Divider,
-  useBreakpointValue,
   Icon,
+  Box,
+  VStack,
 } from "@chakra-ui/react";
 import { MdMyLocation } from "react-icons/md";
-import { GrLocationPin } from "react-icons/gr";
-import { FaLocationDot } from "react-icons/fa6";
-import React from "react";
+import { FaLocationDot, FaMapLocationDot } from "react-icons/fa6";
+import "./CustomPopover.scss";
 
 interface CustomPopoverProps {
   text: string;
@@ -34,97 +37,77 @@ const CustomPopover: React.FC<CustomPopoverProps> = ({
 }) => {
   const { isOpen, onToggle, onClose } = useDisclosure();
 
-  const triggerIconSize = useBreakpointValue({ base: 14, md: 18 });
-  const textSize = useBreakpointValue({ base: "13px", md: "14px" });
-
   return (
     <Popover
       isOpen={isOpen}
       onClose={onClose}
+      // Improved placement logic for responsiveness
       placement="bottom-start"
       closeOnBlur
+      gutter={12}
     >
       <PopoverTrigger>
         <Button
           onClick={onToggle}
-          leftIcon={
-            <Icon
-              as={FaLocationDot}
-              boxSize={triggerIconSize}
-              color="red.500"
-            />
-          }
-          px={{ base: 4, md: 5 }}
-          py={{ base: 3, md: 4 }}
-          borderRadius="xl"
-          fontWeight="semibold"
-          color="white"
-          bg="teal.500"
-          _hover={{ bg: "teal.600" }}
-          _active={{ bg: "teal.700" }}
+          className="location-trigger-btn"
+          leftIcon={<Icon as={FaLocationDot} className="trigger-icon" />}
         >
-          {text}
+          {/* Responsive max-widths for text */}
+          <Text isTruncated maxW={{ base: "120px", sm: "180px", md: "250px", lg: "300px" }}>
+            {text}
+          </Text>
         </Button>
       </PopoverTrigger>
 
       <Portal>
-        <PopoverContent
-          w={{ base: "240px", md: "280px" }}
-          borderRadius="xl"
-          boxShadow="lg"
-          _focus={{ boxShadow: "lg" }}
-        >
-          <PopoverArrow />
-          <PopoverBody p={4}>
-            <Flex direction="column" gap={4}>
-              {/* Detect Button */}
-              <Button
-                onClick={onDetectLocation}
-                leftIcon={<MdMyLocation />}
-                isLoading={isLoading}
-                loadingText="Detecting"
-                w="full"
-                size="md"
-                fontSize={textSize}
-                borderRadius="lg"
-                colorScheme="teal"
-              >
-                Detect My Location
-              </Button>
+        <PopoverContent className="location-popover-content">
+          <PopoverArrow bg="#1a1a1a" />
+          <PopoverBody p={0}>
+            <VStack align="stretch" spacing={0}>
+              <Box p={{ base: 3, md: 4 }} className="popover-header">
+                <Flex align="center" gap={3}>
+                  <Box className="icon-badge">
+                    <FaMapLocationDot size={18} color="#ffcc00" />
+                  </Box>
+                  <VStack align="start" spacing={0}>
+                    <Text fontSize={{ base: "xs", md: "sm" }} fontWeight="800" color="white">
+                      Your Location
+                    </Text>
+                    <Text fontSize={{ base: "10px", md: "xs" }} color="whiteAlpha.600">
+                      Find nearby services
+                    </Text>
+                  </VStack>
+                </Flex>
+              </Box>
 
-              <Divider />
+              <Divider borderColor="whiteAlpha.100" />
 
-              {/* Location Display */}
-              <Flex align="flex-start" gap={2}>
-                <Icon
-                  as={GrLocationPin}
-                  boxSize={4}
-                  color="red.500"
-                  mt="2px"
-                />
+              <Box p={{ base: 3, md: 4 }}>
+                <VStack spacing={{ base: 3, md: 4 }}>
+                  <Button
+                    onClick={onDetectLocation}
+                    leftIcon={<MdMyLocation size={18} />}
+                    isLoading={isLoading}
+                    className="detect-btn"
+                  >
+                    Auto-detect Location
+                  </Button>
 
-                <Text
-                  flex="1"
-                  fontSize={textSize}
-                  fontWeight="medium"
-                  color="gray.700"
-                  lineHeight="1.4"
-                  noOfLines={2}
-                >
-                  {isLoading
-                    ? "Detecting your location..."
-                    : currentLocation}
-                </Text>
-
-                {isLoading && (
-                  <Spinner
-                    size="sm"
-                    color="teal.500"
-                    mt="2px"
-                  />
-                )}
-              </Flex>
-            </Flex>
+                  <Box className="location-display-card">
+                    <Flex gap={3} align="flex-start">
+                      <Icon as={FaLocationDot} color="#ff4d4d" mt={1} />
+                      <Box flex="1">
+                        <Text className="location-label">Current Address</Text>
+                        <Text className="location-text">
+                          {isLoading ? "Searching GPS..." : currentLocation}
+                        </Text>
+                      </Box>
+                      {isLoading && <Spinner size="xs" color="#ffcc00" />}
+                    </Flex>
+                  </Box>
+                </VStack>
+              </Box>
+            </VStack>
           </PopoverBody>
         </PopoverContent>
       </Portal>

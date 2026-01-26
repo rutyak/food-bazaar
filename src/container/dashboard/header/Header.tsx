@@ -7,7 +7,7 @@ import foodIcon from "../../../../public/appIcon.png";
 import Navbar from "@/components/navbar/Navbar";
 import Search from "@/container/search/Search";
 import MobileMenu from "@/components/mobileMenu/MobileMenu";
-import headerBg from "../../../assets/back-5.jpg"; 
+import headerBg from "../../../assets/back-5.jpg";
 import "./Header.scss";
 
 const Header = () => {
@@ -32,7 +32,7 @@ const Header = () => {
         maxW="container.xl"
         position="relative"
         zIndex={2}
-        px={{ base: 5, sm: 6, lg: 16 }}
+        px={{ base: 5, sm: 6, lg: 12 }}
       >
         <Flex as="nav" align="center" justify="space-between" py={6}>
           <Flex align="center" gap={3} className="logo-group">
@@ -48,7 +48,8 @@ const Header = () => {
             <VStack
               align="flex-start"
               spacing={0}
-              display={{ base: "none", lg: "flex" }}
+              fontSize={{ base: 8, sm: 12, md: 16 }}
+              display={{ base: "none", sm: "flex" }}
             >
               <Text className="slogan-badge">PREMIUM DELIVERY</Text>
               <Text className="slogan-text">Good food, Good Moments</Text>
@@ -56,9 +57,7 @@ const Header = () => {
           </Flex>
 
           <Flex align="center" gap={{ base: 2, md: 5 }}>
-            <Box display={{ base: "none", lg: "block" }}>
-              <Navbar />
-            </Box>
+            <Navbar />
             <MobileMenu />
           </Flex>
         </Flex>
