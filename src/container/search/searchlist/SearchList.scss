@@ -1,6 +1,6 @@
 .searchList {
   width: 100%;
-  background: #c4c4be;
+  background-color: #f8fafc;
   border-radius: 16px;
   max-height: 450px;
   overflow-y: auto;
@@ -29,7 +29,7 @@
     }
 
     &:hover {
-      background-color: #f8fafc;
+      background: #c4c4be;
 
       .restaurant-name {
         color: #ff4d4d;
