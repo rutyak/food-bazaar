@@ -8,8 +8,8 @@
     min-height: 460px;
   }
 
-  @media (max-width: 480px){
-    min-height: 380px
+  @media (max-width: 480px) {
+    min-height: 380px;
   }
 
   .bg-image-wrapper {
@@ -19,7 +19,9 @@
   }
 
   .slogan-badge {
-    color: #e0d12e;
+    background: linear-gradient(120deg, #ffcc00 0%, #ff4d4d 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     letter-spacing: 2px;
     font-weight: 800;
   }
@@ -44,7 +46,6 @@
   .hero-title {
     color: #ffffff;
     font-weight: 800;
-    // font-size: 100px;
     text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
 
     .highlight {
@@ -52,14 +53,6 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-
-    // @media (max-width: 1024px) {
-    //   font-size: 80px;
-    // }
-
-    // @media (max-width: 360px) {
-    //   font-size: 40px;
-    // }
   }
 
   .hero-subtitle {

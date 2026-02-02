@@ -1,102 +1,83 @@
-.search {
+.searchBarWrapper {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
+  width: 100%;
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.1));
+  background: #ffffff;
+  border-radius: 30px;
+  position: relative;
+  z-index: 1000; // Parent must have high z-index
 
-  .searchBarWrapper {
-    display: flex;
-    width: 100%;
-    filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.1));
-    background: #ffffff;
-    border-radius: 30px;
-    // overflow: hidden;
+  @media (max-width: 480px) {
+    border-radius: 12px;
+  }
+}
+
+.locationSection {
+  flex-shrink: 0;
+
+  :global(.location-trigger-btn) {
+    height: 54px !important;
+    background-color: transparent !important;
+    border-radius: 0 !important;
+    border: none !important;
+    border-right: 1px solid #edf2f7 !important;
+    padding: 0 20px !important;
+    font-weight: 600;
+    color: #2d3748;
+
+    @media (max-width: 768px) {
+      height: 48px !important;
+      padding: 0 15px !important;
+      font-size: 13px !important;
+    }
 
     @media (max-width: 480px) {
-      border-radius: 12px;
+      height: 44px !important;
+      padding: 0 10px !important;
+      max-width: 100px;
     }
   }
+}
 
-  .locationSection {
-    flex-shrink: 0;
+.inputSection {
+  flex: 1;
+  position: relative;
+  
+  input {
+    height: 54px !important;
+    border: none !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    padding-left: 45px !important;
+    font-size: 16px;
+    box-shadow: none !important;
 
-    // Targeting the button inside CustomPopover
-    :global(.location-trigger-btn) {
-      height: 54px !important;
-      background-color: transparent !important;
-      border-radius: 0 !important; // Controlled by wrapper
-      border: none !important;
-      border-right: 1px solid #edf2f7 !important;
-      padding: 0 20px !important;
-      font-weight: 600;
-      color: #2d3748;
-      
-      @media (max-width: 768px) {
-        height: 48px !important;
-        padding: 0 15px !important;
-        font-size: 13px !important;
-      }
-
-      @media (max-width: 480px) {
-        height: 44px !important;
-        padding: 0 10px !important;
-        max-width: 100px;
-      }
-    }
-  }
-
-  .inputSection {
-    flex: 1;
-    position: relative;
-    z-index: 10;
-
-    input {
-      height: 54px !important;
-      border: none !important;
-      background: transparent !important;
-      border-radius: 0 !important;
-      padding-left: 45px !important;
-      font-size: 16px;
+    &:focus {
       box-shadow: none !important;
+    }
 
-      &:focus {
-        box-shadow: none !important;
-      }
+    &::placeholder {
+      color: #a0aec0;
+      font-size: 15px;
+    }
+
+    @media (max-width: 768px) {
+      height: 48px !important;
+      font-size: 14px;
 
       &::placeholder {
-        color: #a0aec0;
-        font-size: 15px;
-      }
-
-      @media (max-width: 768px) {
-        height: 48px !important;
-        font-size: 14px;
-        
-        &::placeholder {
-          font-size: 13px;
-        }
-      }
-
-      @media (max-width: 480px) {
-        height: 44px !important;
-        padding-left: 35px !important;
-        font-size: 12px;
-
-        &::placeholder {
-          font-size: 11px;
-        }
+        font-size: 13px;
       }
     }
-  }
 
-  .dropdownContainer {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    z-index: 1000 !important;
-    margin-top: 8px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    border-radius: 12px;
+    @media (max-width: 480px) {
+      height: 44px !important;
+      padding-left: 35px !important;
+      font-size: 12px;
+
+      &::placeholder {
+        font-size: 11px;
+      }
+    }
   }
 }

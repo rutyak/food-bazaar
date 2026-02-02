@@ -19,7 +19,9 @@
     height: 195px;
     padding: 24px;
     display: flex;
-    box-shadow: 0 27px 9px #0006, 0 7px 44px -15px #0000004d,
+    box-shadow:
+      0 27px 9px #0006,
+      0 7px 44px -15px #0000004d,
       inset 0 -11px #0003;
   }
 
@@ -89,7 +91,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 780px) {
   .card-menu {
     margin: 13px 13px;
   }

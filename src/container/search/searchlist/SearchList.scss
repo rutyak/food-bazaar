@@ -1,15 +1,17 @@
 .searchList {
   width: 100%;
-  background-color: #f8fafc;
+  background-color: #ffffff; 
   border-radius: 16px;
   max-height: 450px;
   overflow-y: auto;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
   border: 1px solid #edf2f7;
-  margin-top: 5px;
-  position: absolute;
-  z-index: 1000 !important;
+  margin-top: 8px;
 
+  &:hover{
+    background-color: #f7fafc;
+  } 
+  
   &::-webkit-scrollbar {
     width: 6px;
   }
@@ -29,7 +31,7 @@
     }
 
     &:hover {
-      background: #c4c4be;
+      background: #f7fafc; // Lighter gray for cleaner hover effect
 
       .restaurant-name {
         color: #ff4d4d;

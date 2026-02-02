@@ -1,7 +1,6 @@
 .navbar-container {
   display: flex;
   align-items: center;
-  font-family: 'Plus Jakarta Sans', sans-serif;
 
   .nav-links {
     .nav-item {
@@ -63,20 +62,6 @@
 
   .auth-section {
     margin-left: 10px;
-    
-    button {
-      background: linear-gradient(135deg, #ffcc00 0%, #ff9900 100%) !important;
-      color: #000 !important;
-      font-weight: 800 !important;
-      border-radius: 10px !important;
-      padding: 0 24px !important;
-      height: 40px !important;
-      box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
-      
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(255, 204, 0, 0.4);
-      }
-    }
+  
   }
 }

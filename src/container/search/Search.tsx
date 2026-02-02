@@ -1,20 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  Box,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Flex,
-} from "@chakra-ui/react";
+import { Box, Input, InputGroup, InputLeftElement, Flex } from "@chakra-ui/react";
 import { GoSearch } from "react-icons/go";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { useGlobalContext } from "@/context/GlobalContext";
 import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
 import { RestaurantType } from "@/types/restaurant";
-import useFilter from "@/utils/useFilter";
+import filterData from "@/utils/useFilter"; 
 import SearchList from "./searchlist/SearchList";
 import CustomPopover from "@/components/popover/CustomPopover";
 import styles from "./Search.module.scss";
@@ -29,9 +23,6 @@ const locationApi = process.env.NEXT_PUBLIC_LOCATION_API ?? "";
 
 const Search = ({ setSearch, search, cart }: SearchProps) => {
   const restaurants = useSelector((state: RootState) => state.restaurants);
-
-  console.log("restaurants: ", restaurants);
-
   const { city, setCity } = useGlobalContext();
   const [resultList, setResultList] = useState<RestaurantType[]>([]);
   const [isLocating, setIsLocating] = useState(false);
@@ -42,17 +33,14 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchValue = e.target.value;
     setSearch(searchValue);
-    const filteredData = useFilter(searchValue, restaurants);
-    console.log("filteredData: ", filteredData);
-    setResultList(filteredData);
+    const filtered = filterData(searchValue, restaurants);
+    setResultList(filtered);
   };
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const searchValue = e.currentTarget.value;
     if (e.key === "Enter") {
-      const filteredData = useFilter(searchValue, restaurants);
-      setResultList(filteredData);
-      setSearch("");
+      const filtered = filterData(search, restaurants);
+      setResultList(filtered);
     }
   };
 
@@ -65,7 +53,7 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
           const lng = position.coords.longitude;
           try {
             const response = await fetch(
-              `${locationApi}?latitude=${lat}&longitude=${lng}&localityLanguage=en`,
+              `${locationApi}?latitude=${lat}&longitude=${lng}&localityLanguage=en`
             );
             if (!response.ok) throw new Error("Failed to fetch");
             const data = await response.json();
@@ -82,52 +70,51 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
         () => {
           errorToast("Location access denied");
           setIsLocating(false);
-        },
+        }
       );
     }
   };
-  console.log("seraching : ", search);
 
   return (
-    <Box w="full" px={{ base: 4, md: 0 }} className={styles.search}>
-      <Flex
-        w="full"
-        maxW="850px"
-        justify="center"
-        align="center"
-        className={styles.searchBarWrapper}
-      >
-        <div className={styles.locationSection}>
-          <CustomPopover
-            text={isLocating ? "Locating..." : city || "Location"}
-            onDetectLocation={handleDetectLocation}
-            currentLocation={city}
-          />
-        </div>
+    <Flex className={styles.searchBarWrapper} mx="auto">
+      <Box className={styles.locationSection}>
+        <CustomPopover
+          text={isLocating ? "Locating..." : city || "Location"}
+          onDetectLocation={handleDetectLocation}
+          currentLocation={city}
+        />
+      </Box>
 
-        <Box className={styles.inputSection}>
-          {!cart && (
-            <InputGroup size={{ base: "md", md: "lg" }}>
-              <InputLeftElement
-                pointerEvents="none"
-                h="full"
-                px={{ base: 2, md: 4 }}
-              >
-                <GoSearch color="gray.400" size={18} />
-              </InputLeftElement>
-              <Input
-                placeholder="Search for a restaurant..."
-                onChange={handleSearch}
-                onKeyDown={handleEnter}
-                value={search}
-              />
-            </InputGroup>
-          )}
+      <Box className={styles.inputSection}>
+        {!cart && (
+          <InputGroup size={{ base: "md", md: "lg" }}>
+            <InputLeftElement pointerEvents="none" h="full" px={{ base: 2, md: 4 }}>
+              <GoSearch color="gray.400" size={18} />
+            </InputLeftElement>
+            <Input
+              placeholder="Search for a restaurant..."
+              onChange={handleSearch}
+              onKeyDown={handleEnter}
+              value={search}
+            />
+          </InputGroup>
+        )}
 
-          {search?.trim() && <SearchList resultList={resultList} />}
-        </Box>
-      </Flex>
-    </Box>
+        {/* The Result List Dropdown */}
+        {search?.trim().length > 0 && (
+          <Box 
+            position="absolute" 
+            top="100%" 
+            left="0" 
+            right="0" 
+            zIndex="10000" 
+            mt={2}
+          >
+            <SearchList resultList={resultList} />
+          </Box>
+        )}
+      </Box>
+    </Flex>
   );
 };
 

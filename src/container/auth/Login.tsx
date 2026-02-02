@@ -113,13 +113,12 @@ const Login = () => {
   return (
     <>
       <Button
-        bg="sandybrown"
+        className={styles.loginBtn}
         onClick={onOpen}
-        _hover={{ bg: "darkorange" }}
-        color="white"
       >
         Login
       </Button>
+
       <Modal
         finalFocusRef={finalRef}
         isOpen={isOpen}

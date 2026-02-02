@@ -1,31 +1,14 @@
-.menu {
-  width: 100%;
-}
-
-.search {
-  top: 0;
-  position: static;
-  width: 50%;
-
-  Input {
-    width: 83%;
-  }
-
-  Button {
-    width: 17%;
-  }
-}
-
 .menu-header {
   position: sticky;
   top: 0;
-  z-index: 100;
-  background-color: #ffffff;
-  justify-content: space-between;
+  z-index: 1000;
+  background-color: #000000;
   width: 100%;
   display: flex;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
-    rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .menu-inner-header {
@@ -35,41 +18,50 @@
   align-items: center;
   justify-content: space-between;
   margin: auto;
+  padding: 0 20px;
 }
 
 .menu-title {
-  > h2 {
-    font-family: "Ubuntu", sans-serif;
-    font-weight: 700;
-    font-style: italic;
-    color: #096f91;
+  cursor: pointer;
+
+  .hero-title {
+    color: #ffffff;
+    font-weight: 800;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+
+    .highlight {
+      background: linear-gradient(120deg, #ffcc00 0%, #ff4d4d 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
   }
 }
 
-@media (max-width: 1280px) {
-  .menu-inner-header {
-    padding: 10px 40px;
+.highlight {
+  background: linear-gradient(to right, #facc15, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav-btn {
+  color: #ffffff !important;
+  font-weight: 500 !important;
+  font-size: 15px !important;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #facc15 !important;
   }
 }
 
-@media (max-width: 768px) {
-  .menu-header {
-    width: 100%;
-    gap: 5px !important;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+.login-btn {
+  background-color: #facc15 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+  border-radius: 8px !important;
+  padding: 0 24px !important;
 
-  .menu-inner-header {
-    justify-content: end;
-  }
-
-  .menu-title {
-    visibility: hidden;
-  }
-
-  .menu-inner-header {
-    padding: 10px;
+  &:hover {
+    background-color: #eab308 !important;
   }
 }
