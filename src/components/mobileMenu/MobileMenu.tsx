@@ -74,7 +74,7 @@ const MobileMenu = () => {
           
           <DrawerHeader borderBottomWidth="0" pt={10}>
             <Text fontSize="2xl" fontWeight="800" color="white">
-              Navigation<span style={{ color: "#ffcc00" }}>.</span>
+              Menu<span style={{ color: "#ffcc00" }}>.</span>
             </Text>
           </DrawerHeader>
 

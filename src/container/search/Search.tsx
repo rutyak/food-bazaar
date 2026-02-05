@@ -1,14 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
-import { Box, Input, InputGroup, InputLeftElement, Flex } from "@chakra-ui/react";
+import {
+  Box,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Flex,
+} from "@chakra-ui/react";
 import { GoSearch } from "react-icons/go";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { useGlobalContext } from "@/context/GlobalContext";
 import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
 import { RestaurantType } from "@/types/restaurant";
-import filterData from "@/utils/useFilter"; 
+import filterData from "@/utils/useFilter";
 import SearchList from "./searchlist/SearchList";
 import CustomPopover from "@/components/popover/CustomPopover";
 import styles from "./Search.module.scss";
@@ -53,7 +59,7 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
           const lng = position.coords.longitude;
           try {
             const response = await fetch(
-              `${locationApi}?latitude=${lat}&longitude=${lng}&localityLanguage=en`
+              `${locationApi}?latitude=${lat}&longitude=${lng}&localityLanguage=en`,
             );
             if (!response.ok) throw new Error("Failed to fetch");
             const data = await response.json();
@@ -70,7 +76,7 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
         () => {
           errorToast("Location access denied");
           setIsLocating(false);
-        }
+        },
       );
     }
   };
@@ -88,7 +94,11 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
       <Box className={styles.inputSection}>
         {!cart && (
           <InputGroup size={{ base: "md", md: "lg" }}>
-            <InputLeftElement pointerEvents="none" h="full" px={{ base: 2, md: 4 }}>
+            <InputLeftElement
+              pointerEvents="none"
+              h="full"
+              px={{ base: 2, md: 4 }}
+            >
               <GoSearch color="gray.400" size={18} />
             </InputLeftElement>
             <Input
@@ -100,7 +110,6 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
           </InputGroup>
         )}
 
-        {/* The Result List Dropdown */}
         {search?.trim().length > 0 && (
           <Box 
             position="absolute" 

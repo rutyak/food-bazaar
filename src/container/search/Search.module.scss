@@ -4,8 +4,6 @@
   filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.1));
   background: #ffffff;
   border-radius: 30px;
-  position: relative;
-  z-index: 1000; // Parent must have high z-index
 
   @media (max-width: 480px) {
     border-radius: 12px;

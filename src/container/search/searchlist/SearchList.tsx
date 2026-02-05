@@ -19,31 +19,47 @@ const SearchList = ({ resultList }: { resultList: RestaurantType[] }) => {
       ) : (
         <VStack align="stretch" spacing={0}>
           {resultList?.map((list: RestaurantType) => (
-            <Link 
-              key={list?._id} 
-              href={`/menu/${list?._id}`} 
+            <Link
+              key={list?._id}
+              href={`/menu/${list?._id}`}
               className="search-item-link"
             >
               <Flex className="search-item-content">
                 <Image
                   src={list?.image as string}
                   alt={list?.name}
-                  boxSize="50px" 
+                  boxSize="50px"
                   borderRadius="8px"
                   objectFit="cover"
                   fallbackSrc="https://via.placeholder.com/50"
                 />
-                
+
                 <Flex direction="column" flex="1" gap="1px">
-                  <Text className="restaurant-name">
+                  <Text
+                    className="restaurant-name"
+                    fontSize={{ base: "12px", md: "md" }}
+                    fontWeight={{ base: 600, md: 700 }}
+                  >
                     {list?.name}
                   </Text>
-                  
+
                   <Flex align="center" gap="8px">
-                    <Flex align="center" gap="1" color="orange.400" fontSize="xs" fontWeight="bold">
+                    <Flex
+                      align="center"
+                      gap="1"
+                      color="orange.400"
+                      fontSize="xs"
+                      fontWeight="bold"
+                    >
                       <AiFillStar /> {list?.rating || "N/A"}
                     </Flex>
-                    <Text fontSize="xs" color="gray.500" isTruncated maxW="200px">
+                    <Text
+                      className="restaurant-category"
+                      fontSize="xs"
+                      color="gray.500"
+                      isTruncated
+                      maxW="200px"
+                    >
                       • {list?.categories}
                     </Text>
                   </Flex>

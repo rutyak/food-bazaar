@@ -1,22 +1,21 @@
 .searchList {
   width: 100%;
-  background-color: #ffffff; 
+  background-color: #edecec;
   border-radius: 16px;
   max-height: 450px;
   overflow-y: auto;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.2),
+    0 10px 10px -5px rgba(0, 0, 0, 0.1);
   border: 1px solid #edf2f7;
   margin-top: 8px;
 
-  &:hover{
-    background-color: #f7fafc;
-  } 
-  
   &::-webkit-scrollbar {
-    width: 6px;
+    width: 3px;
+    height: 3px;
   }
   &::-webkit-scrollbar-thumb {
-    background: #e2e8f0;
+    background: #818181;
     border-radius: 10px;
   }
 
@@ -31,7 +30,7 @@
     }
 
     &:hover {
-      background: #f7fafc; // Lighter gray for cleaner hover effect
+      background: #dadbdb;
 
       .restaurant-name {
         color: #ff4d4d;
@@ -51,5 +50,27 @@
     color: #2d3748;
     transition: color 0.2s ease;
     text-align: left;
+  }
+
+  .restaurant-category {
+    display: block;
+  }
+
+  @media (max-width: 480px) {
+    .searchList {
+      border-radius: 5px;
+    }
+
+    .restaurant-name {
+      font-size: 13px;
+    }
+
+    .restaurant-category {
+      display: none;
+    }
+
+    .searchList .search-item-content {
+      padding: 10px 14px;
+    }
   }
 }

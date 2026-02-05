@@ -29,7 +29,7 @@ const Carousel = ({ suggestions, title }: CarouselType) => {
         <Heading as="h2" fontSize={["xl", "2xl"]}>
           {title}
         </Heading>
-        <Box display="flex" gap="34px" zIndex="10 !important">
+        <Box display="flex" gap="34px">
           <div onClick={() => handleScroll("left")} className="scroll-left">
             <MdChevronLeft size="24px" />
           </div>
