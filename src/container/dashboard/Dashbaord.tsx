@@ -1,7 +1,15 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Heading, Box, Skeleton, SkeletonText, VStack, Spinner, Text } from "@chakra-ui/react";
+import {
+  Heading,
+  Box,
+  Skeleton,
+  SkeletonText,
+  VStack,
+  Spinner,
+  Text,
+} from "@chakra-ui/react";
 import "./Dashboard.scss";
 import Filter from "@/components/filtermodal/FIlter";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,32 +21,7 @@ import { RestaurantType } from "@/types/restaurant";
 import axios from "axios";
 import { addRestaurants, removeCards } from "@/redux/slices/restaurantSlice";
 import NotFound from "@/components/notFound/NotFound";
-
-const ShimmerCards = () => {
-  return (
-    <Box
-      className="restaurant-grid-card"
-      display="grid"
-      gridTemplateColumns="repeat(auto-fill, minmax(250px, 1fr))"
-      gap="1.5rem"
-    >
-      {[...Array(4)].map((_, index) => (
-        <Box
-          key={index}
-          p="4"
-          borderRadius="2xl"
-          boxShadow="md"
-          bg="white"
-          display="flex"
-          flexDirection="column"
-        >
-          <Skeleton height="150px" borderRadius="xl" mb="4" />
-          <SkeletonText mt="2" noOfLines={3} spacing="3" skeletonHeight="3" />
-        </Box>
-      ))}
-    </Box>
-  );
-};
+import Restaurants from "./restaurants/Restaurants";
 
 const Dashboard = () => {
   const restaurants = useSelector((state: RootState) => state.restaurants);
@@ -68,7 +51,7 @@ const Dashboard = () => {
 
       if (node) observer.current.observe(node);
     },
-    [loading, hasMore]
+    [loading, hasMore],
   );
 
   async function getRestaurants(page: number) {
@@ -113,35 +96,7 @@ const Dashboard = () => {
   ) : (
     <Box className="home-page">
       <Carousel suggestions={restaurants} title="Top Restaurants" />
-      <Box mt="1rem" className="grid-card-heading">
-        <Heading as="h2" fontSize={["xl", "2xl"]} mb="1rem">
-          Restaurants in {currCity}
-        </Heading>
-        <Filter setFilteredCard={setFilteredCard} />
-
-        <Box className="restaurant-grid-card">
-          {filteredCard?.length > 0 ? (
-            filteredCard.map((data: RestaurantType, index: number) => {
-              if (index === filteredCard.length - 1) {
-                return (
-                  <div ref={lastCardRef} key={data?._id}>
-                    <Card {...data} />
-                  </div>
-                );
-              } else {
-                return <Card key={data?._id} {...data} />;
-              }
-            })
-          ) : (
-            <NotFound
-              title="No restaurants found"
-              message="Try adjusting your filters or search criteria."
-            />
-          )}
-        </Box>
-
-        {loading && <ShimmerCards />}
-      </Box>
+      <Restaurants />
     </Box>
   );
 };

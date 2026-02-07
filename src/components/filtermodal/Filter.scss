@@ -1,33 +1,24 @@
-.restaurant-grid-filter {
-    display: flex;
-    border-radius: 12px;
-    max-width: 100%;
-  }
-  
-  .restaurant-grid-filter > div {
-    display: flex;
+.filter-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  margin-top: 10px;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px); 
+    -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+  mask-image: linear-gradient(to right, black 85%, transparent 100%);
+}
+
+@media (max-width: 480px){
+  .filter-wrapper{
     flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
   }
-  
-  .restaurant-grid-filter button {
-    font-size: 12px;
-    font-weight: 500;
-    padding: 0px 12px;
-    border-radius: 25px;
-    transition: all 0.3s ease;
-    border: 1px solid #319795; 
-    color: #319795;
-  }
-  
-  .restaurant-grid-filter button:hover {
-    background-color: #e6fffa; 
-    transform: translateY(-1px);
-  }
-  
-  .restaurant-grid-filter button.active {
-    background-color: #319795;
-    color: white;
-  }
-  
+}
+
+.chakra-button {
+  flex-shrink: 0;
+}

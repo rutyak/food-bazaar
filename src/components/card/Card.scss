@@ -11,11 +11,16 @@
   }
 
   .card-img {
-    min-width: 250px;
-    height: 182px;
+    min-width: 290px;
+    height: 212px;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+    @media (max-width: 480px) {
+      min-width: 260px;
+      height: 182px;
+    }
 
     img {
       width: 100%;
@@ -43,11 +48,6 @@
     color: rgba(2, 6, 12, 0.75);
   }
 
-  .cuisines {
-    color: rgba(2, 6, 12, 0.6);
-    font-size: 14px;
-  }
-
   .rating {
     display: flex;
     align-items: center;
@@ -62,4 +62,3 @@
 .top-carousal-card {
   width: 140px;
 }
-

@@ -49,9 +49,9 @@ const Card = ({
           <h2 className="title">{name}</h2>
           <Flex className="rating" gap={2} alignItems="center">
             <img src={starIcon?.src} alt="rating" style={{ width: "14px" }} />
-            <Text fontSize="13px">{rating}</Text>
+            <Text fontSize={{base:"13px", md:"14px"}}>{rating}</Text>
           </Flex>
-          <p className="cuisines">{categories?.join(", ")}</p>
+          <Text fontSize={{base:"12px", md:"13px"}} color="black">{categories?.join(", ")}</Text>
         </div>
       </Link>
     </div>
