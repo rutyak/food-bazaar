@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { useErrorToast } from "@/toasts/CustomeToasts";
 import MobileMenu from "@/components/mobileMenu/MobileMenu";
-import Navbar from "@/components/navbar/Navbar";
+import Navbar from "@/components/navbar/NavbarContainer";
 
 const MenuNavbar = () => {
   const carts = useSelector((state: RootState) => state.cart);

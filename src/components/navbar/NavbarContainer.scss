@@ -12,15 +12,14 @@
       transition: color 0.3s ease;
       padding: 5px 0;
 
-      // The sliding underline effect
       &::after {
-        content: '';
+        content: "";
         position: absolute;
         bottom: 0;
         left: 0;
         width: 0;
         height: 2px;
-        background-color: #ffcc00; // Brand Gold
+        background-color: #ffcc00;
         transition: width 0.3s ease;
       }
 
@@ -38,7 +37,7 @@
       gap: 6px;
 
       .cart-count {
-        background: #ff4d4d; 
+        background: #ff4d4d;
         color: white;
         font-size: 11px;
         padding: 2px 7px;
@@ -49,11 +48,11 @@
     }
 
     .admin-link {
-      color: #ffcc00; 
+      color: #ffcc00;
       border: 1px solid rgba(255, 204, 0, 0.3);
       padding: 4px 12px;
       border-radius: 8px;
-      
+
       &:hover {
         background: rgba(255, 204, 0, 0.1);
       }
@@ -62,6 +61,17 @@
 
   .auth-section {
     margin-left: 10px;
-  
   }
+}
+
+.slogan-badge {
+  background: linear-gradient(120deg, #ffcc00 0%, #ff4d4d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 2px;
+  font-weight: 800;
+}
+
+.slogan-text {
+  color: white;
 }

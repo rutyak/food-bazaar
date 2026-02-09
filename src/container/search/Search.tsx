@@ -111,12 +111,12 @@ const Search = ({ setSearch, search, cart }: SearchProps) => {
         )}
 
         {search?.trim().length > 0 && (
-          <Box 
-            position="absolute" 
-            top="100%" 
-            left="0" 
-            right="0" 
-            zIndex="10000" 
+          <Box
+            position="absolute"
+            top="100%"
+            left="0"
+            right="0"
+            zIndex="10000"
             mt={2}
           >
             <SearchList resultList={resultList} />

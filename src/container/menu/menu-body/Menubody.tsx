@@ -21,7 +21,7 @@ const Menubody = () => {
   const menuData = useSelector((state: RootState) => state.menu);
 
   const menu = menuData?.filter(
-    (data: MenuType) => data.restaurantId?.toString() === query?.id
+    (data: MenuType) => data.restaurantId?.toString() === query?.id,
   );
 
   return menu?.length === 0 ? (
@@ -31,7 +31,7 @@ const Menubody = () => {
     />
   ) : (
     <>
-      <div className="card-menu">
+      <Box className="card-menu" mt="115px" mb="4">
         <Heading as="h2" size="lg" className="title-restau">
           {menu[0]?.restaurant?.name}
         </Heading>
@@ -86,7 +86,7 @@ const Menubody = () => {
             />
           ))}
         </Box>
-      </div>
+      </Box>
       <Footer />
     </>
   );
