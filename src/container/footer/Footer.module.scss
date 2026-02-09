@@ -1,65 +1,70 @@
 .footer {
-  background-color: #333;
-  color: #fff;
-  padding: 40px 0;
+  background: rgba(0, 0, 0, 0.95);
+  color: #ffffff;
   width: 100%;
-  margin-top: 30px;
+  border-top: 1px solid rgba(75, 231, 231, 0.2);
 
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 15px;
-  }
+  .brandTitle {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
 
-  .footerContent {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
-  }
-}
+    @media (min-width: 768px) {
+      font-size: 28px;
+    }
 
-.footerColumn {
-  h3 {
-    font-size: 16px;
-    margin-bottom: 15px;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  li {
-    margin-bottom: 10px;
-    
-    &:last-child {
-      margin-bottom: 0;
+    .highlight {
+      background: linear-gradient(120deg, #ffcc00 0%, #ff4d4d 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
   }
-}
 
-.footerBottom {
-  margin-top: 30px;
-  text-align: center;
-  grid-column: 1 / -1;
-}
-
-@media (max-width: 768px) {
-  .footerContent {
-    grid-template-columns: repeat(2, 1fr);
-    row-gap: 25px;
-  }
-}
-
-@media (max-width: 480px) {
-  .footer {
-    padding: 30px 0;
-    height: auto; 
+  .brandDescription {
+    color: #a0aec0;
+    line-height: 1.6;
+    max-width: 300px;
   }
 
-  .footerContent {
-    grid-template-columns: 1fr;
-    gap: 20px;
+  .columnHeader {
+    color: #4be7e7;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+
+    @media (min-width: 768px) {
+      font-size: 16px;
+    }
+  }
+
+  .linkList {
+    a {
+      color: #cbd5e0;
+      transition: all 0.2s ease;
+      cursor: pointer;
+
+      &:hover {
+        color: #4be7e7;
+        padding-left: 5px;
+      }
+    }
+  }
+
+  .socialIcon {
+    font-size: 18px;
+    color: #cbd5e0;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+
+    @media (min-width: 768px) {
+      font-size: 22px;
+    }
+
+    &:hover {
+      color: #4be7e7;
+      transform: translateY(-3px);
+    }
   }
 }

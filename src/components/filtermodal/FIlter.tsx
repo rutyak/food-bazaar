@@ -94,8 +94,8 @@ function Filter({ setFilteredCard }: filteredCardType) {
       <Button
         onClick={() => handleFilter(id)}
         size="sm"
-        px={5}
-        py={4}
+        px={3}
+        py={2}
         borderRadius="full"
         variant="outline"
         leftIcon={icon ? <Icon as={icon} /> : undefined}
@@ -127,8 +127,9 @@ function Filter({ setFilteredCard }: filteredCardType) {
         msOverflowStyle: "none",
         scrollbarWidth: "none",
       }}
+      py={2}
     >
-      <HStack spacing={3} px={1}>
+      <HStack spacing={3} px={1} display="flex" flexWrap="wrap">
         <FilterPill label="All" id="all" icon={MdFilterList} />
         <FilterPill label="Pure Veg" id="pureVeg" icon={MdEco} />
         <FilterPill label="Ratings 4.0+" id="ratings" icon={MdOutlineStars} />

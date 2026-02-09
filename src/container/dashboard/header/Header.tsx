@@ -54,6 +54,7 @@ const Header = () => {
             className="hero-subtitle"
             fontSize={{ base: "sm", md: "xl" }}
             mb={{ base: 8, md: 10 }}
+            maxW={{ base: 100, md: 200 }}
           >
             Discover the best flavors delivered straight to your doorstep.
           </Text>

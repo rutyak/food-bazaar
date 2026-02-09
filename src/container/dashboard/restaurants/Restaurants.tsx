@@ -96,7 +96,7 @@ const Restaurants = () => {
 
   return (
     <Box mt="16px">
-      <VStack align="flex-start" spacing={1} mb="15px">
+      <VStack align="flex-start" spacing={1} mb="10px">
         <Heading
           as="h2"
           fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}

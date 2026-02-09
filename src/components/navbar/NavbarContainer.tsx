@@ -87,6 +87,8 @@ const NavbarContainer = ({
   search,
   isMenu,
 }: NavbarProps) => {
+  const router = useRouter();
+
   return (
     <>
       <Box
@@ -107,15 +109,27 @@ const NavbarContainer = ({
         borderBottom={isScrolled ? "1px solid rgba(255,255,255,0.1)" : "none"}
       >
         <Container maxW="container.xl" px={{ base: 5, sm: 6, lg: 12 }}>
-          <Flex align="center" justify="space-between" py={isScrolled ? 3 : 6}>
-            <Flex align="center" gap={3}>
-              <Box className="icon-box">
+          <Flex
+            align="center"
+            justify="space-between"
+            py={isScrolled ? { base: 3, md: 4 } : { base: 3, md: 6 }}
+          >
+            <Flex
+              align="center"
+              gap={3}
+              onClick={() => isMenu && router.push("/")}
+              cursor="pointer"
+            >
+              <Box
+                width={{ base: "32px", md: "38px",lg: "40px" }}
+                position="relative"
+                className="icon-box"
+              >
                 <Image
                   src={foodIcon}
-                  width={38}
-                  height={38}
                   alt="Logo"
                   priority
+                  style={{ width: "100%", height: "auto" }}
                 />
               </Box>
               <VStack
