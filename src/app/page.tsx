@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect } from "react";
-import Dashboard from "../container/dashboard/Dashbaord"
+import Dashboard from "../container/dashboard/Dashbaord";
 import Header from "../container/dashboard/header/Header";
 import Footer from "../container/footer/Footer";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { setMenu } from "@/redux/slices/menuSlice";
 import { setCarts } from "@/redux/slices/cartSlice";
+import BackgroundImage from "@/components/backgroundImage/BackgroundImage";
 
 export default function Home() {
   const dispatch = useDispatch();

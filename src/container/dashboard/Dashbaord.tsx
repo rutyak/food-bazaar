@@ -4,23 +4,18 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Heading,
   Box,
-  Skeleton,
-  SkeletonText,
   VStack,
   Spinner,
   Text,
 } from "@chakra-ui/react";
 import "./Dashboard.scss";
-import Filter from "@/components/filtermodal/FIlter";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import Card from "@/components/card/Card";
 import { useGlobalContext } from "@/context/GlobalContext";
 import Carousel from "@/components/carousel/Carousel";
 import { RestaurantType } from "@/types/restaurant";
 import axios from "axios";
 import { addRestaurants, removeCards } from "@/redux/slices/restaurantSlice";
-import NotFound from "@/components/notFound/NotFound";
 import Restaurants from "./restaurants/Restaurants";
 
 const Dashboard = () => {
@@ -94,7 +89,7 @@ const Dashboard = () => {
       </Text>
     </VStack>
   ) : (
-    <Box className="home-page">
+    <Box className="home-page" bgColor="white">
       <Carousel suggestions={restaurants} title="Top Restaurants" />
       <Restaurants />
     </Box>
