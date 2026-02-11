@@ -21,6 +21,7 @@ interface NavbarProps {
   setSearch: React.Dispatch<React.SetStateAction<string>>;
   search: string;
   isMenu?: boolean;
+  dashboard?: boolean;
 }
 
 const Navbar = () => {
@@ -86,6 +87,7 @@ const NavbarContainer = ({
   setSearch,
   search,
   isMenu,
+  dashboard = false,
 }: NavbarProps) => {
   const router = useRouter();
 
@@ -121,7 +123,7 @@ const NavbarContainer = ({
               cursor="pointer"
             >
               <Box
-                width={{ base: "32px", md: "38px",lg: "40px" }}
+                width={{ base: "32px", md: "38px", lg: "40px" }}
                 position="relative"
                 className="icon-box"
               >
@@ -147,7 +149,7 @@ const NavbarContainer = ({
             </Flex>
 
             {/* Search visible on scroll */}
-            {isScrolled && (
+            {isScrolled && dashboard && (
               <Box
                 flex={1}
                 maxW="500px"

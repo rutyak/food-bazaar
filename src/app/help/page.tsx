@@ -14,6 +14,7 @@ import {
   Button,
   Divider,
 } from "@chakra-ui/react";
+import NavbarContainer from "@/components/navbar/NavbarContainer";
 
 const Help = () => {
   const bgGradient = "linear(to-r, teal.500, green.500)";
@@ -22,15 +23,17 @@ const Help = () => {
 
   return (
     <>
+      <NavbarContainer isScrolled={true} setSearch={() => {}} search="" />
       <Box
         p={{ base: 6, md: 10 }}
         maxW="1350px"
         mx="auto"
         mb={{ base: "none", xl: "20px" }}
-        mt={{ base: "none", xl: "20px" }}
         bgGradient={bgGradient}
         borderRadius={{ base: "none", xl: "lg" }}
         boxShadow="2xl"
+        mt={{ base: "80px", md: "100px", lg: "115px" }}
+        mb="4"
       >
         <Heading as="h1" mb={8} textAlign="center" fontSize="4xl" color="white">
           Help Center

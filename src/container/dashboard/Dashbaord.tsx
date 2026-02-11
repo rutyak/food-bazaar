@@ -33,21 +33,21 @@ const Dashboard = () => {
 
   const observer = useRef<IntersectionObserver | null>(null);
 
-  const lastCardRef = useCallback(
-    (node: HTMLDivElement | null) => {
-      if (loading) return;
-      if (observer.current) observer.current.disconnect();
+  // const lastCardRef = useCallback(
+  //   (node: HTMLDivElement | null) => {
+  //     if (loading) return;
+  //     if (observer.current) observer.current.disconnect();
 
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          setPage((prev) => prev + 1);
-        }
-      });
+  //     observer.current = new IntersectionObserver((entries) => {
+  //       if (entries[0].isIntersecting && hasMore) {
+  //         setPage((prev) => prev + 1);
+  //       }
+  //     });
 
-      if (node) observer.current.observe(node);
-    },
-    [loading, hasMore],
-  );
+  //     if (node) observer.current.observe(node);
+  //   },
+  //   [loading, hasMore],
+  // );
 
   async function getRestaurants(page: number) {
     try {

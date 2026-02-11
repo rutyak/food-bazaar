@@ -27,6 +27,7 @@ const Header = () => {
         isScrolled={isScrolled}
         setSearch={setSearch}
         search={search}
+        dashboard={true}
       />
 
       <Container
