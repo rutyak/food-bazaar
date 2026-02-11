@@ -31,7 +31,7 @@ const Menubody = () => {
     />
   ) : (
     <>
-      <Box className="card-menu" mt="115px" mb="4">
+      <Box className="card-menu" mt={{ base: "80px", md: "100px", lg: "115px" }} mb="4">
         <Heading as="h2" size="lg" className="title-restau">
           {menu[0]?.restaurant?.name}
         </Heading>

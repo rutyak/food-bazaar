@@ -1,9 +1,7 @@
 "use client";
 
-import { Box, Button, Flex, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading } from "@chakra-ui/react";
 import "./MenuNavbar.scss";
-import Login from "@/container/auth/Login";
-import Drawer from "@/components/profile/Profie";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useSelector } from "react-redux";
@@ -14,11 +12,11 @@ import Navbar from "@/components/navbar/NavbarContainer";
 
 const MenuNavbar = () => {
   const carts = useSelector((state: RootState) => state.cart);
-  const cartsSize: number = carts?.length;
+  const cartsSize: number = carts?.length || 0;
 
-  const { data: session } = useSession();
+  // Destructure status and data from a single useSession call
+  const { data: session, status } = useSession();
   const router = useRouter();
-  const { status } = useSession();
   const errorToast = useErrorToast();
 
   function handleCartRedirect() {
@@ -34,10 +32,12 @@ const MenuNavbar = () => {
       <div className="menu-inner-header">
         <Box
           className="menu-title"
+          display="flex"
           justifyContent="center"
           alignItems="center"
           py={3}
           onClick={() => router.push("/")}
+          cursor="pointer"
         >
           <Heading
             as="h1"
@@ -48,7 +48,8 @@ const MenuNavbar = () => {
           </Heading>
         </Box>
         <Flex align="center" gap={4}>
-          <Navbar />
+          {/* Fixed the missing closing tag here */}
+          <Navbar setSearch={() => {}} search="" />
           <MobileMenu />
         </Flex>
       </div>

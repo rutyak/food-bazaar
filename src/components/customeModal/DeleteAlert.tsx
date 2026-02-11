@@ -40,7 +40,6 @@ const DeleteAlert: React.FC<DeleteAlertProps> = ({
   const errorToast = useErrorToast();
 
   const handleDelete = async (type: string) => {
-    console.log("type: ", type);
 
     setLoading(true);
     try {
