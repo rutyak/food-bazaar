@@ -11,211 +11,202 @@ import {
   Stack,
   Icon,
   Divider,
-  useColorModeValue,
+  Container,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { FaHeart, FaTruck, FaUtensils } from "react-icons/fa";
 import foodBazaar from "@/assets/foodBazaarTeam.png";
 import NavbarContainer from "@/components/navbar/NavbarContainer";
 
 const About = () => {
-  const bgGradient = useColorModeValue(
-    "linear(to-r, teal.500, green.500)",
-    "linear(to-r, teal.200, green.200)",
-  );
-  const bgCard = useColorModeValue("white", "gray.800");
-  const textColor = useColorModeValue("gray.800", "white");
+  const cardBg = "#f8f9fa";
+  const borderColor = "#e2e8f0";
+  const primaryGradient = "linear(to-r, #facc15, #f97316)";
 
   return (
     <>
-      <NavbarContainer isScrolled={true} setSearch={() => {}} search="" />
+      <NavbarContainer
+        isScrolled={true}
+        setSearch={() => {}}
+        search=""
+        isMenu={true}
+      />
 
-      <Box
-        p={{ base: 6, md: 10 }}
-        maxW="1350px"
-        mx="auto"
-        // mb={{ base: "none", xl: "20px" }}
-        // mt={{ base: "none", xl: "20px" }}
-        bgGradient={bgGradient}
-        borderRadius={{ base: "none", xl: "lg" }}
-        boxShadow="2xl"
-        mt={{ base: "80px", md: "100px" }}
-        mb="4"
-      >
-        <Heading
-          as="h1"
-          mb={10}
-          textAlign="center"
-          fontSize={{ base: "3xl", md: "4xl" }}
-          color="white"
-        >
-          About FoodBazaar
-        </Heading>
-
-        <Flex
-          direction={{ base: "column", md: "row" }}
-          align="center"
-          justify="space-between"
-          gap={8}
-          mb={10}
-        >
-          <Box flex="1" borderRadius="md" boxShadow="xl" overflow="hidden">
-            <Image
-              src={foodBazaar?.src}
-              alt="Our Team"
-              borderRadius="md"
-              objectFit="cover"
-              w="100%"
-              h={{ base: "250px", md: "100%" }}
-            />
-          </Box>
-
-          <VStack
-            flex="1"
-            spacing={5}
-            align="start"
-            bg={bgCard}
-            p={{ base: 4, md: 6 }}
-            borderRadius="md"
-            boxShadow="lg"
-          >
-            <Text fontSize="lg" color={textColor}>
-              Welcome to FoodBazaar, your number one source for all things food.
-              We're dedicated to giving you the very best of meals, with a focus
-              on quality, customer service, and uniqueness.
-            </Text>
-            <Text fontSize="lg" color={textColor}>
-              Founded in 2023 by a group of food enthusiasts, FoodBazaar has
-              come a long way from its beginnings in a small kitchen. Our
-              passion for delicious and convenient meals drove us to turn hard
-              work and inspiration into a thriving food brand.
-            </Text>
-            <Text fontSize="lg" color={textColor}>
-              We now serve customers all over the city and are thrilled to be
-              part of the fast-paced wing of the food industry. We hope you
-              enjoy our meals as much as we enjoy offering them to you.
+      <Box pt={{ base: "100px", md: "120px" }} pb={20}>
+        <Container maxW="1200px">
+          <VStack spacing={4} mb={16} textAlign="center">
+            <Box
+              bgGradient={primaryGradient}
+              px={4}
+              py={1}
+              borderRadius="full"
+              fontSize="xs"
+              fontWeight="bold"
+              color="white"
+              textTransform="uppercase"
+              letterSpacing="widest"
+            >
+              Our Story
+            </Box>
+            <Heading
+              as="h1"
+              fontSize={{ base: "4xl", md: "6xl" }}
+              fontWeight="extrabold"
+              bgGradient={primaryGradient}
+              bgClip="text"
+              lineHeight="shorter"
+            >
+              About FoodBazaar
+            </Heading>
+            <Text color="gray.600" fontSize="lg" maxW="700px">
+              Founded in 2023, we've grown from a small kitchen idea into a thriving 
+              food brand serving customers across the city.
             </Text>
           </VStack>
-        </Flex>
 
-        <Divider my={10} borderColor="whiteAlpha.700" />
+          <Flex
+            direction={{ base: "column", lg: "row" }}
+            align="stretch"
+            gap={10}
+            mb={20}
+          >
+            <Box flex="1" borderRadius="2xl" overflow="hidden" boxShadow="xl">
+              <Image
+                src={foodBazaar?.src}
+                alt="Our Team"
+                objectFit="cover"
+                w="100%"
+                h={{ base: "300px", lg: "100%" }}
+              />
+            </Box>
 
-        <Heading
-          as="h2"
-          size="lg"
-          mb={8}
-          textAlign="center"
-          color="black"
-          position="relative"
-          zIndex={10}
-        >
-          Why Choose FoodBazaar?
-        </Heading>
-
-        <Stack
-          direction={{ base: "column", md: "row" }}
-          spacing={8}
-          justify="center"
-          align="stretch"
-          px={{ base: 2, md: 8 }}
-        >
-          {[
-            {
-              icon: FaHeart,
-              title: "Passionate Team",
-              text: "Our team is passionate about delivering the best food experiences to your doorstep.",
-            },
-            {
-              icon: FaTruck,
-              title: "Fast Delivery",
-              text: "We ensure quick and efficient delivery so that your food arrives fresh and hot.",
-            },
-            {
-              icon: FaUtensils,
-              title: "Quality Ingredients",
-              text: "We use only the highest quality ingredients to prepare our meals.",
-            },
-          ].map((feature, index) => (
-            <Box
-              key={index}
-              textAlign="center"
-              p={6}
-              bg={bgCard}
-              borderRadius="md"
+            <VStack
+              flex="1"
+              spacing={6}
+              align="start"
+              justify="center"
+              bg="white"
+              p={{ base: 8, md: 10 }}
+              borderRadius="2xl"
+              border="1px solid"
+              borderColor={borderColor}
               boxShadow="lg"
-              _hover={{ transform: "scale(1.03)", transition: "0.2s" }}
             >
-              <Icon as={feature.icon} w={10} h={10} color="teal.400" mb={3} />
-              <Heading as="h3" size="md" mb={2} color={textColor}>
-                {feature.title}
+              <Text fontSize="xl" color="gray.700" fontWeight="semibold">
+                Your number one source for all things food.
+              </Text>
+              <Text fontSize="lg" color="gray.600" lineHeight="relaxed">
+                We’re dedicated to giving you the very best meals with a focus on
+                quality, customer satisfaction, and uniqueness. 
+              </Text>
+              <Text fontSize="lg" color="gray.600" lineHeight="relaxed">
+                We hope you enjoy our meals as much as we enjoy delivering them to
+                you. Every dish is prepared with the utmost care and passion.
+              </Text>
+            </VStack>
+          </Flex>
+
+          <Divider my={20} borderColor={borderColor} />
+
+          <Heading size="xl" mb={12} textAlign="center" color="gray.800" fontWeight="bold">
+            Why Choose <Text as="span" color="orange.500">FoodBazaar?</Text>
+          </Heading>
+
+          <SimpleGrid columns={{ base: 1, md: 3 }} spacing={10} mb={20}>
+            {[
+              {
+                icon: FaHeart,
+                title: "Passionate Team",
+                text: "Our team is passionate about delivering the best food experiences.",
+                accent: "orange.50"
+              },
+              {
+                icon: FaTruck,
+                title: "Fast Delivery",
+                text: "Quick and efficient delivery so your food arrives fresh and hot.",
+                accent: "yellow.50"
+              },
+              {
+                icon: FaUtensils,
+                title: "Quality Ingredients",
+                text: "We use only the highest quality ingredients in every meal.",
+                accent: "orange.50"
+              },
+            ].map((feature, index) => (
+              <Box
+                key={index}
+                textAlign="center"
+                p={10}
+                bg="white"
+                borderRadius="2xl"
+                border="1px solid"
+                borderColor={borderColor}
+                transition="all 0.4s ease"
+                _hover={{
+                  transform: "translateY(-10px)",
+                  borderColor: "orange.400",
+                  boxShadow: "0 20px 40px rgba(0,0,0,0.08)",
+                }}
+              >
+                <Flex
+                  w={16}
+                  h={16}
+                  bg={feature.accent}
+                  borderRadius="full"
+                  align="center"
+                  justify="center"
+                  mx="auto"
+                  mb={6}
+                >
+                  <Icon as={feature.icon} color="orange.500" boxSize={8} />
+                </Flex>
+                <Heading size="md" mb={4} color="gray.800">
+                  {feature.title}
+                </Heading>
+                <Text color="gray.600" lineHeight="relaxed">
+                  {feature.text}
+                </Text>
+              </Box>
+            ))}
+          </SimpleGrid>
+
+          <Divider my={20} borderColor={borderColor} />
+
+          <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
+            <Box
+              p={10}
+              bg={cardBg}
+              borderRadius="2xl"
+              border="1px solid"
+              borderColor={borderColor}
+            >
+              <Heading size="lg" color="gray.800" mb={4}>
+                Our Vision
               </Heading>
-              <Text fontSize="md" color={textColor}>
-                {feature.text}
+              <Text color="gray.600" fontSize="lg" lineHeight="relaxed">
+                To become the leading food delivery service by offering
+                exceptional meals and outstanding customer experiences that 
+                bring people together.
               </Text>
             </Box>
-          ))}
-        </Stack>
 
-        <Divider my={10} borderColor="whiteAlpha.700" />
-
-        <Heading
-          as="h2"
-          size="lg"
-          mb={8}
-          textAlign="center"
-          color="black"
-          position="relative"
-          zIndex={10}
-        >
-          Our Vision and Mission
-        </Heading>
-
-        <Flex
-          direction={{ base: "column", md: "row" }}
-          align="stretch"
-          justify="space-between"
-          gap={8}
-        >
-          <VStack
-            flex="1"
-            spacing={4}
-            align="start"
-            p={6}
-            bg={bgCard}
-            borderRadius="md"
-            boxShadow="lg"
-          >
-            <Heading as="h3" size="md" color={textColor}>
-              Our Vision
-            </Heading>
-            <Text fontSize="lg" color={textColor}>
-              At FoodBazaar, our vision is to become the leading food delivery
-              service by providing exceptional meals and outstanding customer
-              service. We aim to create a community where food lovers can enjoy
-              their favorite dishes conveniently and reliably.
-            </Text>
-          </VStack>
-
-          <VStack
-            flex="1"
-            spacing={4}
-            align="start"
-            p={6}
-            bg={bgCard}
-            borderRadius="md"
-            boxShadow="lg"
-          >
-            <Heading as="h3" size="md" color={textColor}>
-              Our Mission
-            </Heading>
-            <Text fontSize="lg" color={textColor}>
-              Our mission is to revolutionize the food delivery industry by
-              offering a wide variety of delicious meals prepared with the
-              finest ingredients, delivered promptly to your doorstep. We are
-              committed to sustainability, innovation, and excellence in
-              everything we do.
-            </Text>
-          </VStack>
-        </Flex>
+            <Box
+              p={10}
+              bg={cardBg}
+              borderRadius="2xl"
+              border="1px solid"
+              borderColor={borderColor}
+            >
+              <Heading size="lg" color="gray.800" mb={4}>
+                Our Mission
+              </Heading>
+              <Text color="gray.600" fontSize="lg" lineHeight="relaxed">
+                To revolutionize food delivery through quality ingredients, prompt
+                service, and continuous innovation for every customer.
+              </Text>
+            </Box>
+          </SimpleGrid>
+        </Container>
       </Box>
     </>
   );

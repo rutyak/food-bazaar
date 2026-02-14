@@ -5,7 +5,6 @@ import {
   Box,
   Heading,
   Text,
-  Flex,
   VStack,
   Accordion,
   AccordionItem,
@@ -15,166 +14,210 @@ import {
   Stack,
   Button,
   Divider,
+  Icon,
+  Container,
+  Flex,
+  SimpleGrid,
 } from "@chakra-ui/react";
+import { FiMail, FiPhone, FiHelpCircle, FiShoppingBag, FiCreditCard } from "react-icons/fi";
 import NavbarContainer from "@/components/navbar/NavbarContainer";
 
 const Help = () => {
-  const bgGradient = "linear(to-r, teal.500, green.500)";
-  const bgCard = "white";
-  const textColor = "gray.800";
+  const cardBg = "#f8f9fa";
+  const borderColor = "#e2e8f0";
+  const primaryGradient = "linear(to-r, #facc15, #f97316)";
 
   return (
     <>
-      <NavbarContainer isScrolled={true} setSearch={() => {}} search="" />
+      <NavbarContainer isScrolled={true} setSearch={() => {}} search="" isMenu={true} />
 
-      <Box
-        p={{ base: 6, md: 10 }}
-        maxW="1350px"
-        mx="auto"
-        // mb={{ base: "none", xl: "20px" }}
-        // mt={{ base: "none", xl: "20px" }}
-        bgGradient={bgGradient}
-        borderRadius={{ base: "none", xl: "lg" }}
-        boxShadow="2xl"
-        mt={{ base: "80px", md: "100px" }}
-        mb="4"
-      >
-        <Heading as="h1" mb={8} textAlign="center" fontSize="4xl" color="white">
-          Help Center
-        </Heading>
-        <Flex
-          direction={["column", "row"]}
-          align="center"
-          justify="space-between"
-          mb={8}
-        >
-          <VStack
-            flex="1"
-            spacing={4}
-            align="start"
-            p={4}
-            bg={bgCard}
-            borderRadius="md"
-            boxShadow="lg"
-          >
-            <Heading as="h2" size="lg" mb={4} color={textColor}>
-              Frequently Asked Questions
+      <Box pt={{ base: "100px", md: "120px" }} pb={20}>
+        <Container maxW="1200px">
+          {/* Hero Header */}
+          <VStack spacing={4} mb={16} textAlign="center">
+            <Box
+              bgGradient={primaryGradient}
+              px={4}
+              py={1}
+              borderRadius="full"
+              fontSize="xs"
+              fontWeight="bold"
+              color="white"
+              textTransform="uppercase"
+              letterSpacing="widest"
+            >
+              Support Center
+            </Box>
+            <Heading
+              as="h1"
+              fontSize={{ base: "4xl", md: "6xl" }}
+              fontWeight="extrabold"
+              bgGradient={primaryGradient}
+              bgClip="text"
+              lineHeight="shorter"
+            >
+              How can we help?
             </Heading>
-            <Accordion allowToggle w="100%">
-              <AccordionItem>
-                <AccordionButton>
-                  <Box flex="1" textAlign="left" color={textColor}>
+            <Text color="gray.600" fontSize="lg" maxW="600px">
+              Find answers to frequently asked questions or get in touch with our dedicated support team.
+            </Text>
+          </VStack>
+
+          {/* FAQ Section */}
+          <Box
+            bg="white"
+            borderRadius="2xl"
+            border="1px solid"
+            borderColor={borderColor}
+            overflow="hidden"
+            boxShadow="xl"
+          >
+            <Box p={8} borderBottom="1px solid" borderColor={borderColor} bg={cardBg}>
+              <Flex align="center">
+                <Icon as={FiHelpCircle} color="orange.500" boxSize={6} mr={3} />
+                <Heading size="lg" color="gray.800">
+                  Frequently Asked Questions
+                </Heading>
+              </Flex>
+            </Box>
+
+            <Accordion allowToggle>
+              <AccordionItem border="none" borderBottom="1px solid" borderColor={borderColor}>
+                <AccordionButton py={6} _hover={{ bg: "gray.50" }}>
+                  <Icon as={FiShoppingBag} mr={4} color="gray.400" />
+                  <Box flex="1" textAlign="left" color="gray.700" fontWeight="semibold" fontSize="lg">
                     How do I place an order?
                   </Box>
-                  <AccordionIcon />
+                  <AccordionIcon color="orange.500" />
                 </AccordionButton>
-                <AccordionPanel pb={4} color={textColor}>
-                  To place an order, simply browse our menu, select the items
-                  you wish to purchase, and click on the 'Add to Cart' button.
-                  Once you're ready, proceed to checkout and follow the prompts
-                  to complete your order.
+                <AccordionPanel pb={6} px={14} color="gray.600" lineHeight="tall">
+                  To place an order, browse the menu, add items to your cart, and proceed to checkout. 
+                  You can track your delivery in real-time once the order is confirmed.
                 </AccordionPanel>
               </AccordionItem>
 
-              <AccordionItem>
-                <AccordionButton>
-                  <Box flex="1" textAlign="left" color={textColor}>
+              <AccordionItem border="none">
+                <AccordionButton py={6} _hover={{ bg: "gray.50" }}>
+                  <Icon as={FiCreditCard} mr={4} color="gray.400" />
+                  <Box flex="1" textAlign="left" color="gray.700" fontWeight="semibold" fontSize="lg">
                     What payment methods do you accept?
                   </Box>
-                  <AccordionIcon />
+                  <AccordionIcon color="orange.500" />
                 </AccordionButton>
-                <AccordionPanel pb={4} color={textColor}>
-                  We accept various payment methods, including credit/debit
-                  cards, PayPal, and Apple Pay. All transactions are secure and
-                  encrypted.
-                </AccordionPanel>
-              </AccordionItem>
-
-              <AccordionItem>
-                <AccordionButton>
-                  <Box flex="1" textAlign="left" color={textColor}>
-                    How can I track my order?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-                <AccordionPanel pb={4} color={textColor}>
-                  After placing your order, you will receive a confirmation
-                  email with a tracking link. You can use this link to monitor
-                  the status and estimated delivery time of your order.
-                </AccordionPanel>
-              </AccordionItem>
-
-              <AccordionItem>
-                <AccordionButton>
-                  <Box flex="1" textAlign="left" color={textColor}>
-                    What is your refund policy?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-                <AccordionPanel pb={4} color={textColor}>
-                  If you are not satisfied with your order, please contact our
-                  customer support within 24 hours of delivery. We will review
-                  your case and offer a refund or replacement if necessary.
-                </AccordionPanel>
-              </AccordionItem>
-
-              <AccordionItem>
-                <AccordionButton>
-                  <Box flex="1" textAlign="left" color={textColor}>
-                    How do I contact customer support?
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-                <AccordionPanel pb={4} color={textColor}>
-                  You can contact our customer support via email at
-                  support@foodbazaar.com or call us at (123) 456-7890. Our
-                  support team is available 24/7 to assist you with any
-                  inquiries.
+                <AccordionPanel pb={6} px={14} color="gray.600" lineHeight="tall">
+                  We accept all major credit/debit cards, digital wallets, and other secure online 
+                  payment gateways. Your transaction data is always encrypted and secure.
                 </AccordionPanel>
               </AccordionItem>
             </Accordion>
-          </VStack>
-        </Flex>
-
-        <Divider my={8} borderColor="whiteAlpha.700" />
-
-        <Heading as="h2" size="lg" mb={8} textAlign="center" color="white">
-          Contact Us
-        </Heading>
-        <Stack direction={["column", "row"]} spacing={8} justify="center">
-          <Box
-            textAlign="center"
-            p={6}
-            bg={bgCard}
-            borderRadius="md"
-            boxShadow="lg"
-          >
-            <Heading as="h3" size="md" mb={2} color={textColor}>
-              Email Support
-            </Heading>
-            <Text fontSize="md" mb={4} color={textColor}>
-              For any inquiries, feel free to email us at
-              support@foodbazaar.com.
-            </Text>
-            <Button colorScheme="teal">Email Us</Button>
           </Box>
-          <Box
-            textAlign="center"
-            p={6}
-            bg={bgCard}
-            borderRadius="md"
-            boxShadow="lg"
-          >
-            <Heading as="h3" size="md" mb={2} color={textColor}>
-              Call Support
-            </Heading>
-            <Text fontSize="md" mb={4} color={textColor}>
-              You can reach us by phone at (123) 456-7890. Our lines are open
-              24/7.
-            </Text>
-            <Button colorScheme="teal">Call Us</Button>
-          </Box>
-        </Stack>
+
+          <Divider my={20} borderColor={borderColor} />
+
+          {/* Contact Section */}
+          <Heading size="xl" mb={12} textAlign="center" color="gray.800" fontWeight="bold">
+            Still need help? <Text as="span" color="orange.500">Reach out.</Text>
+          </Heading>
+
+          <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
+            {/* Email Card */}
+            <Box
+              p={10}
+              bg="white"
+              borderRadius="2xl"
+              border="1px solid"
+              borderColor={borderColor}
+              textAlign="center"
+              transition="all 0.4s ease"
+              _hover={{
+                transform: "translateY(-10px)",
+                borderColor: "orange.400",
+                boxShadow: "0 20px 40px rgba(0,0,0,0.08)",
+              }}
+            >
+              <Flex
+                w={16}
+                h={16}
+                bg="orange.50"
+                borderRadius="full"
+                align="center"
+                justify="center"
+                mx="auto"
+                mb={6}
+              >
+                <Icon as={FiMail} color="orange.500" boxSize={8} />
+              </Flex>
+              <Heading size="md" mb={2} color="gray.800">
+                Email Support
+              </Heading>
+              <Text color="gray.500" mb={8}>
+                support@foodbazaar.com
+              </Text>
+              <Button
+                w="full"
+                size="lg"
+                bgGradient={primaryGradient}
+                color="white"
+                fontWeight="bold"
+                _hover={{ 
+                  opacity: 0.9,
+                  transform: "scale(1.02)"
+                }}
+              >
+                Send an Email
+              </Button>
+            </Box>
+
+            {/* Call Card */}
+            <Box
+              p={10}
+              bg="white"
+              borderRadius="2xl"
+              border="1px solid"
+              borderColor={borderColor}
+              textAlign="center"
+              transition="all 0.4s ease"
+              _hover={{
+                transform: "translateY(-10px)",
+                borderColor: "yellow.400",
+                boxShadow: "0 20px 40px rgba(0,0,0,0.08)",
+              }}
+            >
+              <Flex
+                w={16}
+                h={16}
+                bg="yellow.50"
+                borderRadius="full"
+                align="center"
+                justify="center"
+                mx="auto"
+                mb={6}
+              >
+                <Icon as={FiPhone} color="yellow.600" boxSize={8} />
+              </Flex>
+              <Heading size="md" mb={2} color="gray.800">
+                Call Support
+              </Heading>
+              <Text color="gray.500" mb={8}>
+                +1 (123) 456-7890
+              </Text>
+              <Button
+                w="full"
+                size="lg"
+                variant="outline"
+                borderColor="yellow.500"
+                color="yellow.600"
+                fontWeight="bold"
+                _hover={{ 
+                  bg: "yellow.50",
+                  transform: "scale(1.02)"
+                }}
+              >
+                Call Us Now
+              </Button>
+            </Box>
+          </SimpleGrid>
+        </Container>
       </Box>
     </>
   );

@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { setMenu } from "@/redux/slices/menuSlice";
 import { setCarts } from "@/redux/slices/cartSlice";
-import BackgroundImage from "@/components/backgroundImage/BackgroundImage";
+import { Box } from "@chakra-ui/react";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -38,10 +38,10 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <Box bg="#fcfaf8" minH="100vh">
       <Header />
       <Dashboard />
       <Footer />
-    </>
+    </Box>
   );
 }

@@ -63,7 +63,7 @@ const MobileMenu = () => {
         icon={<FiMenu size={24} />}
         onClick={onOpen}
         variant="unstyled"
-        display={{ base: "flex", lg: "none" }}
+        display={{ base: "flex", xl: "none" }}
         className="mobile-hamburger-btn"
       />
 

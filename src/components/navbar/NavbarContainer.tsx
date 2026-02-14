@@ -44,7 +44,7 @@ const Navbar = () => {
     <HStack as="nav" spacing={8} className="navbar-container">
       <HStack
         spacing={8}
-        display={{ base: "none", lg: "flex" }}
+        display={{ base: "none", xl: "flex" }}
         className="nav-links"
       >
         <Link href="/" className="nav-item">
@@ -90,6 +90,8 @@ const NavbarContainer = ({
   dashboard = false,
 }: NavbarProps) => {
   const router = useRouter();
+
+  console.log("isMenu:", isMenu);
 
   return (
     <>
@@ -154,7 +156,7 @@ const NavbarContainer = ({
                 flex={1}
                 maxW="500px"
                 mx={4}
-                display={{ base: "none", lg: "block" }}
+                display={{ base: "none", xl: "block" }}
               >
                 <Search setSearch={setSearch} search={search} />
               </Box>

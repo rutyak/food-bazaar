@@ -89,7 +89,7 @@ const Dashboard = () => {
       </Text>
     </VStack>
   ) : (
-    <Box className="home-page" bgColor="white">
+    <Box className="home-page">
       <Carousel suggestions={restaurants} title="Top Restaurants" />
       <Restaurants />
     </Box>
