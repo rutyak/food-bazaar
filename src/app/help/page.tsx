@@ -31,7 +31,7 @@ const Help = () => {
     <>
       <NavbarContainer isScrolled={true} setSearch={() => {}} search="" isMenu={true} />
 
-      <Box pt={{ base: "100px", md: "120px" }} pb={20}>
+      <Box  mt={{ base: "80px", md: "100px", lg: "115px" }} mb="4" pb={20}>
         <Container maxW="1200px">
           {/* Hero Header */}
           <VStack spacing={4} mb={16} textAlign="center">

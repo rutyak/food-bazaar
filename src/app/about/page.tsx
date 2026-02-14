@@ -32,7 +32,7 @@ const About = () => {
         isMenu={true}
       />
 
-      <Box pt={{ base: "100px", md: "120px" }} pb={20}>
+      <Box  mt={{ base: "80px", md: "100px", lg: "115px" }} mb="4" pb={20}>
         <Container maxW="1200px">
           <VStack spacing={4} mb={16} textAlign="center">
             <Box

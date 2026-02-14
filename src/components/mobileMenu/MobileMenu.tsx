@@ -71,7 +71,7 @@ const MobileMenu = () => {
         <DrawerOverlay backdropFilter="blur(8px)" />
         <DrawerContent className="mobile-drawer-content">
           <DrawerCloseButton color="white" top="20px" />
-          
+           
           <DrawerHeader borderBottomWidth="0" pt={10}>
             <Text fontSize="2xl" fontWeight="800" color="white">
               Menu<span style={{ color: "#ffcc00" }}>.</span>

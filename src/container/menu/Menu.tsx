@@ -7,7 +7,7 @@ import Menubody from "./menu-body/Menubody";
 const Menu = () => {
   return (
     <div className="menu">
-      <NavbarContainer isMenu={true} setSearch={() => {}} search="" />
+      <NavbarContainer setSearch={() => {}} search="" isMenu={true} />
       <Menubody />
     </div>
   );

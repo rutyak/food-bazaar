@@ -21,7 +21,7 @@ import {
   Badge,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { FiShoppingBag, FiCreditCard, FiTruck, FiClock } from "react-icons/fi";
+import { FiShoppingBag, FiTruck, FiClock } from "react-icons/fi";
 import CartItem from "./cartItem/CartItem";
 import { RootState } from "@/redux/store";
 import { useErrorToast, useSuccessToast } from "@/toasts/CustomeToasts";
@@ -56,10 +56,14 @@ const Cart = () => {
   const deliveryCharge = 40;
   const estimatedTime = 30;
 
+  const cardBg = "#f8f9fa";
+  const borderColor = "#e2e8f0";
+  const primaryGradient = "linear(to-r, #facc15, #f97316)";
+
   const calculateSubtotal = () =>
     cart.reduce(
       (acc: number, item: CartType) => acc + item.price * item.quantity,
-      0
+      0,
     );
 
   const calculateTotal = () =>
@@ -99,214 +103,274 @@ const Cart = () => {
 
   return (
     <>
-      <NavbarContainer isScrolled={true} setSearch={() => {}} search="" />
-      
-      {/* Main Wrapper with Navbar offset */}
-      <Box bg="gray.50" minH="100vh" pt={{ base: "80px", md: "100px" }} pb={10}>
+      <NavbarContainer
+        isScrolled={true}
+        setSearch={() => {}}
+        search=""
+        isMenu={true}
+      />
+
+      <Box mt={{ base: "80px", md: "100px" }} mb="4">
         <Container maxW="container.xl">
-          
-          {/* Header Section */}
-          <Flex 
-            align="center" 
-            justifyContent="space-between" 
-            mb={8} 
+          <Flex
+            align="center"
+            justifyContent="space-between"
+            mb={7}
             px={{ base: 2, md: 4 }}
           >
-            <HStack spacing={3}>
-              <Icon
-                as={FiShoppingBag}
-                w={{ base: 6, md: 8 }}
-                h={{ base: 6, md: 8 }}
-                color="teal.500"
-              />
-              <Heading size={{ base: "md", md: "lg" }} fontWeight="800">
-                Your Orders
-              </Heading>
+            <HStack spacing={4}>
+              <Flex
+                w={12}
+                h={12}
+                bg="orange.50"
+                borderRadius="full"
+                align="center"
+                justify="center"
+              >
+                <Icon as={FiShoppingBag} color="orange.500" boxSize={6} />
+              </Flex>
+              <VStack align="start" spacing={0}>
+                <Heading size="lg" fontWeight="extrabold" color="gray.800">
+                  Your Checkout
+                </Heading>
+                <Text color="gray.500" fontSize="sm">
+                  Review items and delivery details
+                </Text>
+              </VStack>
             </HStack>
             <Badge
-              colorScheme="teal"
-              fontSize={{ base: "xs", md: "sm" }}
+              bgGradient={primaryGradient}
+              color="white"
+              fontSize="sm"
               borderRadius="full"
-              px={4}
-              py={1}
+              px={5}
+              py={1.5}
+              boxShadow="md"
             >
               {cart.length} {cart.length === 1 ? "Item" : "Items"}
             </Badge>
           </Flex>
 
-          <SimpleGrid columns={{ base: 1, lg: 3 }} spacing={{ base: 6, lg: 10 }}>
-            
-            {/* Left Section: Items & Billing */}
-            <Stack spacing={6} gridColumn={{ lg: "span 2" }}>
-              
-              {/* Cart Items List */}
+          <SimpleGrid
+            columns={{ base: 1, lg: 3 }}
+            spacing={{ base: 8, lg: 10 }}
+          >
+            <Stack
+              spacing={8}
+              gridColumn={{ lg: "span 2" }}
+              overflowY="auto"
+              height={{ base: "auto" }}
+              pr={4}
+              css={{
+                "&::-webkit-scrollbar": { width: "6px" },
+                "&::-webkit-scrollbar-thumb": {
+                  background: "#cbd5e0",
+                  borderRadius: "10px",
+                },
+              }}
+              pb={7}
+            >
               <Box
                 bg="white"
-                p={{ base: 4, md: 6 }}
                 borderRadius="2xl"
-                boxShadow="sm"
                 border="1px solid"
-                borderColor="gray.100"
+                borderColor={borderColor}
+                boxShadow="xl"
+                overflow="hidden"
               >
-                <VStack align="stretch" spacing={5}>
+                <Box
+                  p={6}
+                  bg={cardBg}
+                  borderBottom="1px solid"
+                  borderColor={borderColor}
+                >
+                  <Heading size="md" color="gray.700">
+                    Order Items
+                  </Heading>
+                </Box>
+                <VStack align="stretch" spacing={0} p={2}>
                   {cart.length > 0 ? (
                     cart.map((item: CartType, index: number) => (
                       <React.Fragment key={item.itemId + index}>
-                        <CartItem item={item} />
-                        {index < cart.length - 1 && <Divider borderColor="gray.50" />}
+                        <Box p={4}>
+                          <CartItem item={item} />
+                        </Box>
+                        {index < cart.length - 1 && (
+                          <Divider borderColor="gray.100" />
+                        )}
                       </React.Fragment>
                     ))
                   ) : (
-                    <Box py={10} textAlign="center">
-                      <Text color="gray.500">Your cart is empty.</Text>
+                    <Box py={20} textAlign="center">
+                      <Text color="gray.400" fontSize="lg">
+                        Your cart is feeling light...
+                      </Text>
                     </Box>
                   )}
                 </VStack>
               </Box>
 
-              {/* Delivery Details Form */}
               <Box
                 bg="white"
-                p={{ base: 5, md: 8 }}
                 borderRadius="2xl"
-                boxShadow="sm"
                 border="1px solid"
-                borderColor="gray.100"
+                borderColor={borderColor}
+                boxShadow="xl"
+                overflow="hidden"
               >
-                <Heading size="md" mb={6} display="flex" alignItems="center">
-                  <Icon as={FiTruck} mr={3} color="teal.500" /> 
-                  Delivery Details
-                </Heading>
-                <SimpleGrid columns={{ base: 1, md: 2 }} spacing={5}>
-                  {[
-                    "name",
-                    "email",
-                    "address",
-                    "city",
-                    "zipCode",
-                    "country",
-                  ].map((field) => (
-                    <Box key={field}>
-                      <Text
-                        fontSize="xs"
-                        fontWeight="bold"
-                        color="gray.400"
-                        mb={2}
-                        textTransform="uppercase"
-                        letterSpacing="wider"
-                      >
-                        {field}
-                      </Text>
-                      <Input
-                        name={field}
-                        placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-                        focusBorderColor="teal.400"
-                        variant="filled"
-                        bg="gray.50"
-                        _hover={{ bg: "gray.100" }}
-                        onChange={handleInputChange}
-                      />
-                    </Box>
-                  ))}
-                </SimpleGrid>
+                <Box
+                  p={6}
+                  bg={cardBg}
+                  borderBottom="1px solid"
+                  borderColor={borderColor}
+                >
+                  <Heading
+                    size="md"
+                    color="gray.700"
+                    display="flex"
+                    alignItems="center"
+                  >
+                    <Icon as={FiTruck} mr={3} color="orange.500" /> Delivery
+                    Details
+                  </Heading>
+                </Box>
+                <Box p={8}>
+                  <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
+                    {[
+                      "name",
+                      "email",
+                      "address",
+                      "city",
+                      "zipCode",
+                      "country",
+                    ].map((field) => (
+                      <Box key={field}>
+                        <Text
+                          fontSize="xs"
+                          fontWeight="bold"
+                          color="gray.400"
+                          mb={2}
+                          textTransform="uppercase"
+                          letterSpacing="wider"
+                        >
+                          {field}
+                        </Text>
+                        <Input
+                          name={field}
+                          placeholder={
+                            field.charAt(0).toUpperCase() + field.slice(1)
+                          }
+                          focusBorderColor="orange.400"
+                          variant="filled"
+                          bg="gray.50"
+                          _hover={{ bg: "gray.100" }}
+                          onChange={handleInputChange}
+                          h="50px"
+                        />
+                      </Box>
+                    ))}
+                  </SimpleGrid>
+                </Box>
               </Box>
             </Stack>
 
-            {/* Right Section: Sticky Summary */}
-            <Box position={{ lg: "sticky" }} top="100px" height="fit-content">
-              <VStack spacing={6} align="stretch">
-                <Box
-                  bg="white"
-                  p={6}
-                  borderRadius="2xl"
-                  boxShadow="xl"
-                  border="1px solid"
-                  borderColor="teal.50"
-                >
-                  <Heading size="md" mb={6}>
-                    Order Summary
-                  </Heading>
+            <Box position={{ lg: "sticky" }} top="120px" height="fit-content">
+              <Box
+                bg="white"
+                p={7}
+                borderRadius="2xl"
+                border="2px solid"
+                borderColor="orange.100"
+                boxShadow="2xl"
+              >
+                <Heading size="md" mb={8} color="gray.800" textAlign="center">
+                  Payment Summary
+                </Heading>
 
-                  <Stack spacing={4} mb={8}>
-                    <Flex justify="space-between" color="gray.600">
-                      <Text>Subtotal</Text>
-                      <Text fontWeight="bold" color="gray.800">
-                        ₹{calculateSubtotal().toFixed(2)}
-                      </Text>
-                    </Flex>
-                    <Flex justify="space-between" color="gray.600">
-                      <HStack spacing={1}>
-                        <Icon as={FiTruck} boxSize={3} />
-                        <Text>Delivery Fee</Text>
-                      </HStack>
-                      <Text fontWeight="bold" color="gray.800">
-                        ₹{deliveryCharge.toFixed(2)}
-                      </Text>
-                    </Flex>
-                    
-                    <Flex
-                      justify="space-between"
-                      align="center"
-                      color="teal.700"
-                      bg="teal.50"
-                      px={4}
-                      py={3}
-                      borderRadius="lg"
-                    >
-                      <HStack spacing={2}>
-                        <Icon as={FiClock} />
-                        <Text fontSize="sm" fontWeight="medium">Estimated Arrival</Text>
-                      </HStack>
-                      <Text fontWeight="bold" fontSize="sm">{estimatedTime} mins</Text>
-                    </Flex>
-
-                    <Divider py={2} />
-
-                    <Flex justify="space-between" align="center">
-                      <Text fontSize="lg" fontWeight="600">Total Amount</Text>
-                      <Text fontSize="2xl" fontWeight="800" color="teal.600">
-                        ₹{calculateTotal()}
-                      </Text>
-                    </Flex>
-                  </Stack>
-
-                  <Box mb={8}>
-                    <Text fontWeight="bold" mb={4} fontSize="sm" color="gray.500" textTransform="uppercase">
-                      Payment Method
+                <VStack spacing={5} mb={6}>
+                  <Flex justify="space-between" w="full">
+                    <Text color="gray.500">Subtotal</Text>
+                    <Text fontWeight="bold" color="gray.800">
+                      ₹{calculateSubtotal().toFixed(2)}
                     </Text>
-                    <RadioGroup value={paymentMethod} onChange={setPaymentMethod}>
-                      <Stack direction="row" spacing={6}>
-                        <Radio value="creditCard" colorScheme="teal" size="lg">
-                          <Text fontSize="sm" fontWeight="medium">Card</Text>
-                        </Radio>
-                        <Radio value="paypal" colorScheme="teal" size="lg">
-                          <Text fontSize="sm" fontWeight="medium">PayPal</Text>
-                        </Radio>
-                      </Stack>
-                    </RadioGroup>
-                  </Box>
-
-                  <Button
-                    leftIcon={<Icon as={FiCreditCard} />}
-                    colorScheme="teal"
-                    size="lg"
-                    width="100%"
-                    height="60px"
-                    fontSize="md"
-                    onClick={handleCheckout}
-                    isDisabled={cart.length === 0}
-                    boxShadow="0 4px 14px 0 rgba(49, 151, 149, 0.39)"
-                    _hover={{ 
-                      transform: "translateY(-2px)", 
-                      boxShadow: "0 6px 20px rgba(49, 151, 149, 0.45)" 
-                    }}
-                    _active={{ transform: "translateY(0)" }}
-                    transition="all 0.2s"
+                  </Flex>
+                  <Flex justify="space-between" w="full">
+                    <Text color="gray.500">Delivery Fee</Text>
+                    <Text fontWeight="bold" color="gray.800">
+                      ₹{deliveryCharge.toFixed(2)}
+                    </Text>
+                  </Flex>
+                  <Flex
+                    justify="space-between"
+                    w="full"
+                    bg="yellow.50"
+                    p={3}
+                    borderRadius="lg"
+                    color="yellow.700"
                   >
-                    Confirm & Pay
-                  </Button>
+                    <HStack spacing={2}>
+                      <Icon as={FiClock} />
+                      <Text fontSize="sm" fontWeight="bold">
+                        Arrival Time
+                      </Text>
+                    </HStack>
+                    <Text fontWeight="bold" fontSize="sm">
+                      {estimatedTime} mins
+                    </Text>
+                  </Flex>
+                  <Divider />
+                  <Flex justify="space-between" w="full" align="center">
+                    <Text fontSize="lg" fontWeight="bold" color="gray.800">
+                      Total
+                    </Text>
+                    <Text
+                      fontSize="2xl"
+                      fontWeight="extrabold"
+                      color="orange.500"
+                    >
+                      ₹{calculateTotal()}
+                    </Text>
+                  </Flex>
+                </VStack>
+
+                <Box mb={10}>
+                  <Text
+                    fontWeight="bold"
+                    mb={4}
+                    fontSize="xs"
+                    color="gray.400"
+                    textTransform="uppercase"
+                  >
+                    Payment Method
+                  </Text>
+                  <RadioGroup value={paymentMethod} onChange={setPaymentMethod}>
+                    <Stack direction="row" spacing={6}>
+                      <Radio value="creditCard" colorScheme="orange">
+                        Card
+                      </Radio>
+                      <Radio value="paypal" colorScheme="orange">
+                        PayPal
+                      </Radio>
+                    </Stack>
+                  </RadioGroup>
                 </Box>
-              </VStack>
+
+                <Button
+                  w="full"
+                  size="lg"
+                  h="60px"
+                  bgGradient={primaryGradient}
+                  color="white"
+                  fontWeight="bold"
+                  boxShadow="lg"
+                  onClick={handleCheckout}
+                  isDisabled={cart.length === 0}
+                  _hover={{ opacity: 0.9, transform: "translateY(-2px)" }}
+                  _active={{ transform: "translateY(0)" }}
+                >
+                  Pay ₹{calculateTotal()}
+                </Button>
+              </Box>
             </Box>
           </SimpleGrid>
 
