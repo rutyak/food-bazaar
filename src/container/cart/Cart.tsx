@@ -61,13 +61,9 @@ const Cart = () => {
   const primaryGradient = "linear(to-r, #facc15, #f97316)";
 
   const calculateSubtotal = () =>
-    cart.reduce(
-      (acc: number, item: CartType) => acc + item.price * item.quantity,
-      0,
-    );
+    cart.reduce((acc: number, item: CartType) => acc + item.price * item.quantity, 0);
 
-  const calculateTotal = () =>
-    (calculateSubtotal() + deliveryCharge).toFixed(2);
+  const calculateTotal = () => (calculateSubtotal() + deliveryCharge).toFixed(2);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -103,37 +99,33 @@ const Cart = () => {
 
   return (
     <>
-      <NavbarContainer
-        isScrolled={true}
-        setSearch={() => {}}
-        search=""
-        isMenu={true}
-      />
+      <NavbarContainer isScrolled={true} setSearch={() => {}} search="" isMenu={true} />
 
-      <Box mt={{ base: "80px", md: "100px" }} mb="4">
-        <Container maxW="container.xl">
+      <Box pt={{ base: "90px", md: "120px" }}>
+        <Container maxW="1200px" px={{ base: 4, md: 6 }} pb={{ base: 8, xl: 10 }}>
           <Flex
-            align="center"
-            justifyContent="space-between"
-            mb={7}
-            px={{ base: 2, md: 4 }}
+            direction={{ base: "column", sm: "row" }}
+            align={{ base: "start", sm: "center" }}
+            justify="space-between"
+            mb={{ base: 6, md: 10 }}
+            gap={4}
           >
             <HStack spacing={4}>
               <Flex
-                w={12}
-                h={12}
+                w={{ base: 10, md: 12 }}
+                h={{ base: 10, md: 12 }}
                 bg="orange.50"
                 borderRadius="full"
                 align="center"
                 justify="center"
               >
-                <Icon as={FiShoppingBag} color="orange.500" boxSize={6} />
+                <Icon as={FiShoppingBag} color="orange.500" boxSize={{ base: 5, md: 6 }} />
               </Flex>
               <VStack align="start" spacing={0}>
-                <Heading size="lg" fontWeight="extrabold" color="gray.800">
+                <Heading size={{ base: "md", md: "lg" }} fontWeight="extrabold" color="gray.800">
                   Your Checkout
                 </Heading>
-                <Text color="gray.500" fontSize="sm">
+                <Text color="gray.500" fontSize={{ base: "xs", md: "sm" }}>
                   Review items and delivery details
                 </Text>
               </VStack>
@@ -141,131 +133,76 @@ const Cart = () => {
             <Badge
               bgGradient={primaryGradient}
               color="white"
-              fontSize="sm"
+              fontSize={{ base: "xs", md: "sm" }}
               borderRadius="full"
-              px={5}
+              px={4}
               py={1.5}
-              boxShadow="md"
             >
               {cart.length} {cart.length === 1 ? "Item" : "Items"}
             </Badge>
           </Flex>
 
-          <SimpleGrid
-            columns={{ base: 1, lg: 3 }}
-            spacing={{ base: 8, lg: 10 }}
-          >
-            <Stack
-              spacing={8}
-              gridColumn={{ lg: "span 2" }}
-              overflowY="auto"
-              height={{ base: "auto" }}
-              pr={4}
-              css={{
-                "&::-webkit-scrollbar": { width: "6px" },
-                "&::-webkit-scrollbar-thumb": {
-                  background: "#cbd5e0",
-                  borderRadius: "10px",
-                },
-              }}
-              pb={7}
-            >
+          <SimpleGrid columns={{ base: 1, lg: 3 }} spacing={{ base: 6, md: 10 }} alignItems="start">
+            {/* Left Column: Items and Form */}
+            <Stack spacing={{ base: 6, md: 8 }} gridColumn={{ lg: "span 2" }}>
+              {/* Order Items Box */}
               <Box
                 bg="white"
                 borderRadius="2xl"
                 border="1px solid"
                 borderColor={borderColor}
-                boxShadow="xl"
+                boxShadow="sm"
                 overflow="hidden"
               >
-                <Box
-                  p={6}
-                  bg={cardBg}
-                  borderBottom="1px solid"
-                  borderColor={borderColor}
-                >
-                  <Heading size="md" color="gray.700">
-                    Order Items
-                  </Heading>
+                <Box p={{ base: 4, md: 6 }} bg={cardBg} borderBottom="1px solid" borderColor={borderColor}>
+                  <Heading size="md" color="gray.700">Order Items</Heading>
                 </Box>
-                <VStack align="stretch" spacing={0} p={2}>
+                <VStack align="stretch" spacing={0} p={{ base: 2, md: 4 }}>
                   {cart.length > 0 ? (
                     cart.map((item: CartType, index: number) => (
                       <React.Fragment key={item.itemId + index}>
-                        <Box p={4}>
+                        <Box py={4}>
                           <CartItem item={item} />
                         </Box>
-                        {index < cart.length - 1 && (
-                          <Divider borderColor="gray.100" />
-                        )}
+                        {index < cart.length - 1 && <Divider borderColor="gray.100" />}
                       </React.Fragment>
                     ))
                   ) : (
-                    <Box py={20} textAlign="center">
-                      <Text color="gray.400" fontSize="lg">
-                        Your cart is feeling light...
-                      </Text>
+                    <Box py={10} textAlign="center">
+                      <Text color="gray.400">Your cart is empty</Text>
                     </Box>
                   )}
                 </VStack>
               </Box>
 
+              {/* Delivery Details Box */}
               <Box
                 bg="white"
                 borderRadius="2xl"
                 border="1px solid"
                 borderColor={borderColor}
-                boxShadow="xl"
+                boxShadow="sm"
                 overflow="hidden"
               >
-                <Box
-                  p={6}
-                  bg={cardBg}
-                  borderBottom="1px solid"
-                  borderColor={borderColor}
-                >
-                  <Heading
-                    size="md"
-                    color="gray.700"
-                    display="flex"
-                    alignItems="center"
-                  >
-                    <Icon as={FiTruck} mr={3} color="orange.500" /> Delivery
-                    Details
+                <Box p={{ base: 4, md: 6 }} bg={cardBg} borderBottom="1px solid" borderColor={borderColor}>
+                  <Heading size="md" color="gray.700" display="flex" alignItems="center">
+                    <Icon as={FiTruck} mr={3} color="orange.500" /> Delivery Details
                   </Heading>
                 </Box>
-                <Box p={8}>
-                  <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
-                    {[
-                      "name",
-                      "email",
-                      "address",
-                      "city",
-                      "zipCode",
-                      "country",
-                    ].map((field) => (
+                <Box p={{ base: 4, md: 8 }}>
+                  <SimpleGrid columns={{ base: 1, md: 2 }} spacing={{ base: 4, md: 6 }}>
+                    {["name", "email", "address", "city", "zipCode", "country"].map((field) => (
                       <Box key={field}>
-                        <Text
-                          fontSize="xs"
-                          fontWeight="bold"
-                          color="gray.400"
-                          mb={2}
-                          textTransform="uppercase"
-                          letterSpacing="wider"
-                        >
+                        <Text fontSize="xs" fontWeight="bold" color="gray.400" mb={2} textTransform="uppercase">
                           {field}
                         </Text>
                         <Input
                           name={field}
-                          placeholder={
-                            field.charAt(0).toUpperCase() + field.slice(1)
-                          }
+                          placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
                           focusBorderColor="orange.400"
-                          variant="filled"
                           bg="gray.50"
-                          _hover={{ bg: "gray.100" }}
                           onChange={handleInputChange}
-                          h="50px"
+                          h={{ base: "45px", md: "50px" }}
                         />
                       </Box>
                     ))}
@@ -274,83 +211,47 @@ const Cart = () => {
               </Box>
             </Stack>
 
-            <Box position={{ lg: "sticky" }} top="120px" height="fit-content">
+            <Box position={{ lg: "sticky" }} top={{ lg: "120px" }}>
               <Box
                 bg="white"
-                p={7}
+                p={{ base: 6, md: 8 }}
                 borderRadius="2xl"
                 border="2px solid"
                 borderColor="orange.100"
-                boxShadow="2xl"
+                boxShadow="xl"
               >
-                <Heading size="md" mb={8} color="gray.800" textAlign="center">
-                  Payment Summary
+                <Heading size="md" mb={6} color="gray.800" textAlign="center">
+                  Order Summary
                 </Heading>
 
-                <VStack spacing={5} mb={6}>
+                <VStack spacing={4} mb={6}>
                   <Flex justify="space-between" w="full">
                     <Text color="gray.500">Subtotal</Text>
-                    <Text fontWeight="bold" color="gray.800">
-                      ₹{calculateSubtotal().toFixed(2)}
-                    </Text>
+                    <Text fontWeight="bold">₹{calculateSubtotal().toFixed(2)}</Text>
                   </Flex>
                   <Flex justify="space-between" w="full">
-                    <Text color="gray.500">Delivery Fee</Text>
-                    <Text fontWeight="bold" color="gray.800">
-                      ₹{deliveryCharge.toFixed(2)}
-                    </Text>
+                    <Text color="gray.500">Delivery</Text>
+                    <Text fontWeight="bold">₹{deliveryCharge.toFixed(2)}</Text>
                   </Flex>
-                  <Flex
-                    justify="space-between"
-                    w="full"
-                    bg="yellow.50"
-                    p={3}
-                    borderRadius="lg"
-                    color="yellow.700"
-                  >
-                    <HStack spacing={2}>
-                      <Icon as={FiClock} />
-                      <Text fontSize="sm" fontWeight="bold">
-                        Arrival Time
-                      </Text>
-                    </HStack>
-                    <Text fontWeight="bold" fontSize="sm">
-                      {estimatedTime} mins
-                    </Text>
+                  <Flex justify="space-between" w="full" bg="yellow.50" p={3} borderRadius="lg" color="yellow.700">
+                    <HStack spacing={2}><Icon as={FiClock} /><Text fontSize="xs" fontWeight="bold">Time</Text></HStack>
+                    <Text fontWeight="bold" fontSize="xs">{estimatedTime} mins</Text>
                   </Flex>
                   <Divider />
-                  <Flex justify="space-between" w="full" align="center">
-                    <Text fontSize="lg" fontWeight="bold" color="gray.800">
-                      Total
-                    </Text>
-                    <Text
-                      fontSize="2xl"
-                      fontWeight="extrabold"
-                      color="orange.500"
-                    >
-                      ₹{calculateTotal()}
-                    </Text>
+                  <Flex justify="space-between" w="full">
+                    <Text fontSize="lg" fontWeight="bold">Total</Text>
+                    <Text fontSize="xl" fontWeight="extrabold" color="orange.500">₹{calculateTotal()}</Text>
                   </Flex>
                 </VStack>
 
-                <Box mb={10}>
-                  <Text
-                    fontWeight="bold"
-                    mb={4}
-                    fontSize="xs"
-                    color="gray.400"
-                    textTransform="uppercase"
-                  >
-                    Payment Method
+                <Box mb={8}>
+                  <Text fontWeight="bold" mb={3} fontSize="xs" color="gray.400" textTransform="uppercase">
+                    Payment
                   </Text>
                   <RadioGroup value={paymentMethod} onChange={setPaymentMethod}>
-                    <Stack direction="row" spacing={6}>
-                      <Radio value="creditCard" colorScheme="orange">
-                        Card
-                      </Radio>
-                      <Radio value="paypal" colorScheme="orange">
-                        PayPal
-                      </Radio>
+                    <Stack direction={{ base: "column", sm: "row", lg: "column", xl: "row" }} spacing={4}>
+                      <Radio value="creditCard" colorScheme="orange">Card</Radio>
+                      <Radio value="paypal" colorScheme="orange">PayPal</Radio>
                     </Stack>
                   </RadioGroup>
                 </Box>
@@ -358,17 +259,14 @@ const Cart = () => {
                 <Button
                   w="full"
                   size="lg"
-                  h="60px"
+                  h="55px"
                   bgGradient={primaryGradient}
                   color="white"
-                  fontWeight="bold"
-                  boxShadow="lg"
                   onClick={handleCheckout}
                   isDisabled={cart.length === 0}
-                  _hover={{ opacity: 0.9, transform: "translateY(-2px)" }}
-                  _active={{ transform: "translateY(0)" }}
+                  _hover={{ opacity: 0.9 }}
                 >
-                  Pay ₹{calculateTotal()}
+                  Confirm Order
                 </Button>
               </Box>
             </Box>
