@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Box,
@@ -24,15 +26,17 @@ const Help = () => {
   return (
     <>
       <NavbarContainer isScrolled={true} setSearch={() => {}} search="" />
+
       <Box
         p={{ base: 6, md: 10 }}
         maxW="1350px"
         mx="auto"
-        mb={{ base: "none", xl: "20px" }}
+        // mb={{ base: "none", xl: "20px" }}
+        // mt={{ base: "none", xl: "20px" }}
         bgGradient={bgGradient}
         borderRadius={{ base: "none", xl: "lg" }}
         boxShadow="2xl"
-        mt={{ base: "80px", md: "100px", lg: "115px" }}
+        mt={{ base: "80px", md: "100px" }}
         mb="4"
       >
         <Heading as="h1" mb={8} textAlign="center" fontSize="4xl" color="white">
