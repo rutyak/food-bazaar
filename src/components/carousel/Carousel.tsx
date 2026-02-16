@@ -25,7 +25,7 @@ const Carousel = ({ suggestions, title }: CarouselType) => {
 
   return (
     <>
-      <Box className="carousel-heading" >
+      <Box className="carousel-heading">
         <VStack align="flex-start" spacing={1}>
           <Heading
             as="h2"
@@ -62,13 +62,17 @@ const Carousel = ({ suggestions, title }: CarouselType) => {
         <Flex gap={{ base: "10px", sm: "24px" }} align="center">
           <IconButton
             aria-label="Scroll Left"
-            icon={<MdChevronLeft className="icons" />}
+            icon={
+              <MdChevronLeft className="icons w-[22px] h-[22px] md:w-[24px] md:h-[24px]" />
+            }
             onClick={() => handleScroll("left")}
             className="nav-btn"
           />
           <IconButton
             aria-label="Scroll Right"
-            icon={<MdChevronRight className="icons" />}
+            icon={
+              <MdChevronRight className="icons w-[22px] h-[22px] md:w-[24px] md:h-[24px]" />
+            }
             onClick={() => handleScroll("right")}
             className="nav-btn"
           />

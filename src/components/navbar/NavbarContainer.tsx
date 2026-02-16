@@ -100,7 +100,7 @@ const NavbarContainer = ({
         top={0}
         left={0}
         right={0}
-        zIndex={10}
+        zIndex={100}
         transition="all 0.3s ease"
         bg={
           isScrolled
