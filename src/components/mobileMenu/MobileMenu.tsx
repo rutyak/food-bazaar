@@ -45,7 +45,6 @@ const MobileMenu = () => {
     }
   };
 
-  // Internal NavLink Component for cleaner code
   const NavLink = ({ href, icon: Icon, children, onClick, activeColor = "orange.400" }: any) => {
     const isActive = pathname === href;
     
@@ -80,13 +79,13 @@ const MobileMenu = () => {
         onClick={onOpen}
         variant="unstyled"
         display={{ base: "flex", xl: "none" }}
-        color="white" // Adjust based on your navbar color
+        color="white" 
         _focus={{ boxShadow: "none" }}
       />
 
       <Drawer isOpen={isOpen} placement="right" onClose={onClose} finalFocusRef={btnRef}>
         <DrawerOverlay backdropFilter="blur(8px)" />
-        <DrawerContent bg="#1A202C" color="white" maxW="300px"> {/* Dark theme for premium feel */}
+        <DrawerContent bg="#1A202C" color="white" maxW="300px"> 
           <DrawerCloseButton color="white" top="20px" size="lg" />
           
           <DrawerHeader pt={12} pb={6} px={6}>

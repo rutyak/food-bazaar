@@ -33,18 +33,13 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
     role: "customer",
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [socialLoading, setSocialLoading] = useState<
-    "google" | "github" | null
-  >(null);
+  const [socialLoading, setSocialLoading] = useState<"google" | "github" | null>(null);
 
   const successToast = useSuccessToast();
   const errorToast = useErrorToast();
-
   const router = useRouter();
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
@@ -71,7 +66,6 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
       if (!res.ok) throw new Error(data.message || "Signup failed");
 
       successToast(data.message || "Signup successful!");
-
       router.push("/");
       onClose();
     } catch (err: any) {
@@ -93,62 +87,53 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
   };
 
   const signupFields = [
-    {
-      id: "name",
-      label: "Full Name",
-      type: "text",
-      placeholder: "John Doe",
-    },
-    {
-      id: "email",
-      label: "Email",
-      type: "email",
-      placeholder: "your@email.com",
-    },
-    {
-      id: "password",
-      label: "Password",
-      type: "password",
-      placeholder: "••••••••",
-    },
-    {
-      id: "confirmPassword",
-      label: "Confirm Password",
-      type: "password",
-      placeholder: "••••••••",
-    },
+    { id: "name", label: "Full Name", type: "text", placeholder: "John Doe" },
+    { id: "email", label: "Email", type: "email", placeholder: "your@email.com" },
+    { id: "password", label: "Password", type: "password", placeholder: "••••••••" },
+    { id: "confirmPassword", label: "Confirm Password", type: "password", placeholder: "••••••••" },
   ];
 
   return (
-    <TabPanel className={styles.signupBody}>
+    <TabPanel p={0} pb={4} className={styles.signupBody}>
       <form onSubmit={handleSubmit}>
         <Stack spacing={4}>
-          {signupFields?.map(({ id, label, type, placeholder }) => (
+          {signupFields.map(({ id, label, type, placeholder }) => (
             <FormControl key={id} isRequired>
-              <FormLabel htmlFor={id}>{label}</FormLabel>
+              <FormLabel htmlFor={id} mb={1} fontSize="sm">
+                {label}
+              </FormLabel>
               <Input
                 id={id}
                 type={type}
                 value={formData[id as keyof typeof formData]}
                 onChange={handleChange}
                 placeholder={placeholder}
+                bg="gray.800"
+                border="none"
+                _focus={{ ring: 1, ringColor: "orange.500" }}
               />
             </FormControl>
           ))}
 
-          {/* New Role Selection */}
           <FormControl isRequired>
-            <FormLabel htmlFor="role">Role</FormLabel>
+            <FormLabel htmlFor="role" mb={1} fontSize="sm">
+              Role
+            </FormLabel>
             <Select
               id="role"
-              w="100%"
               value={formData.role}
               onChange={handleChange}
-              color="black"
-              bg="white"
+              color="white"
+              bg="gray.800"
+              border="none"
+              _focus={{ ring: 1, ringColor: "orange.500" }}
             >
-              <option value="customer">Customer</option>
-              <option value="admin">Admin</option>
+              <option value="customer" style={{ background: "#1A202C" }}>
+                Customer
+              </option>
+              <option value="admin" style={{ background: "#1A202C" }}>
+                Admin
+              </option>
             </Select>
           </FormControl>
 
@@ -159,33 +144,32 @@ const SignUp: React.FC<SignUpProps> = ({ onClose }) => {
               type="submit"
               isLoading={isLoading}
               loadingText="Signing up..."
+              size="lg"
             >
               Sign Up
             </Button>
           </Box>
 
           <Flex align="center" my={2}>
-            <Divider />
-            <Text px={2} color="gray.500">
+            <Divider borderColor="gray.600" />
+            <Text px={2} color="gray.400" fontSize="xs">
               OR
             </Text>
-            <Divider />
+            <Divider borderColor="gray.600" />
           </Flex>
 
-          <Stack spacing={3}>
-            <Button
-              leftIcon={<FaGoogle />}
-              variant="outline"
-              onClick={() => handleSocialSignUp("google")}
-              isLoading={socialLoading === "google"}
-              loadingText="Signing up with Google"
-              disabled={isLoading}
-              color="white"
-              _hover={{ bg: "gray.700" }}
-            >
-              Continue with Google
-            </Button>
-          </Stack>
+          <Button
+            leftIcon={<FaGoogle />}
+            variant="outline"
+            borderColor="gray.600"
+            color="white"
+            onClick={() => handleSocialSignUp("google")}
+            isLoading={socialLoading === "google"}
+            disabled={isLoading}
+            _hover={{ bg: "gray.700" }}
+          >
+            Continue with Google
+          </Button>
         </Stack>
       </form>
     </TabPanel>
