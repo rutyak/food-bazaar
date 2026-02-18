@@ -146,7 +146,7 @@ const Profie = () => {
               left={0}
               right={0}
               height="100%"
-              bgGradient="linear(to-b, teal.500, teal.700)"
+              bgGradient="linear-gradient(120deg, #ffcc00 0%, #ff4d4d 100%)"
               zIndex={1}
             />
 
@@ -174,7 +174,7 @@ const Profie = () => {
             <VStack spacing={4} align="stretch">
               <Box p={4} bg="white" borderRadius="md" boxShadow="sm">
                 <HStack spacing={3}>
-                  <Icon as={FiUser} color="teal.500" boxSize={5} />
+                  <Icon as={FiUser} color="linear-gradient(120deg, #ffcc00 0%, #ff4d4d 100%)" boxSize={5} />
                   <Text fontWeight="medium">Profile Information</Text>
                 </HStack>
                 <Divider my={3} />
@@ -192,7 +192,7 @@ const Profie = () => {
 
               <Box p={4} bg="white" borderRadius="md" boxShadow="sm">
                 <HStack spacing={3}>
-                  <Icon as={FiShoppingCart} color="teal.500" boxSize={5} />
+                  <Icon as={FiShoppingCart} color="linear-gradient(120deg, #ffcc00 0%, #ff4d4d 100%)" boxSize={5} />
                   <Text fontWeight="medium">My Orders</Text>
                 </HStack>
                 <Divider my={3} />
